@@ -10,9 +10,13 @@ public class GameManager : MonoBehaviour
     public TextAsset hiScoreFile;
 
     public HighScoreTable hiScoreTable;
-    public TextMeshProUGUI scoreGUI;
+
+    [Header("UI")]
+    public TextMeshProUGUI scoreUI;
     string filePath;                    //contains location of high score table JSON file
     public TMP_InputField inputField;   //player types words in here
+    public TextMeshProUGUI timerUI;
+    public TextMeshProUGUI difficultyUI;
 
     // Start is called before the first frame update
     void Start()
@@ -20,7 +24,7 @@ public class GameManager : MonoBehaviour
         //read from JSON file
         hiScoreTable = JsonUtility.FromJson<HighScoreTable>(hiScoreFile.text);
         Debug.Log("Score: " + hiScoreTable.score);
-        scoreGUI.text = "Score: " + hiScoreTable.score;
+        scoreUI.text = "Score: " + hiScoreTable.score;
         filePath = Application.dataPath + "/Resources/hiscoretable.json";
         Debug.Log(filePath);
     }
