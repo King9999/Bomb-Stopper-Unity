@@ -1,0 +1,38 @@
+{
+	"wordlist":
+	[
+		{
+			"difficultyId": 0,
+			"words":
+			[
+				{"word":"apple"},
+				{"word":"duddy"},
+				{"word":"world"},
+				{"word":"xerox"},
+				{"word":"aesir"}
+			]	
+		},
+		{
+			"difficulty": 1,
+			"words":
+			[
+				{"word":"Rusty Dagger"},
+				{"word":"Dull Sword"},
+				{"word":"Ragged Armor"},
+				{"word":"Chipped Shield"},
+				{"word":"Broadsword"}
+			]	
+		},
+		{
+			"difficulty": 2,
+			"words":
+			[
+				{"word":"Rusty Dagger"},
+				{"word":"Dull Sword"},
+				{"word":"Ragged Armor"},
+				{"word":"Chipped Shield"},
+				{"word":"Broadsword"}
+			]	
+		}
+	]
+}
