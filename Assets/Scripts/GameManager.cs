@@ -1,7 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
+using UnityEngine.Networking;
 using TMPro;
 
 //NOTE: Unable to add high score table as there's no reliable way to have persistent data on WebGL without using a server.
@@ -27,11 +26,22 @@ public class GameManager : MonoBehaviour
         //read from JSON file
         dictionary = JsonUtility.FromJson<WordLists>(wordFile.text);
 
-        hiScoreTable = JsonUtility.FromJson<HighScoreTable>(hiScoreFile.text);
+        //get hiscore table data
+        //string tableUrl = /*"http://mikemurraygames.rf.gd/hiscoretable.json"*/ "https://drive.google.com/file/d/11ERWGBUGuLbtt1WbJHM6PzBXYxJIPuNQ";
+        //StartCoroutine(GetTableData(tableUrl));
+       /* UnityWebRequest blah = UnityWebRequest.Get(tableUrl);
+
+        if (blah.error == null)
+        {
+            Debug.Log("No error");
+        }
+
+
+        hiScoreTable = JsonUtility.FromJson<HighScoreTable>(blah.downloadHandler.text);
         Debug.Log("Score: " + hiScoreTable.score);
         scoreUI.text = "Score: " + hiScoreTable.score;
         filePath = Application.dataPath + "/Resources/hiscoretable.json";
-        Debug.Log(filePath);
+        Debug.Log(filePath);*/
     }
 
     // Update is called once per frame
@@ -40,10 +50,9 @@ public class GameManager : MonoBehaviour
         //When I click the mouse button, random word is displayed
         if (Input.GetMouseButtonDown(0)) //left button pressed
         {
-            int time = dictionary.wordList[0].time;
-            Debug.Log("time is " + dictionary.wordList[0].words[0].word);
+            //int time = dictionary.wordList[0].time;
+            //Debug.Log("time is " + dictionary.wordList[0].words[0].word);
             int randWord = Random.Range(0, dictionary.wordList[0].words.Length);
-            Debug.Log("Random value " + dictionary.wordList[0].words[randWord]);
             targetWordUI.text = dictionary.wordList[0].words[randWord].word;
             /*hiScoreTable.score += 100;
             scoreGUI.text = "Score: " + hiScoreTable.score;
@@ -52,6 +61,24 @@ public class GameManager : MonoBehaviour
             Debug.Log("New score data: " + scoreStr);
             File.WriteAllText(filePath, scoreStr);*/
         }
+    }
+
+    IEnumerator GetTableData(string url)
+    {
+        UnityWebRequest request = UnityWebRequest.Get(url);
+        yield return request.SendWebRequest();
+
+        if (request.error == null)
+        {
+            //Debug.Log("No error");
+            hiScoreTable = JsonUtility.FromJson<HighScoreTable>(request.downloadHandler.text);
+            Debug.Log("Score: " + hiScoreTable.score);
+        }
+        else
+        {
+            Debug.Log(request.error);
+        }
+
     }
 
     /*public void WriteToFile()
