@@ -26,6 +26,9 @@ public class GameManager : MonoBehaviour
         //read from JSON file
         dictionary = JsonUtility.FromJson<WordLists>(wordFile.text);
 
+        //places the cursor in input field so player can start typing immediately.
+        inputField.ActivateInputField();
+
         //get hiscore table data
         //string tableUrl = /*"http://mikemurraygames.rf.gd/hiscoretable.json"*/ "https://drive.google.com/file/d/11ERWGBUGuLbtt1WbJHM6PzBXYxJIPuNQ";
         //StartCoroutine(GetTableData(tableUrl));
@@ -60,6 +63,21 @@ public class GameManager : MonoBehaviour
             string scoreStr = JsonUtility.ToJson(hiScoreTable);
             Debug.Log("New score data: " + scoreStr);
             File.WriteAllText(filePath, scoreStr);*/
+        }
+
+        //check to see if amount of letters in input field matches the target word's letter count
+        if (inputField.text.Length >= targetWordUI.text.Length)
+        {
+            //compare the words and check if they match.
+            if (inputField.text.ToLower() == targetWordUI.text.ToLower())
+            {
+                Debug.Log("It's a match");
+            }
+            else
+            {
+                Debug.Log("no match");
+            }
+            
         }
     }
 
