@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     bool correctionWasMade;         //if true, player pressed delete or backspace
     enum Difficulty {Easy, Normal, Hard, Special}
     Difficulty currentDifficulty;
+    int comboCount;                 //A combo is formed when player types at least 2 words consecutively without error or correction.
 
     [Header("UI")]
     public TextMeshProUGUI scoreUI;
@@ -25,6 +26,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI difficultyUI;
     public TextMeshProUGUI targetWordUI;
     public TextMeshProUGUI resultUI;    //displays result of the typed word, either "Perfect" or "OK" or "Wrong"
+    public TextMeshProUGUI comboUI;     //displays combo count, starting at 2 consecutive words
 
     [Header("Timers")]
     public float penaltyDuration;
@@ -34,6 +36,8 @@ public class GameManager : MonoBehaviour
     float difficultyMod;                //adjusts the penalty based on difficulty. 0.5 for easy, 1 for normal, 1.5 for hard, 
                                         //1.8 for special
     float penaltyPerLetter;
+    float comboTimer;                   //duration before combo is broken. Length depends on the length of last word completed.
+    float baseComboTimer {get;} = 2;    //time in seconds
 
     // Start is called before the first frame update
     void Start()
@@ -120,6 +124,7 @@ public class GameManager : MonoBehaviour
                     //In the case of an "OK" match, player is slightly penalized.
                     StartCoroutine(ShowResult("OK", Color.white));
                     penaltyDuration = basePenalty;
+                    correctionWasMade = false;
                 }
 
                 
@@ -189,7 +194,20 @@ public class GameManager : MonoBehaviour
     IEnumerator ShowResult(string result, Color textColor)
     {
         resultUI.text = result;
-        yield return null;
+        resultUI.color = textColor;
+
+        //display the result for a second. Show a pulse effect
+        resultUI.transform.localScale = new Vector3(1.5f, 1.5f, 1);
+        while (resultUI.transform.localScale.x > 1)
+        {
+            resultUI.transform.localScale = new Vector3(resultUI.transform.localScale.x - 0.1f * Time.timeScale, 
+                resultUI.transform.localScale.y - 0.1f * Time.timeScale, 1);
+            yield return new WaitForSeconds(0.016f);
+        }
+
+        resultUI.transform.localScale = new Vector3(1, 1, 1);
+        yield return new WaitForSeconds(0.5f);
+        resultUI.text = "";
     }
 
     IEnumerator Stun(float stunDuration)
