@@ -24,13 +24,15 @@ public class GameManager : MonoBehaviour
     //public TextMeshProUGUI timerUI;
     public TextMeshProUGUI difficultyUI;
     public TextMeshProUGUI targetWordUI;
+    public TextMeshProUGUI resultUI;    //displays result of the typed word, either "Perfect" or "OK" or "Wrong"
 
     [Header("Timers")]
     public float penaltyDuration;
     float currentTime;              
     float basePenalty { get; } = 1;    //time in seconds. base penalty is getting the word correct but making a correction.
     float basePenaltyPerLetter { get; } = 0.3f;
-    float difficultyMod;                //adjusts the penalty based on difficulty. 0.5 for easy, 1 for normal, 1.5 for hard, 1.8 for special
+    float difficultyMod;                //adjusts the penalty based on difficulty. 0.5 for easy, 1 for normal, 1.5 for hard, 
+                                        //1.8 for special
     float penaltyPerLetter;
 
     // Start is called before the first frame update
@@ -111,16 +113,28 @@ public class GameManager : MonoBehaviour
             if (inputField.text.ToLower() == targetWordUI.text.ToLower())
             {
                 //show icon indicating a correct word. Show "Perfect!" if no corrections were made, "OK" otherwise
-                //In the case of an "OK" match, player is slightly penalized.
+                if (!correctionWasMade)
+                    StartCoroutine(ShowResult("Perfect!", Color.yellow));
+                else
+                {
+                    //In the case of an "OK" match, player is slightly penalized.
+                    StartCoroutine(ShowResult("OK", Color.white));
+                    penaltyDuration = basePenalty;
+                }
+
+                
                 Debug.Log("It's a match");
             }
             else
             {
                 //highlight all of the incorrect letters in both the typed word and the target word.
-                //penalty is base penalty + (number of incorrect letters * 0.3)
+                //penalty is base penalty + (number of incorrect letters * 0.3 * difficulty)
                 Debug.Log("no match");
             }
             
+            //check for penalty and run the proper coroutine
+            StartCoroutine(Stun(penaltyDuration));
+
             //clear the field and select new word
             inputField.text = "";
             targetWordSelected = false;
@@ -170,6 +184,17 @@ public class GameManager : MonoBehaviour
             Debug.Log(request.error);
         }
 
+    }
+
+    IEnumerator ShowResult(string result, Color textColor)
+    {
+        resultUI.text = result;
+        yield return null;
+    }
+
+    IEnumerator Stun(float stunDuration)
+    {
+        yield return null;
     }
 
     /*public void WriteToFile()
