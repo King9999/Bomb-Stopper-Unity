@@ -144,7 +144,7 @@ public class GameManager : MonoBehaviour
             ui.inputField.DeactivateInputField();
 
             //compare the words and check if they match.
-            if (ui.inputField.text.ToLower() == ui.targetWordUI.text.ToLower())
+            if (WordsMatch(ui.inputField.text, ui.targetWordUI.text))
             {
                 //show icon indicating a correct word. Show "Perfect!" if no corrections were made, "OK" otherwise
                 if (!correctionWasMade)
@@ -236,6 +236,11 @@ public class GameManager : MonoBehaviour
         return difficultyScale;
     }
 
+    bool WordsMatch(string typedWord, string targetWord)
+    {
+        return typedWord.ToLower() == targetWord.ToLower();
+    }
+
     float IncorrectLetterTotal(string typedWord, string targetWord)
     {
         float errorCount = 0;
@@ -319,6 +324,16 @@ public class GameManager : MonoBehaviour
         //shake the screen
         //uiHandler.transform.position = new Vector3(uiHandler.transform.position.x + 100, 
             //uiHandler.transform.position.y, uiHandler.transform.position.z);
+        
+        //only show stun meter if there was a correction/word is wrong
+        if (!WordsMatch(ui.inputField.text, ui.targetWordUI.text) || correctionWasMade == true)
+        {
+            ui.stunMeter.enabled = true;
+            ui.stunMeter.value = ui.stunMeter.maxValue;
+
+            
+
+        }
         yield return new WaitForSeconds(stunDuration);
 
          //clear the field and select new word
