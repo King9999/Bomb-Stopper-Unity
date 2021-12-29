@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     enum Difficulty {Easy, Normal, Hard, Special}
     Difficulty currentDifficulty;
     int comboCount;                 //A combo is formed when player types at least 2 words consecutively without error or correction.
+    int score;
 
     [Header("UI")]
     public GameObject uiHandler;        //controls all UI. Mainly used to create a "shake" effect
@@ -28,8 +29,10 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI targetWordUI;
     public TextMeshProUGUI resultUI;    //displays result of the typed word, either "Perfect" or "OK" or "Wrong"
     public TextMeshProUGUI comboUI;     //displays combo count, starting at 2 consecutive words
+    public TextMeshProUGUI penaltyUI;
 
     [Header("Timers")]
+    public Timer gameTimer;
     public float penaltyDuration;
     float currentTime;              
     float basePenalty { get; } = 1;    //time in seconds. base penalty is getting the word correct but making a correction.
@@ -62,6 +65,13 @@ public class GameManager : MonoBehaviour
         resultCoroutineOn = false;
         targetWordSelected = false;
         correctionWasMade = false;
+
+        //UI setup
+        penaltyUI.text = "PPL: +" + penaltyPerLetter + " sec.";
+        difficultyUI.text = "Difficulty: " + dictionary.wordList[(int)currentDifficulty].difficultyId;
+        resultUI.text = "";
+        scoreUI.text = "Score: " + score;
+        gameTimer.timerRunning = true;
 
         //get hiscore table data
         //string tableUrl = /*"http://mikemurraygames.rf.gd/hiscoretable.json"*/ "https://drive.google.com/file/d/11ERWGBUGuLbtt1WbJHM6PzBXYxJIPuNQ";
@@ -214,12 +224,9 @@ public class GameManager : MonoBehaviour
     {
         float errorCount = 0;
 
-        //need to compare each letter of each word. They should be equal length
-        //char[] word1 = typedWord.ToLower().ToCharArray();
-        //char[] word2 = targetWord.ToLower().ToCharArray();
         string word1 = "";
         string word2 = "";
-        string startColor = "<color=#ff0000>";
+        string startColor = "<color=#ff0000>";  //I can append this to a string to add colour to individual letters.
         string endColor = "</color>";
 
         for (int i = 0; i < targetWord.Length; i++)
