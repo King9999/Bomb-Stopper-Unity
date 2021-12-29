@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
         //places the cursor in input field so player can start typing immediately.
         UI.instance.inputField.ActivateInputField();
 
-        currentDifficulty = Difficulty.Easy;
+        currentDifficulty = Difficulty.Normal;
         difficultyMod = AdjustDifficultyMod(difficultyMod);
         penaltyPerLetter = basePenaltyPerLetter * difficultyMod;
 
@@ -127,7 +127,7 @@ public class GameManager : MonoBehaviour
             while (previousWord == ui.targetWordUI.text)
             {
                 int randWord = Random.Range(0, dictionary.wordList[(int)currentDifficulty].words.Length);
-                ui.targetWordUI.text = dictionary.wordList[(int)currentDifficulty].words[randWord].word;                
+                ui.targetWordUI.text = dictionary.wordList[(int)currentDifficulty].words[randWord].word;
             }
             targetWordSelected = true;
         }
