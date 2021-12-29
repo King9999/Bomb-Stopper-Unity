@@ -183,7 +183,7 @@ public class GameManager : MonoBehaviour
                 }
 
                 
-                Debug.Log("It's a match");
+                //Debug.Log("It's a match");
             }
             else
             {
@@ -191,10 +191,11 @@ public class GameManager : MonoBehaviour
                 //penalty is base penalty + (number of incorrect letters * 0.3 * difficulty)
                 float errorCount = IncorrectLetterTotal(ui.inputField.text, ui.targetWordUI.text);
                 penaltyDuration = basePenalty + (errorCount * penaltyPerLetter);
-                Debug.Log("Penalty time is " + penaltyDuration);
+                //Debug.Log("Penalty time is " + penaltyDuration);
                 if (!resultCoroutineOn)
                 {
                     resultCoroutineOn = true;
+                    Debug.Log("Penalty time is " + penaltyDuration);
                     StartCoroutine(ShowResult("Incorrect", new Color(0.9f, 0.2f, 0.2f), penaltyDuration));
                 }
                 if (!stunCoroutineOn)
@@ -274,8 +275,8 @@ public class GameManager : MonoBehaviour
         //update the onscreen words to show incorrect letters
         ui.targetWordUI.text = word2;
         ui.inputField.text = word1;
-        Debug.Log("Word2 is " + word2);
-        Debug.Log("Error count: " + errorCount);
+        //Debug.Log("Word2 is " + word2);
+        //Debug.Log("Error count: " + errorCount);
         return errorCount;
     }
 
@@ -350,8 +351,8 @@ public class GameManager : MonoBehaviour
             ui.stunMeterHandler.gameObject.SetActive(false);
 
         }
-       
-        //yield return new WaitForSeconds(stunDuration);
+        else //got a perfect word
+            yield return new WaitForSeconds(stunDuration);
         
 
          //clear the field and select new word
