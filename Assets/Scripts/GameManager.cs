@@ -77,6 +77,7 @@ public class GameManager : MonoBehaviour
         ui.resultUI.text = "";
         ui.scoreUI.text = "Score: " + score;
         ui.wordCountUI.text = "Word Count: " + currentWordCount + "/" + totalWordCount;
+        ui.stunMeterHandler.gameObject.SetActive(false);   //hidden by default
 
         //timer setup
         gameTimer.SetTimer(time);
@@ -325,16 +326,25 @@ public class GameManager : MonoBehaviour
         //uiHandler.transform.position = new Vector3(uiHandler.transform.position.x + 100, 
             //uiHandler.transform.position.y, uiHandler.transform.position.z);
         
-        //only show stun meter if there was a correction/word is wrong
+        //show stun meter if there was a correction/word is wrong
         if (!WordsMatch(ui.inputField.text, ui.targetWordUI.text) || correctionWasMade == true)
         {
-            ui.stunMeter.enabled = true;
+            ui.stunMeterHandler.gameObject.SetActive(true);
             ui.stunMeter.value = ui.stunMeter.maxValue;
+            float currentTime = Time.time;
+            while (Time.time < currentTime + stunDuration)
+            {
+                //update stun meter. The meter starts full, then gradually goes down.
+                ui.stunMeter.value = ui.stunMeter.maxValue - ((Time.time - currentTime) / stunDuration); //((currentTime + stunDuration) - currentTime));
+                yield return null;
+            }
 
-            
+            ui.stunMeterHandler.gameObject.SetActive(false);
 
         }
-        yield return new WaitForSeconds(stunDuration);
+       
+        //yield return new WaitForSeconds(stunDuration);
+        
 
          //clear the field and select new word
         ui.inputField.text = "";
