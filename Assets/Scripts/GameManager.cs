@@ -171,7 +171,7 @@ public class GameManager : MonoBehaviour
                     if (!resultCoroutineOn)
                     {
                         resultCoroutineOn = true;
-                        StartCoroutine(ShowResult("OK", Color.white));
+                        StartCoroutine(ShowResult("OK", Color.white, basePenalty));
                         currentWordCount++;
                     }
                     if (!stunCoroutineOn)
@@ -192,7 +192,11 @@ public class GameManager : MonoBehaviour
                 float errorCount = IncorrectLetterTotal(ui.inputField.text, ui.targetWordUI.text);
                 penaltyDuration = basePenalty + (errorCount * penaltyPerLetter);
                 Debug.Log("Penalty time is " + penaltyDuration);
-
+                if (!resultCoroutineOn)
+                {
+                    resultCoroutineOn = true;
+                    StartCoroutine(ShowResult("Incorrect", new Color(0.9f, 0.2f, 0.2f), penaltyDuration));
+                }
                 if (!stunCoroutineOn)
                 {
                     stunCoroutineOn = true;
@@ -248,7 +252,7 @@ public class GameManager : MonoBehaviour
 
         string word1 = "";
         string word2 = "";
-        string startColor = "<color=#ff0000>";  //I can append this to a string to add colour to individual letters.
+        string startColor = "<color=#E53C3C>";  //I can append this to a string to add colour to individual letters.
         string endColor = "</color>";
 
         for (int i = 0; i < targetWord.Length; i++)
@@ -295,7 +299,8 @@ public class GameManager : MonoBehaviour
 
     }
 
-    IEnumerator ShowResult(string result, Color textColor)
+    //display a result. Can specify the amount of time to display message.
+    IEnumerator ShowResult(string result, Color textColor, float duration = 0.5f)
     {
         ui.resultUI.text = result;
         ui.resultUI.color = textColor;
@@ -314,8 +319,11 @@ public class GameManager : MonoBehaviour
 
         //time delay is different if player made a correction. This is to prevent the coroutine from running
         //multiple times while player is stuned.
-        float delay = correctionWasMade == false ? 0.5f : basePenalty;
-        yield return new WaitForSeconds(delay);
+        //float delay;
+        //if (!WordsMatch(ui.inputField.text, ui.targetWordUI.text))
+            //delay = 
+        //float delay = correctionWasMade == false ? 0.5f : basePenalty;
+        yield return new WaitForSeconds(duration);
         ui.resultUI.text = "";
         resultCoroutineOn = false;
     }
