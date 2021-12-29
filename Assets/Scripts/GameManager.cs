@@ -132,9 +132,14 @@ public class GameManager : MonoBehaviour
                         resultCoroutineOn = true;
                         StartCoroutine(ShowResult("Perfect!", Color.yellow));
                     }
+                    if (!stunCoroutineOn)
+                    {
+                        stunCoroutineOn = true;
+                        StartCoroutine(Stun(0.5f)); //I have this here so player can confirm that they typed the correct word
+                    }
                     //clear the field and select new word
-                    inputField.text = "";
-                    targetWordSelected = false;
+                    //inputField.text = "";
+                    //targetWordSelected = false;
                 }
                 else
                 {
