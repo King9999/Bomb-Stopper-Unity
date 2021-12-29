@@ -233,7 +233,9 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        //update the onscreen words to show incorrect letters
         targetWordUI.text = word2;
+        inputField.text = word1;
         Debug.Log("Word2 is " + word2);
         Debug.Log("Error count: " + errorCount);
         return errorCount;
@@ -275,7 +277,11 @@ public class GameManager : MonoBehaviour
 
         //ensure scale is back to normal
         resultUI.transform.localScale = new Vector3(1, 1, 1);
-        yield return new WaitForSeconds(0.5f);
+
+        //time delay is different if player made a correction. This is to prevent the coroutine from running
+        //multiple times while player is stuned.
+        float delay = correctionWasMade == false ? 0.5f : basePenalty;
+        yield return new WaitForSeconds(delay);
         resultUI.text = "";
         resultCoroutineOn = false;
     }
