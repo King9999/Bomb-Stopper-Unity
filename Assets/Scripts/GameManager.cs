@@ -19,17 +19,15 @@ public class GameManager : MonoBehaviour
     int comboCount;                 //A combo is formed when player types at least 2 words consecutively without error or correction.
     int score;
 
+    int currentWordCount;
+
+    //JSON variables
+    int totalWordCount;             //number of words to complete to finish the level
+    string difficultyId;
+    float time;
+
     [Header("UI")]
     public GameObject uiHandler;        //controls all UI. Mainly used to create a "shake" effect
-    /*public TextMeshProUGUI scoreUI;
-    string filePath;                    //contains location of high score table JSON file
-    public TMP_InputField inputField;   //player types words in here
-    //public TextMeshProUGUI timerUI;
-    public TextMeshProUGUI difficultyUI;
-    public TextMeshProUGUI targetWordUI;
-    public TextMeshProUGUI resultUI;    //displays result of the typed word, either "Perfect" or "OK" or "Wrong"
-    public TextMeshProUGUI comboUI;     //displays combo count, starting at 2 consecutive words
-    public TextMeshProUGUI penaltyUI;*/
     public UI ui = UI.instance;         //this variable must be public in order to access the instance
     string filePath;                    //contains location of high score table JSON file
 
@@ -68,12 +66,20 @@ public class GameManager : MonoBehaviour
         targetWordSelected = false;
         correctionWasMade = false;
 
+        //JSON data
+        difficultyId = dictionary.wordList[(int)currentDifficulty].difficultyId;
+        totalWordCount = dictionary.wordList[(int)currentDifficulty].wordCount;
+        time = dictionary.wordList[(int)currentDifficulty].time;
+
         //UI setup
         ui.penaltyUI.text = "PPL: +" + penaltyPerLetter + " sec.";
-        ui.difficultyUI.text = "Difficulty: " + dictionary.wordList[(int)currentDifficulty].difficultyId;
+        ui.difficultyUI.text = "Difficulty: " + difficultyId;
         ui.resultUI.text = "";
         ui.scoreUI.text = "Score: " + score;
-        ui.targetWordUI.text = "";
+        ui.wordCountUI.text = "Word Count: " + currentWordCount + "/" + totalWordCount;
+
+        //timer setup
+        gameTimer.SetTimer(time);
         gameTimer.timerRunning = true;
 
         //get hiscore table data
@@ -147,6 +153,7 @@ public class GameManager : MonoBehaviour
                     {
                         resultCoroutineOn = true;
                         StartCoroutine(ShowResult("Perfect!", Color.yellow));
+                        currentWordCount++;
                     }
                     if (!stunCoroutineOn)
                     {
@@ -164,13 +171,14 @@ public class GameManager : MonoBehaviour
                     {
                         resultCoroutineOn = true;
                         StartCoroutine(ShowResult("OK", Color.white));
+                        currentWordCount++;
                     }
                     if (!stunCoroutineOn)
                     {
                         stunCoroutineOn = true;
                         StartCoroutine(Stun(basePenalty));
                     }
-                    //correctionWasMade = false;
+                    
                 }
 
                 
@@ -197,6 +205,8 @@ public class GameManager : MonoBehaviour
             //inputField.text = "";
             //targetWordSelected = false;
         }
+
+        ui.wordCountUI.text = "Word Count: " + currentWordCount + "/" + totalWordCount;
     }
 
     float AdjustDifficultyMod(float difficultyScale)
