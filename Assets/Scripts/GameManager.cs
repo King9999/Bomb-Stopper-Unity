@@ -131,6 +131,9 @@ public class GameManager : MonoBehaviour
         //check to see if amount of letters in input field matches the target word's letter count
         if (inputField.text.Length >= targetWordUI.text.Length)
         {
+            //prevent player from adding any more input.
+            inputField.DeactivateInputField();
+
             //compare the words and check if they match.
             if (inputField.text.ToLower() == targetWordUI.text.ToLower())
             {
@@ -282,9 +285,9 @@ public class GameManager : MonoBehaviour
         resultUI.transform.localScale = new Vector3(1.5f, 1.5f, 1);
         while (resultUI.transform.localScale.x > 1)
         {
-            resultUI.transform.localScale = new Vector3(resultUI.transform.localScale.x - 0.1f * Time.timeScale, 
-                resultUI.transform.localScale.y - 0.1f * Time.timeScale, 1);
-            yield return new WaitForSeconds(0.016f);
+            resultUI.transform.localScale = new Vector3(resultUI.transform.localScale.x - 5f * Time.deltaTime, 
+                resultUI.transform.localScale.y - 5f * Time.deltaTime, 1);
+            yield return null; //new WaitForSeconds(0.016f);
         }
 
         //ensure scale is back to normal
@@ -303,13 +306,14 @@ public class GameManager : MonoBehaviour
         //shake the screen
         //uiHandler.transform.position = new Vector3(uiHandler.transform.position.x + 100, 
             //uiHandler.transform.position.y, uiHandler.transform.position.z);
-        yield return new WaitForSeconds(stunDuration);
+        yield return new WaitForSecondsRealtime(stunDuration);
 
          //clear the field and select new word
         inputField.text = "";
         targetWordSelected = false;
         correctionWasMade = false;
         stunCoroutineOn = false;
+        inputField.ActivateInputField();
     }
 
     /*public void WriteToFile()
