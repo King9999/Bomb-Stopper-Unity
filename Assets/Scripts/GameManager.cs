@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     int comboCount;                 //A combo is formed when player types at least 2 words consecutively without error or correction.
 
     [Header("UI")]
+    public GameObject uiHandler;        //controls all UI. Mainly used to create a "shake" effect
     public TextMeshProUGUI scoreUI;
     string filePath;                    //contains location of high score table JSON file
     public TMP_InputField inputField;   //player types words in here
@@ -39,6 +40,10 @@ public class GameManager : MonoBehaviour
     float comboTimer;                   //duration before combo is broken. Length depends on the length of last word completed.
     float baseComboTimer {get;} = 2;    //time in seconds
 
+    //coroutine checks
+    bool stunCoroutineOn;
+    bool resultCoroutineOn;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -48,12 +53,15 @@ public class GameManager : MonoBehaviour
         //places the cursor in input field so player can start typing immediately.
         inputField.ActivateInputField();
 
+        currentDifficulty = Difficulty.Easy;
+        difficultyMod = AdjustDifficultyMod(difficultyMod);
+        penaltyPerLetter = basePenaltyPerLetter * difficultyMod;
+
+        //bool setup
+        stunCoroutineOn = false;
+        resultCoroutineOn = false;
         targetWordSelected = false;
         correctionWasMade = false;
-
-        currentDifficulty = Difficulty.Easy;
-        AdjustDifficultyMod(difficultyMod);
-        penaltyPerLetter = basePenaltyPerLetter * difficultyMod;
 
         //get hiscore table data
         //string tableUrl = /*"http://mikemurraygames.rf.gd/hiscoretable.json"*/ "https://drive.google.com/file/d/11ERWGBUGuLbtt1WbJHM6PzBXYxJIPuNQ";
@@ -118,13 +126,30 @@ public class GameManager : MonoBehaviour
             {
                 //show icon indicating a correct word. Show "Perfect!" if no corrections were made, "OK" otherwise
                 if (!correctionWasMade)
-                    StartCoroutine(ShowResult("Perfect!", Color.yellow));
+                {
+                    if (!resultCoroutineOn)
+                    {
+                        resultCoroutineOn = true;
+                        StartCoroutine(ShowResult("Perfect!", Color.yellow));
+                    }
+                    //clear the field and select new word
+                    inputField.text = "";
+                    targetWordSelected = false;
+                }
                 else
                 {
                     //In the case of an "OK" match, player is slightly penalized.
-                    StartCoroutine(ShowResult("OK", Color.white));
-                    penaltyDuration = basePenalty;
-                    correctionWasMade = false;
+                    if (!resultCoroutineOn)
+                    {
+                        resultCoroutineOn = true;
+                        StartCoroutine(ShowResult("OK", Color.white));
+                    }
+                    if (!stunCoroutineOn)
+                    {
+                        stunCoroutineOn = true;
+                        StartCoroutine(Stun(basePenalty));
+                    }
+                    //correctionWasMade = false;
                 }
 
                 
@@ -134,19 +159,26 @@ public class GameManager : MonoBehaviour
             {
                 //highlight all of the incorrect letters in both the typed word and the target word.
                 //penalty is base penalty + (number of incorrect letters * 0.3 * difficulty)
-                Debug.Log("no match");
+                float errorCount = IncorrectLetterTotal(inputField.text, targetWordUI.text);
+                penaltyDuration = basePenalty + (errorCount * penaltyPerLetter);
+                Debug.Log("Penalty time is " + penaltyDuration);
+
+                if (!stunCoroutineOn)
+                {
+                    stunCoroutineOn = true;
+                    StartCoroutine(Stun(penaltyDuration));
+                }
+                
             }
             
-            //check for penalty and run the proper coroutine
-            StartCoroutine(Stun(penaltyDuration));
 
             //clear the field and select new word
-            inputField.text = "";
-            targetWordSelected = false;
+            //inputField.text = "";
+            //targetWordSelected = false;
         }
     }
 
-    void AdjustDifficultyMod(float difficultyScale)
+    float AdjustDifficultyMod(float difficultyScale)
     {
         switch(currentDifficulty)
         {
@@ -169,6 +201,42 @@ public class GameManager : MonoBehaviour
             default:
                 break;
         }
+
+        return difficultyScale;
+    }
+
+    float IncorrectLetterTotal(string typedWord, string targetWord)
+    {
+        float errorCount = 0;
+
+        //need to compare each letter of each word. They should be equal length
+        //char[] word1 = typedWord.ToLower().ToCharArray();
+        //char[] word2 = targetWord.ToLower().ToCharArray();
+        string word1 = "";
+        string word2 = "";
+        string startColor = "<color=#ff0000>";
+        string endColor = "</color>";
+
+        for (int i = 0; i < targetWord.Length; i++)
+        {
+            if (typedWord.ToLower().Substring(i,1) != targetWord.ToLower().Substring(i,1))
+            {
+                errorCount++;
+                //change colour of letter
+                word1 += startColor + typedWord.Substring(i,1) + endColor;
+                word2 += startColor + targetWord.Substring(i,1) + endColor;
+            }
+            else
+            {
+                word1 += typedWord.Substring(i,1);
+                word2 += targetWord.Substring(i,1);
+            }
+        }
+
+        targetWordUI.text = word2;
+        Debug.Log("Word2 is " + word2);
+        Debug.Log("Error count: " + errorCount);
+        return errorCount;
     }
 
     //I'm using this coroutine to grab the high score table from the web, but currently I'm unsuccessful in 
@@ -205,14 +273,25 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(0.016f);
         }
 
+        //ensure scale is back to normal
         resultUI.transform.localScale = new Vector3(1, 1, 1);
         yield return new WaitForSeconds(0.5f);
         resultUI.text = "";
+        resultCoroutineOn = false;
     }
 
     IEnumerator Stun(float stunDuration)
     {
-        yield return null;
+        //shake the screen
+        //uiHandler.transform.position = new Vector3(uiHandler.transform.position.x + 100, 
+            //uiHandler.transform.position.y, uiHandler.transform.position.z);
+        yield return new WaitForSeconds(stunDuration);
+
+         //clear the field and select new word
+        inputField.text = "";
+        targetWordSelected = false;
+        correctionWasMade = false;
+        stunCoroutineOn = false;
     }
 
     /*public void WriteToFile()
