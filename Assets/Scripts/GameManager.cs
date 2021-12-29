@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
 
     [Header("UI")]
     public GameObject uiHandler;        //controls all UI. Mainly used to create a "shake" effect
-    public TextMeshProUGUI scoreUI;
+    /*public TextMeshProUGUI scoreUI;
     string filePath;                    //contains location of high score table JSON file
     public TMP_InputField inputField;   //player types words in here
     //public TextMeshProUGUI timerUI;
@@ -29,7 +29,9 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI targetWordUI;
     public TextMeshProUGUI resultUI;    //displays result of the typed word, either "Perfect" or "OK" or "Wrong"
     public TextMeshProUGUI comboUI;     //displays combo count, starting at 2 consecutive words
-    public TextMeshProUGUI penaltyUI;
+    public TextMeshProUGUI penaltyUI;*/
+    public UI ui = UI.instance;         //this variable must be public in order to access the instance
+    string filePath;                    //contains location of high score table JSON file
 
     [Header("Timers")]
     public Timer gameTimer;
@@ -54,7 +56,7 @@ public class GameManager : MonoBehaviour
         dictionary = JsonUtility.FromJson<WordLists>(wordFile.text);
 
         //places the cursor in input field so player can start typing immediately.
-        inputField.ActivateInputField();
+        UI.instance.inputField.ActivateInputField();
 
         currentDifficulty = Difficulty.Easy;
         difficultyMod = AdjustDifficultyMod(difficultyMod);
@@ -67,10 +69,11 @@ public class GameManager : MonoBehaviour
         correctionWasMade = false;
 
         //UI setup
-        penaltyUI.text = "PPL: +" + penaltyPerLetter + " sec.";
-        difficultyUI.text = "Difficulty: " + dictionary.wordList[(int)currentDifficulty].difficultyId;
-        resultUI.text = "";
-        scoreUI.text = "Score: " + score;
+        ui.penaltyUI.text = "PPL: +" + penaltyPerLetter + " sec.";
+        ui.difficultyUI.text = "Difficulty: " + dictionary.wordList[(int)currentDifficulty].difficultyId;
+        ui.resultUI.text = "";
+        ui.scoreUI.text = "Score: " + score;
+        ui.targetWordUI.text = "";
         gameTimer.timerRunning = true;
 
         //get hiscore table data
@@ -113,11 +116,11 @@ public class GameManager : MonoBehaviour
         {
            
             //change the target word, taking care to make sure the same word isn't selected.
-            string previousWord = targetWordUI.text;
-            while (previousWord == targetWordUI.text)
+            string previousWord = ui.targetWordUI.text;
+            while (previousWord == ui.targetWordUI.text)
             {
                 int randWord = Random.Range(0, dictionary.wordList[(int)currentDifficulty].words.Length);
-                targetWordUI.text = dictionary.wordList[(int)currentDifficulty].words[randWord].word;                
+                ui.targetWordUI.text = dictionary.wordList[(int)currentDifficulty].words[randWord].word;                
             }
             targetWordSelected = true;
         }
@@ -129,13 +132,13 @@ public class GameManager : MonoBehaviour
         }
 
         //check to see if amount of letters in input field matches the target word's letter count
-        if (inputField.text.Length >= targetWordUI.text.Length)
+        if (ui.inputField.text.Length >= ui.targetWordUI.text.Length)
         {
             //prevent player from adding any more input.
-            inputField.DeactivateInputField();
+            ui.inputField.DeactivateInputField();
 
             //compare the words and check if they match.
-            if (inputField.text.ToLower() == targetWordUI.text.ToLower())
+            if (ui.inputField.text.ToLower() == ui.targetWordUI.text.ToLower())
             {
                 //show icon indicating a correct word. Show "Perfect!" if no corrections were made, "OK" otherwise
                 if (!correctionWasMade)
@@ -177,7 +180,7 @@ public class GameManager : MonoBehaviour
             {
                 //highlight all of the incorrect letters in both the typed word and the target word.
                 //penalty is base penalty + (number of incorrect letters * 0.3 * difficulty)
-                float errorCount = IncorrectLetterTotal(inputField.text, targetWordUI.text);
+                float errorCount = IncorrectLetterTotal(ui.inputField.text, ui.targetWordUI.text);
                 penaltyDuration = basePenalty + (errorCount * penaltyPerLetter);
                 Debug.Log("Penalty time is " + penaltyDuration);
 
@@ -249,8 +252,8 @@ public class GameManager : MonoBehaviour
         }
 
         //update the onscreen words to show incorrect letters
-        targetWordUI.text = word2;
-        inputField.text = word1;
+        ui.targetWordUI.text = word2;
+        ui.inputField.text = word1;
         Debug.Log("Word2 is " + word2);
         Debug.Log("Error count: " + errorCount);
         return errorCount;
@@ -278,26 +281,26 @@ public class GameManager : MonoBehaviour
 
     IEnumerator ShowResult(string result, Color textColor)
     {
-        resultUI.text = result;
-        resultUI.color = textColor;
+        ui.resultUI.text = result;
+        ui.resultUI.color = textColor;
 
         //display the result for a second. Show a pulse effect
-        resultUI.transform.localScale = new Vector3(1.5f, 1.5f, 1);
-        while (resultUI.transform.localScale.x > 1)
+        ui.resultUI.transform.localScale = new Vector3(1.5f, 1.5f, 1);
+        while (ui.resultUI.transform.localScale.x > 1)
         {
-            resultUI.transform.localScale = new Vector3(resultUI.transform.localScale.x - 5f * Time.deltaTime, 
-                resultUI.transform.localScale.y - 5f * Time.deltaTime, 1);
+            ui.resultUI.transform.localScale = new Vector3(ui.resultUI.transform.localScale.x - 5f * Time.deltaTime, 
+                ui.resultUI.transform.localScale.y - 5f * Time.deltaTime, 1);
             yield return null; //new WaitForSeconds(0.016f);
         }
 
         //ensure scale is back to normal
-        resultUI.transform.localScale = new Vector3(1, 1, 1);
+        ui.resultUI.transform.localScale = new Vector3(1, 1, 1);
 
         //time delay is different if player made a correction. This is to prevent the coroutine from running
         //multiple times while player is stuned.
         float delay = correctionWasMade == false ? 0.5f : basePenalty;
         yield return new WaitForSeconds(delay);
-        resultUI.text = "";
+        ui.resultUI.text = "";
         resultCoroutineOn = false;
     }
 
@@ -306,14 +309,14 @@ public class GameManager : MonoBehaviour
         //shake the screen
         //uiHandler.transform.position = new Vector3(uiHandler.transform.position.x + 100, 
             //uiHandler.transform.position.y, uiHandler.transform.position.z);
-        yield return new WaitForSecondsRealtime(stunDuration);
+        yield return new WaitForSeconds(stunDuration);
 
          //clear the field and select new word
-        inputField.text = "";
+        ui.inputField.text = "";
         targetWordSelected = false;
         correctionWasMade = false;
         stunCoroutineOn = false;
-        inputField.ActivateInputField();
+        ui.inputField.ActivateInputField();
     }
 
     /*public void WriteToFile()

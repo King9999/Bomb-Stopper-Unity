@@ -155,13 +155,7 @@ MonoBehaviour:
   hiScoreFile: {fileID: 4900000, guid: 1a1e6c2c43c108d46b3f72644b01c769, type: 3}
   wordFile: {fileID: 4900000, guid: 9495aeb7e6f9554428307e0cb4fd46a2, type: 3}
   uiHandler: {fileID: 1830214186}
-  scoreUI: {fileID: 1830214185}
-  inputField: {fileID: 1830214184}
-  difficultyUI: {fileID: 1830214182}
-  targetWordUI: {fileID: 1830214183}
-  resultUI: {fileID: 1830214181}
-  comboUI: {fileID: 1830214180}
-  penaltyUI: {fileID: 1379776359}
+  gameTimer: {fileID: 816278676}
   penaltyDuration: 0
 --- !u!4 &190259076
 Transform:
@@ -260,6 +254,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &816278676 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6832036755822330232, guid: 31f82d417159e3840b2e6ac482eb5ec5, type: 3}
+  m_PrefabInstance: {fileID: 6832036755096147644}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72079d8970aaf6848bebd92d2eb48bf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &902483462
 GameObject:
   m_ObjectHideFlags: 0
@@ -520,13 +525,41 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 902483466}
     m_Modifications:
+    - target: {fileID: 5432881051060473080, guid: 31f82d417159e3840b2e6ac482eb5ec5, type: 3}
+      propertyPath: comboUI
+      value: 
+      objectReference: {fileID: 1830214180}
+    - target: {fileID: 5432881051060473080, guid: 31f82d417159e3840b2e6ac482eb5ec5, type: 3}
+      propertyPath: scoreUI
+      value: 
+      objectReference: {fileID: 1830214185}
+    - target: {fileID: 5432881051060473080, guid: 31f82d417159e3840b2e6ac482eb5ec5, type: 3}
+      propertyPath: resultUI
+      value: 
+      objectReference: {fileID: 1830214181}
+    - target: {fileID: 5432881051060473080, guid: 31f82d417159e3840b2e6ac482eb5ec5, type: 3}
+      propertyPath: penaltyUI
+      value: 
+      objectReference: {fileID: 1379776359}
+    - target: {fileID: 5432881051060473080, guid: 31f82d417159e3840b2e6ac482eb5ec5, type: 3}
+      propertyPath: uiHandler
+      value: 
+      objectReference: {fileID: 1830214186}
+    - target: {fileID: 5432881051060473080, guid: 31f82d417159e3840b2e6ac482eb5ec5, type: 3}
+      propertyPath: inputField
+      value: 
+      objectReference: {fileID: 1830214184}
+    - target: {fileID: 5432881051060473080, guid: 31f82d417159e3840b2e6ac482eb5ec5, type: 3}
+      propertyPath: difficultyUI
+      value: 
+      objectReference: {fileID: 1830214182}
+    - target: {fileID: 5432881051060473080, guid: 31f82d417159e3840b2e6ac482eb5ec5, type: 3}
+      propertyPath: targetWordUI
+      value: 
+      objectReference: {fileID: 1830214183}
     - target: {fileID: 6832036755684576406, guid: 31f82d417159e3840b2e6ac482eb5ec5, type: 3}
       propertyPath: m_Name
       value: UI Handler
-      objectReference: {fileID: 0}
-    - target: {fileID: 6832036755684576409, guid: 31f82d417159e3840b2e6ac482eb5ec5, type: 3}
-      propertyPath: m_text
-      value: Result
       objectReference: {fileID: 0}
     - target: {fileID: 6832036755684576415, guid: 31f82d417159e3840b2e6ac482eb5ec5, type: 3}
       propertyPath: m_Pivot.x
@@ -610,6 +643,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6832036755684576415, guid: 31f82d417159e3840b2e6ac482eb5ec5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7655709563078081276, guid: 31f82d417159e3840b2e6ac482eb5ec5, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7655709563078081276, guid: 31f82d417159e3840b2e6ac482eb5ec5, type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
