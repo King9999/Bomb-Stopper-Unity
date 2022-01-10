@@ -177,7 +177,7 @@ public class GameManager : MonoBehaviour
                     if (!stunCoroutineOn)
                     {
                         stunCoroutineOn = true;
-                        StartCoroutine(Stun(basePenalty));
+                        StartCoroutine(Stun(basePenalty, true));
                     }
                     
                 }
@@ -189,19 +189,18 @@ public class GameManager : MonoBehaviour
             {
                 //highlight all of the incorrect letters in both the typed word and the target word.
                 //penalty is base penalty + (number of incorrect letters * 0.3 * difficulty)
-                float errorCount = IncorrectLetterTotal(ui.inputField.text, ui.targetWordUI.text);
+                int errorCount = IncorrectLetterTotal(ui.inputField.text, ui.targetWordUI.text);
                 penaltyDuration = basePenalty + (errorCount * penaltyPerLetter);
-                //Debug.Log("Penalty time is " + penaltyDuration);
+                Debug.Log("Penalty time is " + penaltyDuration);
                 if (!resultCoroutineOn)
                 {
                     resultCoroutineOn = true;
-                    Debug.Log("Penalty time is " + penaltyDuration);
                     StartCoroutine(ShowResult("Incorrect", new Color(0.9f, 0.2f, 0.2f), penaltyDuration));
                 }
                 if (!stunCoroutineOn)
                 {
                     stunCoroutineOn = true;
-                    StartCoroutine(Stun(penaltyDuration));
+                    StartCoroutine(Stun(penaltyDuration, true));
                 }
                 
             }
@@ -247,12 +246,14 @@ public class GameManager : MonoBehaviour
         return typedWord.ToLower() == targetWord.ToLower();
     }
 
-    float IncorrectLetterTotal(string typedWord, string targetWord)
+    //NOTE: This method was slowing down the game, probably because of too many string operations. I decided to only highlight the
+    //incorrect letters that player types, instead of highlighting the target word also.
+    int IncorrectLetterTotal(string typedWord, string targetWord)
     {
-        float errorCount = 0;
+        int errorTotal = 0;
 
         string word1 = "";
-        string word2 = "";
+        //string word2 = "";
         string startColor = "<color=#E53C3C>";  //I can append this to a string to add colour to individual letters.
         string endColor = "</color>";
 
@@ -260,24 +261,24 @@ public class GameManager : MonoBehaviour
         {
             if (typedWord.ToLower().Substring(i,1) != targetWord.ToLower().Substring(i,1))
             {
-                errorCount++;
+                errorTotal++;
                 //change colour of letter
                 word1 += startColor + typedWord.Substring(i,1) + endColor;
-                word2 += startColor + targetWord.Substring(i,1) + endColor;
+                //word2 += startColor + targetWord.Substring(i,1) + endColor;
             }
             else
             {
                 word1 += typedWord.Substring(i,1);
-                word2 += targetWord.Substring(i,1);
+                //word2 += targetWord.Substring(i,1);
             }
         }
 
         //update the onscreen words to show incorrect letters
-        ui.targetWordUI.text = word2;
+        //ui.targetWordUI.text = word2;
         ui.inputField.text = word1;
         //Debug.Log("Word2 is " + word2);
         //Debug.Log("Error count: " + errorCount);
-        return errorCount;
+        return errorTotal;
     }
 
     //I'm using this coroutine to grab the high score table from the web, but currently I'm unsuccessful in 
@@ -329,14 +330,14 @@ public class GameManager : MonoBehaviour
         resultCoroutineOn = false;
     }
 
-    IEnumerator Stun(float stunDuration)
+    IEnumerator Stun(float stunDuration, bool stunMeterOn = false)
     {
         //shake the screen
         //uiHandler.transform.position = new Vector3(uiHandler.transform.position.x + 100, 
             //uiHandler.transform.position.y, uiHandler.transform.position.z);
         
         //show stun meter if there was a correction/word is wrong
-        if (!WordsMatch(ui.inputField.text, ui.targetWordUI.text) || correctionWasMade == true)
+        if (stunMeterOn/*!WordsMatch(ui.inputField.text, ui.targetWordUI.text) || correctionWasMade == true*/)
         {
             ui.stunMeterHandler.gameObject.SetActive(true);
             ui.stunMeter.value = ui.stunMeter.maxValue;
