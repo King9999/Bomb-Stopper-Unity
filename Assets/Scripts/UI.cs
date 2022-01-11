@@ -18,6 +18,8 @@ public class UI : MonoBehaviour
     
     public TextMeshProUGUI penaltyUI;   //displays how much time is added to penalty per incorrect letter.
     public TextMeshProUGUI wordCountUI; //total number of words that need to be completed to finish the stage.
+    public TextMeshProUGUI scoreValueUI;
+    public TextMeshProUGUI wordCountValueUI;
 
     [Header("Sliders")]
     public Slider stunMeter;
@@ -25,7 +27,9 @@ public class UI : MonoBehaviour
 
     [Header("Handlers")]
     public GameObject stunMeterHandler; //need this to hide stun meter when necessary.
-    public GameObject comboHandler;     //manages all UI pertaining to combos            
+    public GameObject comboHandler;     //manages all UI pertaining to combos
+    public GameObject scoreHandler;
+    public GameObject wordCountHandler;            
 
     public static UI instance;
 

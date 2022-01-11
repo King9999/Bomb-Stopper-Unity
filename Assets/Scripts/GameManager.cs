@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
     int comboCount;                 //A combo is formed when player types at least 2 words consecutively without error or correction.
     bool comboCounted;              //prevents combo counter from increasing more than once if a combo was already performed on current word.
     int score;
+    int pointsPerLetter {get;} = 10;
+    bool scoreAdded;                //prevents score from being added multiple times per frame.    
 
     int currentWordCount;
 
@@ -80,8 +82,9 @@ public class GameManager : MonoBehaviour
         ui.penaltyUI.text = "PPL: +" + penaltyPerLetter + " sec.";
         ui.difficultyUI.text = "Difficulty: " + difficultyId;
         ui.resultUI.text = "";
-        ui.scoreUI.text = "Score: " + score;
-        ui.wordCountUI.text = "Word Count: " + currentWordCount + "/" + totalWordCount;
+        //ui.scoreUI.text = "Score: " + score;
+        ui.wordCountValueUI.text = currentWordCount + "/" + totalWordCount;
+        ui.scoreValueUI.text = score.ToString();
         wrongWordColor = new Color(0.9f, 0.2f, 0.2f);       //red
         perfectWordColor = new Color(1, 0.84f, 0);           //gold
 
@@ -140,6 +143,7 @@ public class GameManager : MonoBehaviour
             }
             targetWordSelected = true;
             comboCounted = false;   //new word, no combo occurred yet
+            scoreAdded = false;     //new word, new opportunity to add to score
         }
 
         //check if backspace or delete is pressed. Player takes a small penalty in these cases
@@ -160,6 +164,7 @@ public class GameManager : MonoBehaviour
                 //show icon indicating a correct word. Show "Perfect!" if no corrections were made, "OK" otherwise
                 if (!correctionWasMade)
                 {
+
                     //add to combo count
                     if (!comboCounted && targetWordSelected)
                     {
@@ -175,17 +180,26 @@ public class GameManager : MonoBehaviour
                         }
                     }
 
+                    //add points
+                    if (!scoreAdded && targetWordSelected)
+                    {
+                        int bonus = pointsPerLetter * ui.inputField.text.Length * comboCount;
+                        score += bonus + (bonus / 2);
+                        Debug.Log("Bonus: " + (bonus + (bonus / 2)));
+                        scoreAdded = true;
+                    }
+
+
                     if (comboCount > 1)
                     {
                         //run coroutine. The timer duration is base combo timer + (number of letters * 0.1)
-                        comboTimer = baseComboTimer + (ui.inputField.text.Length * 0.1f);
-                        Debug.Log("Combo duration: " + comboTimer);
-
                         if (!comboCountdownCoroutineOn)
                         {
                             comboCountdownCoroutineOn = true;
+                            comboTimer = baseComboTimer + (ui.inputField.text.Length * 0.1f);
                             comboCountDown = CountdownComboTimer(comboTimer);
                             StartCoroutine(comboCountDown);
+                            Debug.Log("Combo duration: " + comboTimer);
                         }
                     }
 
@@ -204,6 +218,13 @@ public class GameManager : MonoBehaviour
                 }
                 else    //an OK match
                 {
+                    //add points
+                    if (!scoreAdded && targetWordSelected)
+                    {
+                        score += pointsPerLetter * ui.inputField.text.Length;
+                        scoreAdded = true;
+                    }
+
                     //reset combo & coroutine
                     comboCount = 0;
                     if (comboCountdownCoroutineOn)
@@ -240,7 +261,7 @@ public class GameManager : MonoBehaviour
                     comboCountdownCoroutineOn = false;
                 }
 
-                //highlight all of the incorrect letters in both the typed word and the target word.
+                //highlight all of the incorrect letters in the target word.
                 //penalty is base penalty + (number of incorrect letters * 0.3 * difficulty)
                 int errorCount = IncorrectLetterTotal(ui.inputField.text, ui.targetWordUI.text);
                 penaltyDuration = basePenalty + (errorCount * penaltyPerLetter);
@@ -258,13 +279,11 @@ public class GameManager : MonoBehaviour
                 
             }
             
-
-            //clear the field and select new word
-            //inputField.text = "";
-            //targetWordSelected = false;
         }
 
-        ui.wordCountUI.text = "Word Count: " + currentWordCount + "/" + totalWordCount;
+        //UI update
+        ui.scoreValueUI.text = score.ToString();
+        ui.wordCountValueUI.text = currentWordCount + "/" + totalWordCount;
     }
 
     float AdjustDifficultyMod(float difficultyScale)
@@ -362,18 +381,12 @@ public class GameManager : MonoBehaviour
         {
             ui.resultUI.transform.localScale = new Vector3(ui.resultUI.transform.localScale.x - 5f * Time.deltaTime, 
                 ui.resultUI.transform.localScale.y - 5f * Time.deltaTime, 1);
-            yield return null; //new WaitForSeconds(0.016f);
+            yield return null;
         }
 
         //ensure scale is back to normal
         ui.resultUI.transform.localScale = new Vector3(1, 1, 1);
 
-        //time delay is different if player made a correction. This is to prevent the coroutine from running
-        //multiple times while player is stuned.
-        //float delay;
-        //if (!WordsMatch(ui.inputField.text, ui.targetWordUI.text))
-            //delay = 
-        //float delay = correctionWasMade == false ? 0.5f : basePenalty;
         yield return new WaitForSeconds(duration);
         ui.resultUI.text = "";
         resultCoroutineOn = false;
@@ -386,7 +399,7 @@ public class GameManager : MonoBehaviour
             //uiHandler.transform.position.y, uiHandler.transform.position.z);
         
         //show stun meter if there was a correction/word is wrong
-        if (stunMeterOn/*!WordsMatch(ui.inputField.text, ui.targetWordUI.text) || correctionWasMade == true*/)
+        if (stunMeterOn)
         {
             ui.stunMeterHandler.gameObject.SetActive(true);
             ui.stunMeter.value = ui.stunMeter.maxValue;
@@ -394,7 +407,7 @@ public class GameManager : MonoBehaviour
             while (Time.time < currentTime + stunDuration)
             {
                 //update stun meter. The meter starts full, then gradually goes down.
-                ui.stunMeter.value = ui.stunMeter.maxValue - ((Time.time - currentTime) / stunDuration); //((currentTime + stunDuration) - currentTime));
+                ui.stunMeter.value = ui.stunMeter.maxValue - ((Time.time - currentTime) / stunDuration);
                 yield return null;
             }
 
