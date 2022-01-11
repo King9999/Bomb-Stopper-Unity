@@ -2,7 +2,7 @@
 	"wordList":
 	[
 		{
-			"difficultyId": "Easy", "time": 120, "wordCount": 10,
+			"difficultyId": "Easy", "time": 120, "wordCount": 20,
 			"words":
 			[
 				{"word":"apple"},
@@ -59,7 +59,7 @@
 			]	
 		},
 		{
-			"difficultyId": "Normal", "time": 120, "wordCount": 15,
+			"difficultyId": "Normal", "time": 120, "wordCount": 30,
 			"words":
 			[
 				{"word":"acquit"},
@@ -116,7 +116,7 @@
 			]	
 		},
 		{
-			"difficultyId": "Hard", "time": 180, "wordCount": 20,
+			"difficultyId": "Hard", "time": 180, "wordCount": 40,
 			"words":
 			[
 				{"word":"tensorial"},

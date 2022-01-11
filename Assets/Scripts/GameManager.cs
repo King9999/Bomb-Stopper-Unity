@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     int currentWordCount;
 
     //JSON variables
-    int totalWordCount;             //number of words to complete to finish the level
+    int totalWordCount;                 //number of words to complete to finish the level
     string difficultyId;
     float time;
 
@@ -30,6 +30,8 @@ public class GameManager : MonoBehaviour
     public GameObject uiHandler;        //controls all UI. Mainly used to create a "shake" effect
     public UI ui = UI.instance;         //this variable must be public in order to access the instance
     string filePath;                    //contains location of high score table JSON file
+    Color perfectWordColor;
+    Color wrongWordColor;
 
     [Header("Timers")]
     public Timer gameTimer;
@@ -78,6 +80,8 @@ public class GameManager : MonoBehaviour
         ui.scoreUI.text = "Score: " + score;
         ui.wordCountUI.text = "Word Count: " + currentWordCount + "/" + totalWordCount;
         ui.stunMeterHandler.gameObject.SetActive(false);   //hidden by default
+        wrongWordColor = new Color(0.9f, 0.2f, 0.2f);       //red
+        perfectWordColor = new Color(1, 0.84f, 0);           //gold
 
         //timer setup
         gameTimer.SetTimer(time);
@@ -153,7 +157,7 @@ public class GameManager : MonoBehaviour
                     if (!resultCoroutineOn)
                     {
                         resultCoroutineOn = true;
-                        StartCoroutine(ShowResult("Perfect!", Color.yellow));
+                        StartCoroutine(ShowResult("Perfect!", perfectWordColor));
                         currentWordCount++;
                     }
                     if (!stunCoroutineOn)
@@ -195,7 +199,7 @@ public class GameManager : MonoBehaviour
                 if (!resultCoroutineOn)
                 {
                     resultCoroutineOn = true;
-                    StartCoroutine(ShowResult("Incorrect", new Color(0.9f, 0.2f, 0.2f), penaltyDuration));
+                    StartCoroutine(ShowResult("Incorrect", wrongWordColor, penaltyDuration));
                 }
                 if (!stunCoroutineOn)
                 {
@@ -247,13 +251,12 @@ public class GameManager : MonoBehaviour
     }
 
     //NOTE: This method was slowing down the game, probably because of too many string operations. I decided to only highlight the
-    //incorrect letters that player types, instead of highlighting the target word also.
+    //incorrect letters in the target word, instead of highlighting both words.
     int IncorrectLetterTotal(string typedWord, string targetWord)
     {
         int errorTotal = 0;
 
-        string word1 = "";
-        //string word2 = "";
+        string result = "";
         string startColor = "<color=#E53C3C>";  //I can append this to a string to add colour to individual letters.
         string endColor = "</color>";
 
@@ -263,21 +266,17 @@ public class GameManager : MonoBehaviour
             {
                 errorTotal++;
                 //change colour of letter
-                word1 += startColor + typedWord.Substring(i,1) + endColor;
-                //word2 += startColor + targetWord.Substring(i,1) + endColor;
+                result += startColor + targetWord.Substring(i,1) + endColor;
             }
             else
             {
-                word1 += typedWord.Substring(i,1);
-                //word2 += targetWord.Substring(i,1);
+                result += targetWord.Substring(i,1);
             }
         }
 
         //update the onscreen words to show incorrect letters
-        //ui.targetWordUI.text = word2;
-        ui.inputField.text = word1;
-        //Debug.Log("Word2 is " + word2);
-        //Debug.Log("Error count: " + errorCount);
+        ui.targetWordUI.text = result;
+
         return errorTotal;
     }
 
