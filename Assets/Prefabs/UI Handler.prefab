@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 4020703955005357368}
   - component: {fileID: 8034654212443830521}
   m_Layer: 5
-  m_Name: Combo Timer
+  m_Name: Combo Meter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -966,11 +966,14 @@ MonoBehaviour:
   difficultyUI: {fileID: 6832036755684576410}
   targetWordUI: {fileID: 6832036755684576411}
   resultUI: {fileID: 6832036755684576409}
-  comboUI: {fileID: 6832036755684576408}
+  comboTextUI: {fileID: 6832036755684576408}
+  comboValueUI: {fileID: 1367442184925077027}
   penaltyUI: {fileID: 3696436988346269195}
   wordCountUI: {fileID: 4610276301486965365}
   stunMeter: {fileID: 5696643841186150406}
+  comboMeter: {fileID: 8034654212443830521}
   stunMeterHandler: {fileID: 4634370709216656570}
+  comboHandler: {fileID: 4653854465739493508}
 --- !u!1 &6832036755704155917
 GameObject:
   m_ObjectHideFlags: 0

@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     enum Difficulty {Easy, Normal, Hard, Special}
     Difficulty currentDifficulty;
     int comboCount;                 //A combo is formed when player types at least 2 words consecutively without error or correction.
+    bool comboCounted;              //prevents combo counter from increasing more than once if a combo was already performed on current word.
     int score;
 
     int currentWordCount;
@@ -45,9 +46,11 @@ public class GameManager : MonoBehaviour
     float comboTimer;                   //duration before combo is broken. Length depends on the length of last word completed.
     float baseComboTimer {get;} = 2;    //time in seconds
 
-    //coroutine checks
+    //coroutine checks & setup
     bool stunCoroutineOn;
     bool resultCoroutineOn;
+    bool comboCountdownCoroutineOn;
+    IEnumerator comboCountDown;
 
     // Start is called before the first frame update
     void Start()
@@ -79,14 +82,17 @@ public class GameManager : MonoBehaviour
         ui.resultUI.text = "";
         ui.scoreUI.text = "Score: " + score;
         ui.wordCountUI.text = "Word Count: " + currentWordCount + "/" + totalWordCount;
-        ui.stunMeterHandler.gameObject.SetActive(false);   //hidden by default
         wrongWordColor = new Color(0.9f, 0.2f, 0.2f);       //red
         perfectWordColor = new Color(1, 0.84f, 0);           //gold
+
+        ui.stunMeterHandler.gameObject.SetActive(false);   //hidden by default
+        ui.comboHandler.gameObject.SetActive(false);        //this too
 
         //timer setup
         gameTimer.SetTimer(time);
         gameTimer.timerRunning = true;
 
+        
         //get hiscore table data
         //string tableUrl = /*"http://mikemurraygames.rf.gd/hiscoretable.json"*/ "https://drive.google.com/file/d/11ERWGBUGuLbtt1WbJHM6PzBXYxJIPuNQ";
         //StartCoroutine(GetTableData(tableUrl));
@@ -124,8 +130,7 @@ public class GameManager : MonoBehaviour
         //}
 
         if (!targetWordSelected)
-        {
-           
+        {          
             //change the target word, taking care to make sure the same word isn't selected.
             string previousWord = ui.targetWordUI.text;
             while (previousWord == ui.targetWordUI.text)
@@ -134,6 +139,7 @@ public class GameManager : MonoBehaviour
                 ui.targetWordUI.text = dictionary.wordList[(int)currentDifficulty].words[randWord].word;
             }
             targetWordSelected = true;
+            comboCounted = false;   //new word, no combo occurred yet
         }
 
         //check if backspace or delete is pressed. Player takes a small penalty in these cases
@@ -154,6 +160,36 @@ public class GameManager : MonoBehaviour
                 //show icon indicating a correct word. Show "Perfect!" if no corrections were made, "OK" otherwise
                 if (!correctionWasMade)
                 {
+                    //add to combo count
+                    if (!comboCounted && targetWordSelected)
+                    {
+                        comboCount++;
+                        Debug.Log("Combo Count: " + comboCount);
+                        comboCounted = true;
+
+                        //if a combo is already in progress, must reset the coroutine
+                        if (comboTimer > 0)
+                        {
+                            StopCoroutine(comboCountDown);
+                            comboCountdownCoroutineOn = false;
+                        }
+                    }
+
+                    if (comboCount > 1)
+                    {
+                        //run coroutine. The timer duration is base combo timer + (number of letters * 0.1)
+                        comboTimer = baseComboTimer + (ui.inputField.text.Length * 0.1f);
+                        Debug.Log("Combo duration: " + comboTimer);
+
+                        if (!comboCountdownCoroutineOn)
+                        {
+                            comboCountdownCoroutineOn = true;
+                            comboCountDown = CountdownComboTimer(comboTimer);
+                            StartCoroutine(comboCountDown);
+                        }
+                    }
+
+
                     if (!resultCoroutineOn)
                     {
                         resultCoroutineOn = true;
@@ -163,14 +199,20 @@ public class GameManager : MonoBehaviour
                     if (!stunCoroutineOn)
                     {
                         stunCoroutineOn = true;
-                        StartCoroutine(Stun(0.5f)); //I have this here so player can confirm that they typed the correct word
+                        StartCoroutine(Stun(0.5f, false)); //I have this here so player can confirm that they typed the correct word
                     }
-                    //clear the field and select new word
-                    //inputField.text = "";
-                    //targetWordSelected = false;
                 }
-                else
+                else    //an OK match
                 {
+                    //reset combo & coroutine
+                    comboCount = 0;
+                    if (comboCountdownCoroutineOn)
+                    {
+                        ui.comboHandler.gameObject.SetActive(false);
+                        StopCoroutine(comboCountDown);
+                        comboCountdownCoroutineOn = false;
+                    }
+
                     //In the case of an "OK" match, player is slightly penalized.
                     if (!resultCoroutineOn)
                     {
@@ -181,16 +223,23 @@ public class GameManager : MonoBehaviour
                     if (!stunCoroutineOn)
                     {
                         stunCoroutineOn = true;
-                        StartCoroutine(Stun(basePenalty, true));
+                        StartCoroutine(Stun(basePenalty));
                     }
                     
                 }
 
-                
-                //Debug.Log("It's a match");
             }
-            else
+            else    //incorrect word
             {
+                 //reset combo & coroutine
+                comboCount = 0;
+                if (comboCountdownCoroutineOn)
+                {
+                    ui.comboHandler.gameObject.SetActive(false);
+                    StopCoroutine(comboCountDown);
+                    comboCountdownCoroutineOn = false;
+                }
+
                 //highlight all of the incorrect letters in both the typed word and the target word.
                 //penalty is base penalty + (number of incorrect letters * 0.3 * difficulty)
                 int errorCount = IncorrectLetterTotal(ui.inputField.text, ui.targetWordUI.text);
@@ -204,7 +253,7 @@ public class GameManager : MonoBehaviour
                 if (!stunCoroutineOn)
                 {
                     stunCoroutineOn = true;
-                    StartCoroutine(Stun(penaltyDuration, true));
+                    StartCoroutine(Stun(penaltyDuration));
                 }
                 
             }
@@ -280,6 +329,7 @@ public class GameManager : MonoBehaviour
         return errorTotal;
     }
 
+#region Coroutines
     //I'm using this coroutine to grab the high score table from the web, but currently I'm unsuccessful in 
     //retrieving the data.
     IEnumerator GetTableData(string url)
@@ -329,7 +379,7 @@ public class GameManager : MonoBehaviour
         resultCoroutineOn = false;
     }
 
-    IEnumerator Stun(float stunDuration, bool stunMeterOn = false)
+    IEnumerator Stun(float stunDuration, bool stunMeterOn = true)
     {
         //shake the screen
         //uiHandler.transform.position = new Vector3(uiHandler.transform.position.x + 100, 
@@ -363,6 +413,26 @@ public class GameManager : MonoBehaviour
         ui.inputField.ActivateInputField();
     }
 
+IEnumerator CountdownComboTimer(float duration)
+{
+    ui.comboHandler.gameObject.SetActive(true);
+    ui.comboMeter.value = ui.comboMeter.maxValue;
+    ui.comboValueUI.text = comboCount.ToString();
+
+    float currentTime = Time.time;
+    while (Time.time < currentTime + duration)
+    {
+        //update combo meter. The meter starts full, then gradually goes down.
+        ui.comboMeter.value = ui.comboMeter.maxValue - ((Time.time - currentTime) / duration);
+        yield return null;
+    }
+
+    //if we get here, combo has ended
+    comboCount = 0;
+    ui.comboHandler.gameObject.SetActive(false);
+    comboCountdownCoroutineOn = false;
+}
+#endregion
     /*public void WriteToFile()
     {
         if (!File.Exists(filePath))
