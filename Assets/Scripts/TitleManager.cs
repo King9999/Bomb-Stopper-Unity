@@ -32,15 +32,9 @@ public class TitleManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //mouseOverColor = Color.red;
-        //easyButton.image.color = mouseOverColor;
+        modeDetails.text = "";
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 
     public void OnEasyButtonClicked()
     {
