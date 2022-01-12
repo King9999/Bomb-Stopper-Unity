@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
     float comboTimer;                   //duration before combo is broken. Length depends on the length of last word completed.
     float baseComboTimer {get;} = 2;    //time in seconds
 
-    public TitleManager titleScreen = TitleManager.instance;
+    public TitleManager tm = TitleManager.instance;
 
     //coroutine checks & setup
     bool stunCoroutineOn;
@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour
         //places the cursor in input field so player can start typing immediately.
         UI.instance.inputField.ActivateInputField();
 
-        titleScreen.currentDifficulty = TitleManager.Difficulty.Normal;
+        //tm.currentDifficulty = TitleManager.Difficulty.Normal;
         difficultyMod = AdjustDifficultyMod(difficultyMod);
         penaltyPerLetter = basePenaltyPerLetter * difficultyMod;
 
@@ -75,9 +75,9 @@ public class GameManager : MonoBehaviour
         correctionWasMade = false;
 
         //JSON data
-        difficultyId = dictionary.wordList[(int)titleScreen.currentDifficulty].difficultyId;
-        totalWordCount = dictionary.wordList[(int)titleScreen.currentDifficulty].wordCount;
-        time = dictionary.wordList[(int)titleScreen.currentDifficulty].time;
+        difficultyId = dictionary.wordList[(int)tm.currentDifficulty].difficultyId;
+        totalWordCount = dictionary.wordList[(int)tm.currentDifficulty].wordCount;
+        time = dictionary.wordList[(int)tm.currentDifficulty].time;
 
         //UI setup
         ui.penaltyUI.text = "PPL: +" + penaltyPerLetter + " sec.";
@@ -140,8 +140,8 @@ public class GameManager : MonoBehaviour
             string previousWord = ui.targetWordUI.text;
             while (previousWord == ui.targetWordUI.text)
             {
-                int randWord = Random.Range(0, dictionary.wordList[(int)titleScreen.currentDifficulty].words.Length);
-                ui.targetWordUI.text = dictionary.wordList[(int)titleScreen.currentDifficulty].words[randWord].word;
+                int randWord = Random.Range(0, dictionary.wordList[(int)tm.currentDifficulty].words.Length);
+                ui.targetWordUI.text = dictionary.wordList[(int)tm.currentDifficulty].words[randWord].word;
             }
             targetWordSelected = true;
             comboCounted = false;   //new word, no combo occurred yet
@@ -290,7 +290,7 @@ public class GameManager : MonoBehaviour
 
     float AdjustDifficultyMod(float difficultyScale)
     {
-        switch(titleScreen.currentDifficulty)
+        switch(tm.currentDifficulty)
         {
             case TitleManager.Difficulty.Easy:
                 difficultyScale = 0.5f;
