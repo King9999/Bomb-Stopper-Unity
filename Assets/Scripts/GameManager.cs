@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
-using TMPro;
 
 //NOTE: Unable to add high score table as there's no reliable way to have persistent data on WebGL without using a server.
 public class GameManager : MonoBehaviour
@@ -14,8 +13,8 @@ public class GameManager : MonoBehaviour
 
     bool targetWordSelected;
     bool correctionWasMade;         //if true, player pressed delete or backspace
-    enum Difficulty {Easy, Normal, Hard, Special}
-    Difficulty currentDifficulty;
+    //enum Difficulty {Easy, Normal, Hard, Special}
+    //Difficulty currentDifficulty;
     int comboCount;                 //A combo is formed when player types at least 2 words consecutively without error or correction.
     bool comboCounted;              //prevents combo counter from increasing more than once if a combo was already performed on current word.
     int score;
@@ -48,6 +47,8 @@ public class GameManager : MonoBehaviour
     float comboTimer;                   //duration before combo is broken. Length depends on the length of last word completed.
     float baseComboTimer {get;} = 2;    //time in seconds
 
+    public TitleManager titleScreen = TitleManager.instance;
+
     //coroutine checks & setup
     bool stunCoroutineOn;
     bool resultCoroutineOn;
@@ -63,7 +64,7 @@ public class GameManager : MonoBehaviour
         //places the cursor in input field so player can start typing immediately.
         UI.instance.inputField.ActivateInputField();
 
-        currentDifficulty = Difficulty.Normal;
+        titleScreen.currentDifficulty = TitleManager.Difficulty.Normal;
         difficultyMod = AdjustDifficultyMod(difficultyMod);
         penaltyPerLetter = basePenaltyPerLetter * difficultyMod;
 
@@ -74,9 +75,9 @@ public class GameManager : MonoBehaviour
         correctionWasMade = false;
 
         //JSON data
-        difficultyId = dictionary.wordList[(int)currentDifficulty].difficultyId;
-        totalWordCount = dictionary.wordList[(int)currentDifficulty].wordCount;
-        time = dictionary.wordList[(int)currentDifficulty].time;
+        difficultyId = dictionary.wordList[(int)titleScreen.currentDifficulty].difficultyId;
+        totalWordCount = dictionary.wordList[(int)titleScreen.currentDifficulty].wordCount;
+        time = dictionary.wordList[(int)titleScreen.currentDifficulty].time;
 
         //UI setup
         ui.penaltyUI.text = "PPL: +" + penaltyPerLetter + " sec.";
@@ -112,6 +113,7 @@ public class GameManager : MonoBehaviour
         scoreUI.text = "Score: " + hiScoreTable.score;
         filePath = Application.dataPath + "/Resources/hiscoretable.json";
         Debug.Log(filePath);*/
+
     }
 
     // Update is called once per frame
@@ -138,8 +140,8 @@ public class GameManager : MonoBehaviour
             string previousWord = ui.targetWordUI.text;
             while (previousWord == ui.targetWordUI.text)
             {
-                int randWord = Random.Range(0, dictionary.wordList[(int)currentDifficulty].words.Length);
-                ui.targetWordUI.text = dictionary.wordList[(int)currentDifficulty].words[randWord].word;
+                int randWord = Random.Range(0, dictionary.wordList[(int)titleScreen.currentDifficulty].words.Length);
+                ui.targetWordUI.text = dictionary.wordList[(int)titleScreen.currentDifficulty].words[randWord].word;
             }
             targetWordSelected = true;
             comboCounted = false;   //new word, no combo occurred yet
@@ -288,21 +290,21 @@ public class GameManager : MonoBehaviour
 
     float AdjustDifficultyMod(float difficultyScale)
     {
-        switch(currentDifficulty)
+        switch(titleScreen.currentDifficulty)
         {
-            case Difficulty.Easy:
+            case TitleManager.Difficulty.Easy:
                 difficultyScale = 0.5f;
                 break;
 
-            case Difficulty.Normal:
+            case TitleManager.Difficulty.Normal:
                 difficultyScale = 1f;
                 break;
             
-            case Difficulty.Hard:
+            case TitleManager.Difficulty.Hard:
                 difficultyScale = 1.5f;
                 break;
             
-            case Difficulty.Special:
+            case TitleManager.Difficulty.Special:
                 difficultyScale = 1.8f;
                 break;
             
