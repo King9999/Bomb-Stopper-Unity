@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
     float comboTimer;                   //duration before combo is broken. Length depends on the length of last word completed.
     float baseComboTimer {get;} = 2;    //time in seconds
 
-    public TitleManager tm = TitleManager.instance;
+    TitleManager tm = TitleManager.instance;
 
     //coroutine checks & setup
     bool stunCoroutineOn;
@@ -58,6 +58,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Random.InitState((int)System.DateTime.Now.Ticks);   //set a new seed. Unsure if Unity keeps the same seed until game is closed.
+
         //read from JSON file
         dictionary = JsonUtility.FromJson<WordLists>(wordFile.text);
 
@@ -91,6 +93,7 @@ public class GameManager : MonoBehaviour
 
         ui.stunMeterHandler.gameObject.SetActive(false);   //hidden by default
         ui.comboHandler.gameObject.SetActive(false);        //this too
+        ui.returnButton.gameObject.SetActive(false);
 
         //timer setup
         gameTimer.SetTimer(time);
@@ -133,100 +136,128 @@ public class GameManager : MonoBehaviour
             Debug.Log("New score data: " + scoreStr);
             File.WriteAllText(filePath, scoreStr);*/
         //}
-
-        if (!targetWordSelected)
-        {          
-            //change the target word, taking care to make sure the same word isn't selected.
-            string previousWord = ui.targetWordUI.text;
-            while (previousWord == ui.targetWordUI.text)
-            {
-                int randWord = Random.Range(0, dictionary.wordList[(int)tm.currentDifficulty].words.Length);
-                ui.targetWordUI.text = dictionary.wordList[(int)tm.currentDifficulty].words[randWord].word;
-            }
-            targetWordSelected = true;
-            comboCounted = false;   //new word, no combo occurred yet
-            scoreAdded = false;     //new word, new opportunity to add to score
-        }
-
-        //check if backspace or delete is pressed. Player takes a small penalty in these cases
-        if (Input.GetKeyDown(KeyCode.Backspace) || Input.GetKeyDown(KeyCode.Delete))
+        if (!gameTimer.TimeUp())
         {
-            correctionWasMade = true;
-        }
-
-        //check to see if amount of letters in input field matches the target word's letter count
-        if (ui.inputField.text.Length >= ui.targetWordUI.text.Length)
-        {
-            //prevent player from adding any more input.
-            ui.inputField.DeactivateInputField();
-
-            //compare the words and check if they match.
-            if (WordsMatch(ui.inputField.text, ui.targetWordUI.text))
-            {
-                //show icon indicating a correct word. Show "Perfect!" if no corrections were made, "OK" otherwise
-                if (!correctionWasMade)
+            if (!targetWordSelected)
+            {          
+                //change the target word, taking care to make sure the same word isn't selected.
+                string previousWord = ui.targetWordUI.text;
+                while (previousWord == ui.targetWordUI.text)
                 {
+                    int randWord = Random.Range(0, dictionary.wordList[(int)tm.currentDifficulty].words.Length);
+                    ui.targetWordUI.text = dictionary.wordList[(int)tm.currentDifficulty].words[randWord].word;
+                }
+                targetWordSelected = true;
+                comboCounted = false;   //new word, no combo occurred yet
+                scoreAdded = false;     //new word, new opportunity to add to score
+            }
 
-                    //add to combo count
-                    if (!comboCounted && targetWordSelected)
+            //check if backspace or delete is pressed. Player takes a small penalty in these cases
+            if (Input.GetKeyDown(KeyCode.Backspace) || Input.GetKeyDown(KeyCode.Delete))
+            {
+                correctionWasMade = true;
+            }
+
+            //check to see if amount of letters in input field matches the target word's letter count
+            if (ui.inputField.text.Length >= ui.targetWordUI.text.Length)
+            {
+                //prevent player from adding any more input.
+                ui.inputField.DeactivateInputField();
+
+                //compare the words and check if they match.
+                if (WordsMatch(ui.inputField.text, ui.targetWordUI.text))
+                {
+                    //show icon indicating a correct word. Show "Perfect!" if no corrections were made, "OK" otherwise
+                    if (!correctionWasMade)
                     {
-                        comboCount++;
-                        Debug.Log("Combo Count: " + comboCount);
-                        comboCounted = true;
 
-                        //if a combo is already in progress, must reset the coroutine
-                        if (comboTimer > 0)
+                        //add to combo count
+                        if (!comboCounted && targetWordSelected)
                         {
+                            comboCount++;
+                            Debug.Log("Combo Count: " + comboCount);
+                            comboCounted = true;
+
+                            //if a combo is already in progress, must reset the coroutine
+                            if (comboTimer > 0)
+                            {
+                                StopCoroutine(comboCountDown);
+                                comboCountdownCoroutineOn = false;
+                            }
+                        }
+
+                        //add points
+                        if (!scoreAdded && targetWordSelected)
+                        {
+                            int bonus = pointsPerLetter * ui.inputField.text.Length * comboCount;
+                            score += bonus + (bonus / 2);
+                            Debug.Log("Bonus: " + (bonus + (bonus / 2)));
+                            scoreAdded = true;
+                        }
+
+
+                        if (comboCount > 1)
+                        {
+                            //run coroutine. The timer duration is base combo timer + (number of letters * 0.1)
+                            if (!comboCountdownCoroutineOn)
+                            {
+                                comboCountdownCoroutineOn = true;
+                                comboTimer = baseComboTimer + (ui.inputField.text.Length * 0.1f);
+                                comboCountDown = CountdownComboTimer(comboTimer);
+                                StartCoroutine(comboCountDown);
+                                Debug.Log("Combo duration: " + comboTimer);
+                            }
+                        }
+
+
+                        if (!resultCoroutineOn)
+                        {
+                            resultCoroutineOn = true;
+                            StartCoroutine(ShowResult("Perfect!", perfectWordColor));
+                            currentWordCount++;
+                        }
+                        if (!stunCoroutineOn)
+                        {
+                            stunCoroutineOn = true;
+                            StartCoroutine(Stun(0.5f, false)); //I have this here so player can confirm that they typed the correct word
+                        }
+                    }
+                    else    //an OK match
+                    {
+                        //add points
+                        if (!scoreAdded && targetWordSelected)
+                        {
+                            score += pointsPerLetter * ui.inputField.text.Length;
+                            scoreAdded = true;
+                        }
+
+                        //reset combo & coroutine
+                        comboCount = 0;
+                        if (comboCountdownCoroutineOn)
+                        {
+                            ui.comboHandler.gameObject.SetActive(false);
                             StopCoroutine(comboCountDown);
                             comboCountdownCoroutineOn = false;
                         }
-                    }
 
-                    //add points
-                    if (!scoreAdded && targetWordSelected)
-                    {
-                        int bonus = pointsPerLetter * ui.inputField.text.Length * comboCount;
-                        score += bonus + (bonus / 2);
-                        Debug.Log("Bonus: " + (bonus + (bonus / 2)));
-                        scoreAdded = true;
-                    }
-
-
-                    if (comboCount > 1)
-                    {
-                        //run coroutine. The timer duration is base combo timer + (number of letters * 0.1)
-                        if (!comboCountdownCoroutineOn)
+                        //In the case of an "OK" match, player is slightly penalized.
+                        if (!resultCoroutineOn)
                         {
-                            comboCountdownCoroutineOn = true;
-                            comboTimer = baseComboTimer + (ui.inputField.text.Length * 0.1f);
-                            comboCountDown = CountdownComboTimer(comboTimer);
-                            StartCoroutine(comboCountDown);
-                            Debug.Log("Combo duration: " + comboTimer);
+                            resultCoroutineOn = true;
+                            StartCoroutine(ShowResult("OK", Color.white, basePenalty));
+                            currentWordCount++;
                         }
+                        if (!stunCoroutineOn)
+                        {
+                            stunCoroutineOn = true;
+                            StartCoroutine(Stun(basePenalty));
+                        }
+                        
                     }
 
-
-                    if (!resultCoroutineOn)
-                    {
-                        resultCoroutineOn = true;
-                        StartCoroutine(ShowResult("Perfect!", perfectWordColor));
-                        currentWordCount++;
-                    }
-                    if (!stunCoroutineOn)
-                    {
-                        stunCoroutineOn = true;
-                        StartCoroutine(Stun(0.5f, false)); //I have this here so player can confirm that they typed the correct word
-                    }
                 }
-                else    //an OK match
+                else    //incorrect word
                 {
-                    //add points
-                    if (!scoreAdded && targetWordSelected)
-                    {
-                        score += pointsPerLetter * ui.inputField.text.Length;
-                        scoreAdded = true;
-                    }
-
                     //reset combo & coroutine
                     comboCount = 0;
                     if (comboCountdownCoroutineOn)
@@ -236,56 +267,35 @@ public class GameManager : MonoBehaviour
                         comboCountdownCoroutineOn = false;
                     }
 
-                    //In the case of an "OK" match, player is slightly penalized.
+                    //highlight all of the incorrect letters in the target word.
+                    //penalty is base penalty + (number of incorrect letters * 0.3 * difficulty)
+                    int errorCount = IncorrectLetterTotal(ui.inputField.text, ui.targetWordUI.text);
+                    penaltyDuration = basePenalty + (errorCount * penaltyPerLetter);
+                    Debug.Log("Penalty time is " + penaltyDuration);
                     if (!resultCoroutineOn)
                     {
                         resultCoroutineOn = true;
-                        StartCoroutine(ShowResult("OK", Color.white, basePenalty));
-                        currentWordCount++;
+                        StartCoroutine(ShowResult("Incorrect", wrongWordColor, penaltyDuration));
                     }
                     if (!stunCoroutineOn)
                     {
                         stunCoroutineOn = true;
-                        StartCoroutine(Stun(basePenalty));
+                        StartCoroutine(Stun(penaltyDuration));
                     }
                     
                 }
-
-            }
-            else    //incorrect word
-            {
-                 //reset combo & coroutine
-                comboCount = 0;
-                if (comboCountdownCoroutineOn)
-                {
-                    ui.comboHandler.gameObject.SetActive(false);
-                    StopCoroutine(comboCountDown);
-                    comboCountdownCoroutineOn = false;
-                }
-
-                //highlight all of the incorrect letters in the target word.
-                //penalty is base penalty + (number of incorrect letters * 0.3 * difficulty)
-                int errorCount = IncorrectLetterTotal(ui.inputField.text, ui.targetWordUI.text);
-                penaltyDuration = basePenalty + (errorCount * penaltyPerLetter);
-                Debug.Log("Penalty time is " + penaltyDuration);
-                if (!resultCoroutineOn)
-                {
-                    resultCoroutineOn = true;
-                    StartCoroutine(ShowResult("Incorrect", wrongWordColor, penaltyDuration));
-                }
-                if (!stunCoroutineOn)
-                {
-                    stunCoroutineOn = true;
-                    StartCoroutine(Stun(penaltyDuration));
-                }
                 
             }
-            
-        }
 
-        //UI update
-        ui.scoreValueUI.text = score.ToString();
-        ui.wordCountValueUI.text = currentWordCount + "/" + totalWordCount;
+            //UI update
+            ui.scoreValueUI.text = score.ToString();
+            ui.wordCountValueUI.text = currentWordCount + "/" + totalWordCount;
+        }
+        else //time is up
+        {
+            ui.returnButton.gameObject.SetActive(true); //return to title
+            ui.inputField.DeactivateInputField();
+        }
     }
 
     float AdjustDifficultyMod(float difficultyScale)

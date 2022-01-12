@@ -23,12 +23,13 @@ public class ToggleHandler : MonoBehaviour, IPointerExitHandler, IPointerEnterHa
     public void OnPointerEnter(PointerEventData pointer)
     {
         highlight.color = mouseOverColor; 
-        tm.modeDetails.text = details;      
+        tm.modeDetails.text = details;
+        tm.modeDetailsHandler.SetActive(true);      
     }
 
     public void OnPointerExit(PointerEventData pointer)
     {
         highlight.color = normalColor;
-        tm.modeDetails.text = "";
+        tm.modeDetailsHandler.SetActive(false); 
     }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 //All UI is stored here.
 public class UI : MonoBehaviour
@@ -19,6 +20,7 @@ public class UI : MonoBehaviour
     public TextMeshProUGUI wordCountUI; //total number of words that need to be completed to finish the stage.
     public TextMeshProUGUI scoreValueUI;
     public TextMeshProUGUI wordCountValueUI;
+    public Button returnButton;         //sends player back to title screen.
 
     [Header("Sliders")]
     public Slider stunMeter;
@@ -42,17 +44,6 @@ public class UI : MonoBehaviour
 
         instance = this;
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-        //stunMeter.enabled = false;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     IEnumerator ReduceStunMeter()
     {
@@ -63,5 +54,10 @@ public class UI : MonoBehaviour
         }
 
         stunMeter.enabled = false;
+    }
+
+    public void OnReturnButtonClicked()
+    {
+        SceneManager.LoadScene("Title");
     }
 }

@@ -17,6 +17,7 @@ public class TitleManager : MonoBehaviour
 
     [Header("------")]
     public static TitleManager instance;
+    public GameObject modeDetailsHandler;
 
     private void Awake()
     {
@@ -32,7 +33,8 @@ public class TitleManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        modeDetails.text = "";
+        //modeDetails.text = "";
+        modeDetailsHandler.gameObject.SetActive(false);
     }
 
 

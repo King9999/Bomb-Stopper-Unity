@@ -23,15 +23,14 @@ public class ButtonHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public void OnPointerEnter(PointerEventData pointer)
     {
         buttonImage.color = mouseOverColor; 
-        tm.modeDetails.text = details;      
-        //Debug.Log("Hovering over easy button");       
-        //Debug.Log("Hovering over button");
+        tm.modeDetails.text = details;
+        tm.modeDetailsHandler.SetActive(true);      
     }
 
     public void OnPointerExit(PointerEventData pointer)
     {
         buttonImage.color = normalColor;
-        tm.modeDetails.text = "";
-        //Debug.Log("Moved off button");
+        //tm.modeDetails.text = "";
+        tm.modeDetailsHandler.SetActive(false); 
     }
 }
