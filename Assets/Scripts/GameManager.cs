@@ -5,6 +5,7 @@ using UnityEngine.Networking;
 //NOTE: Unable to add high score table as there's no reliable way to have persistent data on WebGL without using a server.
 public class GameManager : MonoBehaviour
 {
+    #region Variables
     public TextAsset hiScoreFile;
     public TextAsset wordFile;
 
@@ -57,6 +58,8 @@ public class GameManager : MonoBehaviour
     bool resultCoroutineOn;
     bool comboCountdownCoroutineOn;
     IEnumerator comboCountDown;
+    #endregion
+
 
     // Start is called before the first frame update
     void Start()
@@ -157,7 +160,7 @@ public class GameManager : MonoBehaviour
                     usedWordFound = false;
                     while(!usedWordFound && i < usedWords.Length)
                     {
-                        if (newWord.ToLower() == usedWords[i].ToLower())
+                        if (usedWords[i] != null && newWord.ToLower() == usedWords[i].ToLower())
                         {
                             //don't use this word, find another
                             usedWordFound = true;
@@ -176,6 +179,7 @@ public class GameManager : MonoBehaviour
                         //add to used word list
                         usedWords[usedWordIndex] = newWord;
                         usedWordIndex++;
+
                         if (usedWordIndex >= usedWords.Length)
                             //oldest used word will be removed next time
                             usedWordIndex = 0;
