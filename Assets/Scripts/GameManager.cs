@@ -13,8 +13,6 @@ public class GameManager : MonoBehaviour
 
     bool targetWordSelected;
     bool correctionWasMade;         //if true, player pressed delete or backspace
-    //enum Difficulty {Easy, Normal, Hard, Special}
-    //Difficulty currentDifficulty;
     int comboCount;                 //A combo is formed when player types at least 2 words consecutively without error or correction.
     bool comboCounted;              //prevents combo counter from increasing more than once if a combo was already performed on current word.
     int score;
@@ -22,6 +20,11 @@ public class GameManager : MonoBehaviour
     bool scoreAdded;                //prevents score from being added multiple times per frame.    
 
     int currentWordCount;
+
+    //Used Words variables
+    string[] usedWords;             //holds the last 5 words used. Any words in this list won't appear as a target word.
+    int maxUsedWords {get;} = 5;
+    int usedWordIndex;              //always points to last open space in the usedWords array.
 
     //JSON variables
     int totalWordCount;                 //number of words to complete to finish the level
@@ -99,6 +102,7 @@ public class GameManager : MonoBehaviour
         gameTimer.SetTimer(time);
         gameTimer.timerRunning = true;
 
+        usedWords = new string[maxUsedWords];
         
         //get hiscore table data
         //string tableUrl = /*"http://mikemurraygames.rf.gd/hiscoretable.json"*/ "https://drive.google.com/file/d/11ERWGBUGuLbtt1WbJHM6PzBXYxJIPuNQ";
@@ -142,10 +146,40 @@ public class GameManager : MonoBehaviour
             {          
                 //change the target word, taking care to make sure the same word isn't selected.
                 string previousWord = ui.targetWordUI.text;
-                while (previousWord == ui.targetWordUI.text)
+                bool usedWordFound = false;
+                while (previousWord == ui.targetWordUI.text || usedWordFound)
                 {
                     int randWord = Random.Range(0, dictionary.wordList[(int)tm.currentDifficulty].words.Length);
-                    ui.targetWordUI.text = dictionary.wordList[(int)tm.currentDifficulty].words[randWord].word;
+                    string newWord = dictionary.wordList[(int)tm.currentDifficulty].words[randWord].word;
+
+                    //check if word was already used
+                    int i = 0;
+                    usedWordFound = false;
+                    while(!usedWordFound && i < usedWords.Length)
+                    {
+                        if (newWord.ToLower() == usedWords[i].ToLower())
+                        {
+                            //don't use this word, find another
+                            usedWordFound = true;
+                        }
+                        else
+                        {
+                            i++;
+                        }
+                    }
+
+                    if (!usedWordFound)
+                    {
+                        //we can use this word
+                        ui.targetWordUI.text = newWord;
+
+                        //add to used word list
+                        usedWords[usedWordIndex] = newWord;
+                        usedWordIndex++;
+                        if (usedWordIndex >= usedWords.Length)
+                            //oldest used word will be removed next time
+                            usedWordIndex = 0;
+                    }
                 }
                 targetWordSelected = true;
                 comboCounted = false;   //new word, no combo occurred yet
