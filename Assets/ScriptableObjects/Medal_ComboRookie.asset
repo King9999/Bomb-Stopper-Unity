@@ -15,5 +15,5 @@ MonoBehaviour:
   medalSprite: {fileID: 0}
   rank: 0
   medalAcquired: 1
-  medalName: 
-  details: 
+  medalName: Combo Rookie
+  details: Awarded for landing a 5-hit word combo

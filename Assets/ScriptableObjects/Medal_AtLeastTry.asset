@@ -15,5 +15,5 @@ MonoBehaviour:
   medalSprite: {fileID: 0}
   rank: 0
   medalAcquired: 1
-  medalName: 
-  details: 
+  medalName: At Least Try?
+  details: Awarded for not attempting to finish a stage. Are you OK?

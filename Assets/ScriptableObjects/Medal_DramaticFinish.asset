@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Medal_DramaticFinish
   m_EditorClassIdentifier: 
   medalSprite: {fileID: 0}
-  rank: 0
+  rank: 1
   medalAcquired: 1
-  medalName: 
-  details: 
+  medalName: Dramatic Finish
+  details: Awarded for completing a stage with 5 seconds or less remaining on the
+    timer

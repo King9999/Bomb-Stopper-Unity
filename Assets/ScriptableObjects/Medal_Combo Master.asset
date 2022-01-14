@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Medal_Combo Master
   m_EditorClassIdentifier: 
   medalSprite: {fileID: 0}
-  rank: 0
+  rank: 2
   medalAcquired: 1
-  medalName: 
-  details: 
+  medalName: Combo Master
+  details: Awarded for landing a 20-hit word combo. Nice!

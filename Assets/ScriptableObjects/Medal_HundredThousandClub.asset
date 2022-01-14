@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Medal_HundredThousandClub
   m_EditorClassIdentifier: 
   medalSprite: {fileID: 0}
-  rank: 0
+  rank: 2
   medalAcquired: 1
-  medalName: 
-  details: 
+  medalName: Hundred Thousand Club
+  details: Awarded for achieving at least 100,000 points. WOW

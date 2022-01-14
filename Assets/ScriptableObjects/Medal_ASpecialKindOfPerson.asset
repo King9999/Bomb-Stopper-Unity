@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Medal_ASpecialKindOfPerson
   m_EditorClassIdentifier: 
   medalSprite: {fileID: 0}
-  rank: 0
+  rank: 1
   medalAcquired: 1
-  medalName: 
-  details: 
+  medalName: A Special Kind of Person
+  details: Awarded for completing a stage with Special Rules enabled

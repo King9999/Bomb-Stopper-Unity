@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Medal_Perfect
   m_EditorClassIdentifier: 
   medalSprite: {fileID: 0}
+  rank: 2
   medalAcquired: 1
-  medalName: 
-  details: 
+  medalName: Perfect!
+  details: Awarded for not making a single error or correction. Fantastic!

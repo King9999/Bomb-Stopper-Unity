@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7308175674476218990
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4910882665890795454}
+  - component: {fileID: 4144252128096253758}
+  m_Layer: 0
+  m_Name: Medal Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4910882665890795454
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7308175674476218990}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4144252128096253758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7308175674476218990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2afe83f96a0c7a647822b83a399f65c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  medals:
+  - {fileID: 11400000, guid: b69344defc8abb740b379eb5103b6022, type: 2}
+  - {fileID: 11400000, guid: fb175c3f632f52b48a76a411890f9bba, type: 2}
+  - {fileID: 11400000, guid: b50a2bbf62b220046bfe61fc87b979ee, type: 2}
+  - {fileID: 11400000, guid: e5437f874ac62b44985cfc5df439397c, type: 2}
+  - {fileID: 11400000, guid: 8db73c1f151904c49a423748db99d3d4, type: 2}
+  - {fileID: 11400000, guid: 67b0ac0313c10234c9d2e8c2acc4a1a0, type: 2}
+  - {fileID: 11400000, guid: f5aa9ab9fa580364b9839cf65aebec76, type: 2}
+  - {fileID: 11400000, guid: 3d256c0165b62144c97d6aa90b205ba4, type: 2}
+  - {fileID: 11400000, guid: b83e0490343af0c4199b46144561d74d, type: 2}
+  - {fileID: 11400000, guid: 77a0d249e8faed44c94f683d023482ac, type: 2}
+  - {fileID: 11400000, guid: 9aadcbb894556794e9fcd40c8e108f54, type: 2}
+  - {fileID: 11400000, guid: 043b399639d9f28409e53f26c436d476, type: 2}
+  instance: {fileID: 4144252128096253758}

@@ -15,5 +15,5 @@ MonoBehaviour:
   medalSprite: {fileID: 0}
   rank: 0
   medalAcquired: 1
-  medalName: 
-  details: 
+  medalName: Ten Thousand Club
+  details: Awarded for getting at least 10,000 points

@@ -16,4 +16,4 @@ MonoBehaviour:
   rank: 0
   medalAcquired: 1
   medalName: Bomb Defused
-  details: Awarded for successful completion of the stage
+  details: Awarded for completing a stage on Normal difficulty

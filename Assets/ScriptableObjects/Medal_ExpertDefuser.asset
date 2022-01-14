@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Medal_ExpertDefuser
   m_EditorClassIdentifier: 
   medalSprite: {fileID: 0}
-  rank: 0
+  rank: 1
   medalAcquired: 1
-  medalName: 
-  details: 
+  medalName: Expert Defuser
+  details: Awarded for completing a stage on Hard difficulty

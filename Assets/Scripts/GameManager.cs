@@ -32,6 +32,10 @@ public class GameManager : MonoBehaviour
     string difficultyId;
     float time;
 
+    //Medal variables
+    public MedalObject[] medalObjects;
+    public MedalObject medalPrefab;
+
     [Header("UI")]
     public GameObject uiHandler;        //controls all UI. Mainly used to create a "shake" effect
     public UI ui = UI.instance;         //this variable must be public in order to access the instance
@@ -51,7 +55,9 @@ public class GameManager : MonoBehaviour
     float comboTimer;                   //duration before combo is broken. Length depends on the length of last word completed.
     float baseComboTimer {get;} = 2;    //time in seconds
 
+    //instances
     TitleManager tm = TitleManager.instance;
+    MedalManager mm = MedalManager.instance;
 
     //coroutine checks & setup
     bool stunCoroutineOn;
@@ -107,6 +113,27 @@ public class GameManager : MonoBehaviour
 
         usedWords = new string[maxUsedWords];
 
+        //medal setup
+        medalObjects = new MedalObject[mm.medals.Length];
+
+        for (int i = 0; i < medalObjects.Length; i++)
+        {
+        
+            medalObjects[i] = Instantiate(medalPrefab);
+
+            medalObjects[i].medalNameUI.text = mm.medals[i].medalName;
+            medalObjects[i].medalDetailsUI.text = mm.medals[i].details;
+            medalObjects[i].medalRank = mm.medals[i].rank;
+            medalObjects[i].medalAcquired = mm.medals[i].medalAcquired;
+
+            SpriteRenderer sr = medalObjects[i].GetComponent<SpriteRenderer>();
+            sr.sprite = mm.medals[i].medalSprite;
+
+            //medal objects are hidden by default
+            medalObjects[i].gameObject.SetActive(false);
+
+        }
+
         //GUIUtility.systemCopyBuffer = "test";     //USE THIS TO COPY TEXT TO CLIPBOARD!
         
         //get hiscore table data
@@ -145,7 +172,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("New score data: " + scoreStr);
             File.WriteAllText(filePath, scoreStr);*/
         //}
-        if (!gameTimer.TimeUp())
+        if (!gameTimer.TimeUp() && currentWordCount < totalWordCount)
         {
             if (!targetWordSelected)
             {          
@@ -332,10 +359,20 @@ public class GameManager : MonoBehaviour
             ui.scoreValueUI.text = score.ToString();
             ui.wordCountValueUI.text = currentWordCount + "/" + totalWordCount;
         }
-        else //time is up
+        else //time is up or stage is complete
         {
-            ui.returnButton.gameObject.SetActive(true); //return to title
-            ui.inputField.DeactivateInputField();
+            if (gameTimer.TimeUp())
+            {
+                //show animation of screen exploding
+
+
+                ui.returnButton.gameObject.SetActive(true); //return to title
+                ui.inputField.DeactivateInputField();
+            }
+            else
+            {
+                //stage is complete. Check for any medals and display results
+            }
         }
     }
 
@@ -399,6 +436,17 @@ public class GameManager : MonoBehaviour
         ui.targetWordUI.text = result;
 
         return errorTotal;
+    }
+
+    void GetStageCompletionResults()
+    {
+        //collect data
+
+        //check medals
+
+        //provide a share button so player can copy results
+
+        //send player back to title
     }
 
 #region Coroutines
@@ -499,12 +547,5 @@ IEnumerator CountdownComboTimer(float duration)
     comboCountdownCoroutineOn = false;
 }
 #endregion
-    /*public void WriteToFile()
-    {
-        if (!File.Exists(filePath))
-        {
-           // File.Writenew
-           
-        }
-    }*/
+   
 }
