@@ -106,6 +106,8 @@ public class GameManager : MonoBehaviour
         gameTimer.timerRunning = true;
 
         usedWords = new string[maxUsedWords];
+
+        //GUIUtility.systemCopyBuffer = "test";     //USE THIS TO COPY TEXT TO CLIPBOARD!
         
         //get hiscore table data
         //string tableUrl = /*"http://mikemurraygames.rf.gd/hiscoretable.json"*/ "https://drive.google.com/file/d/11ERWGBUGuLbtt1WbJHM6PzBXYxJIPuNQ";
@@ -196,6 +198,7 @@ public class GameManager : MonoBehaviour
                 correctionWasMade = true;
             }
 
+           
             //check to see if amount of letters in input field matches the target word's letter count
             if (ui.inputField.text.Length >= ui.targetWordUI.text.Length)
             {
