@@ -25,6 +25,7 @@ public class UI : MonoBehaviour
     [Header("Sliders")]
     public Slider stunMeter;
     public Slider comboMeter;               //combo duration
+    public Slider screenTransition;
 
     [Header("Handlers")]
     public GameObject stunMeterHandler; //need this to hide stun meter when necessary.
