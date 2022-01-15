@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
 //NOTE: Unable to add high score table as there's no reliable way to have persistent data on WebGL without using a server.
 public class GameManager : MonoBehaviour
@@ -102,6 +103,7 @@ public class GameManager : MonoBehaviour
         ui.scoreValueUI.text = score.ToString();
         wrongWordColor = new Color(0.9f, 0.2f, 0.2f);       //red
         perfectWordColor = new Color(1, 0.84f, 0);           //gold
+        ui.screenTransition.value = 0;
 
         ui.stunMeterHandler.gameObject.SetActive(false);   //hidden by default
         ui.comboHandler.gameObject.SetActive(false);        //this too
@@ -527,25 +529,27 @@ public class GameManager : MonoBehaviour
         ui.inputField.ActivateInputField();
     }
 
-IEnumerator CountdownComboTimer(float duration)
-{
-    ui.comboHandler.gameObject.SetActive(true);
-    ui.comboMeter.value = ui.comboMeter.maxValue;
-    ui.comboValueUI.text = comboCount.ToString();
-
-    float currentTime = Time.time;
-    while (Time.time < currentTime + duration)
+    IEnumerator CountdownComboTimer(float duration)
     {
-        //update combo meter. The meter starts full, then gradually goes down.
-        ui.comboMeter.value = ui.comboMeter.maxValue - ((Time.time - currentTime) / duration);
-        yield return null;
-    }
+        ui.comboHandler.gameObject.SetActive(true);
+        ui.comboMeter.value = ui.comboMeter.maxValue;
+        ui.comboValueUI.text = comboCount.ToString();
 
-    //if we get here, combo has ended
-    comboCount = 0;
-    ui.comboHandler.gameObject.SetActive(false);
-    comboCountdownCoroutineOn = false;
-}
+        float currentTime = Time.time;
+        while (Time.time < currentTime + duration)
+        {
+            //update combo meter. The meter starts full, then gradually goes down.
+            ui.comboMeter.value = ui.comboMeter.maxValue - ((Time.time - currentTime) / duration);
+            yield return null;
+        }
+
+        //if we get here, combo has ended
+        comboCount = 0;
+        ui.comboHandler.gameObject.SetActive(false);
+        comboCountdownCoroutineOn = false;
+    }
 #endregion
+
+
    
 }

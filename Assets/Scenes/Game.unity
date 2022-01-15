@@ -278,17 +278,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72079d8970aaf6848bebd92d2eb48bf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &834099394 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1103319347088075347, guid: 31f82d417159e3840b2e6ac482eb5ec5, type: 3}
-  m_PrefabInstance: {fileID: 6832036755096147644}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &902483462
 GameObject:
   m_ObjectHideFlags: 0
@@ -556,50 +545,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 902483466}
     m_Modifications:
-    - target: {fileID: 1103319347088075347, guid: 31f82d417159e3840b2e6ac482eb5ec5, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1103319347088075347, guid: 31f82d417159e3840b2e6ac482eb5ec5, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1103319347088075347, guid: 31f82d417159e3840b2e6ac482eb5ec5, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1830214187}
-    - target: {fileID: 1103319347088075347, guid: 31f82d417159e3840b2e6ac482eb5ec5, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1103319347088075347, guid: 31f82d417159e3840b2e6ac482eb5ec5, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnReturnButtonClicked
-      objectReference: {fileID: 0}
-    - target: {fileID: 1103319347088075347, guid: 31f82d417159e3840b2e6ac482eb5ec5, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UI, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 1103319347088075347, guid: 31f82d417159e3840b2e6ac482eb5ec5, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 1462964841138420240, guid: 31f82d417159e3840b2e6ac482eb5ec5, type: 3}
-      propertyPath: m_text
-      value: Return to Title
-      objectReference: {fileID: 0}
-    - target: {fileID: 2661697276358871223, guid: 31f82d417159e3840b2e6ac482eb5ec5, type: 3}
-      propertyPath: m_Name
-      value: Return Button
-      objectReference: {fileID: 0}
     - target: {fileID: 2838917791314659827, guid: 31f82d417159e3840b2e6ac482eb5ec5, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5432881051060473080, guid: 31f82d417159e3840b2e6ac482eb5ec5, type: 3}
-      propertyPath: returnButton
-      value: 
-      objectReference: {fileID: 834099394}
     - target: {fileID: 6832036755684576406, guid: 31f82d417159e3840b2e6ac482eb5ec5, type: 3}
       propertyPath: m_Name
       value: UI Handler
@@ -686,6 +635,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6832036755684576415, guid: 31f82d417159e3840b2e6ac482eb5ec5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7377123897032183509, guid: 31f82d417159e3840b2e6ac482eb5ec5, type: 3}
+      propertyPath: m_FillAmount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7421793305427396543, guid: 31f82d417159e3840b2e6ac482eb5ec5, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7421793305427396543, guid: 31f82d417159e3840b2e6ac482eb5ec5, type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7655709563078081276, guid: 31f82d417159e3840b2e6ac482eb5ec5, type: 3}

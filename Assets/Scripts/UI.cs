@@ -59,6 +59,20 @@ public class UI : MonoBehaviour
 
     public void OnReturnButtonClicked()
     {
-        SceneManager.LoadScene("Title");
+        StartCoroutine(ChangeToScreen("Title"));
+        //SceneManager.LoadScene("Title");
+    }
+
+//This screen transition uses a slider to wipe the screen in a radial pattern like a clock.
+    IEnumerator ChangeToScreen(string newScene)
+    {
+        while (screenTransition.value < 1)
+        {
+            screenTransition.value += Time.deltaTime * 2;
+            yield return null;
+        }
+
+        SceneManager.LoadScene(newScene);
+
     }
 }
