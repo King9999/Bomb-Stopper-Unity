@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
 
     [Header("UI")]
     public GameObject uiHandler;        //controls all UI. Mainly used to create a "shake" effect
+    public GameObject resultsScreenHandler;
     public UI ui = UI.instance;         //this variable must be public in order to access the instance
     string filePath;                    //contains location of high score table JSON file
     Color perfectWordColor;
@@ -108,10 +109,11 @@ public class GameManager : MonoBehaviour
         ui.stunMeterHandler.gameObject.SetActive(false);   //hidden by default
         ui.comboHandler.gameObject.SetActive(false);        //this too
         ui.returnButton.gameObject.SetActive(false);
+        resultsScreenHandler.SetActive(false);
 
         //timer setup
         gameTimer.SetTimer(time);
-        gameTimer.timerRunning = true;
+        gameTimer.StartTimer();
 
         usedWords = new string[maxUsedWords];
 
@@ -374,6 +376,11 @@ public class GameManager : MonoBehaviour
             else
             {
                 //stage is complete. Check for any medals and display results
+                gameTimer.StopTimer();
+                uiHandler.SetActive(false);
+                resultsScreenHandler.SetActive(true);
+                //ui.returnButton.gameObject.SetActive(true); //return to title
+                //ui.inputField.DeactivateInputField();
             }
         }
     }

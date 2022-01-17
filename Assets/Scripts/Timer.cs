@@ -8,6 +8,7 @@ using UnityEngine;
 public class Timer : MonoBehaviour
 {
     public float time;           //time in seconds. Will use this value to get the minutes, seconds and milliseconds
+    public float initTime;      //the initial start time. Used to get time elapsed.
     public bool timerRunning;
 
     //UI
@@ -47,6 +48,7 @@ public class Timer : MonoBehaviour
     {
         //timer will not exceed five minutes
         time = (seconds > 300) ? 300 : seconds;
+        initTime = time;
     }
 
     public string DisplayTimer()
@@ -63,6 +65,16 @@ public class Timer : MonoBehaviour
     public bool TimeUp()
     {
         return time <= 0;
+    }
+
+    public void StopTimer()
+    {
+        timerRunning = false;
+    }
+
+    public void StartTimer()
+    {
+        timerRunning = true;
     }
 
 }
