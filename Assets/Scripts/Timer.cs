@@ -62,6 +62,17 @@ public class Timer : MonoBehaviour
         return timeText;
     }
 
+    public string DisplayElapsedTime()
+    {
+        float elapsedTime = initTime - time;
+        float minutes = Mathf.FloorToInt(elapsedTime / 60);
+        float seconds = Mathf.FloorToInt(elapsedTime % 60);
+
+        string timeText = string.Format("{0:0}:{1:00}", minutes, seconds);
+
+        return timeText;
+    }
+
     public bool TimeUp()
     {
         return time <= 0;

@@ -9,7 +9,25 @@ public class ResultsScreen : MonoBehaviour
 {
     public Slider screenTransition;
     public TextMeshProUGUI elapsedTimeValueUI;
+    public TextMeshProUGUI totalWordsAttemptedUI;
+    public TextMeshProUGUI perfectWordCountUI;
+    public TextMeshProUGUI okWordCountUI;
+    public TextMeshProUGUI wrongWordCountUI;
+    public TextMeshProUGUI highestComboUI;
+    public TextMeshProUGUI scoreUI;
 
+    public static ResultsScreen instance;
+
+    private void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject); 
+            return;
+        }
+
+        instance = this;
+    }
 
     public void OnReturnButtonClicked()
     {

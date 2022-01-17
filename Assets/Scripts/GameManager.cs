@@ -33,6 +33,13 @@ public class GameManager : MonoBehaviour
     string difficultyId;
     float time;
 
+    //variables for winning a stage
+    int totalWordsAttempted;        //includes correct and incorrect words
+    int highestCombo;
+    int perfectWordCount;
+    int okWordCount;
+    int wrongWordCount;
+
     //Medal variables
     public MedalObject[] medalObjects;
     public MedalObject medalPrefab;
@@ -40,7 +47,6 @@ public class GameManager : MonoBehaviour
     [Header("UI")]
     public GameObject uiHandler;        //controls all UI. Mainly used to create a "shake" effect
     public GameObject resultsScreenHandler;
-    public UI ui = UI.instance;         //this variable must be public in order to access the instance
     string filePath;                    //contains location of high score table JSON file
     Color perfectWordColor;
     Color wrongWordColor;
@@ -58,8 +64,10 @@ public class GameManager : MonoBehaviour
     float baseComboTimer {get;} = 2;    //time in seconds
 
     //instances
+    public UI ui = UI.instance;         //this variable must be public in order to access the instance
     TitleManager tm = TitleManager.instance;
     MedalManager mm = MedalManager.instance;
+    public ResultsScreen rs = ResultsScreen.instance;
 
     //coroutine checks & setup
     bool stunCoroutineOn;
@@ -138,6 +146,13 @@ public class GameManager : MonoBehaviour
 
         }
 
+      totalWordsAttempted = 0; 
+      highestCombo = 0;
+      perfectWordCount = 0;
+      okWordCount = 0;
+      wrongWordCount = 0;
+
+
         //GUIUtility.systemCopyBuffer = "test";     //USE THIS TO COPY TEXT TO CLIPBOARD!
         
         //get hiscore table data
@@ -179,7 +194,8 @@ public class GameManager : MonoBehaviour
         if (!gameTimer.TimeUp() && currentWordCount < totalWordCount)
         {
             if (!targetWordSelected)
-            {          
+            {
+                totalWordsAttempted++;          
                 //change the target word, taking care to make sure the same word isn't selected.
                 string previousWord = ui.targetWordUI.text;
                 bool usedWordFound = false;
@@ -247,6 +263,10 @@ public class GameManager : MonoBehaviour
                         if (!comboCounted && targetWordSelected)
                         {
                             comboCount++;
+                            //is this the highest combo so far?
+                            if (highestCombo < comboCount)
+                                highestCombo = comboCount;
+
                             Debug.Log("Combo Count: " + comboCount);
                             comboCounted = true;
 
@@ -287,6 +307,7 @@ public class GameManager : MonoBehaviour
                             resultCoroutineOn = true;
                             StartCoroutine(ShowResult("Perfect!", perfectWordColor));
                             currentWordCount++;
+                            perfectWordCount++;
                         }
                         if (!stunCoroutineOn)
                         {
@@ -318,6 +339,7 @@ public class GameManager : MonoBehaviour
                             resultCoroutineOn = true;
                             StartCoroutine(ShowResult("OK", Color.white, basePenalty));
                             currentWordCount++;
+                            okWordCount++;
                         }
                         if (!stunCoroutineOn)
                         {
@@ -348,6 +370,7 @@ public class GameManager : MonoBehaviour
                     {
                         resultCoroutineOn = true;
                         StartCoroutine(ShowResult("Incorrect", wrongWordColor, penaltyDuration));
+                        wrongWordCount++;
                     }
                     if (!stunCoroutineOn)
                     {
@@ -378,7 +401,8 @@ public class GameManager : MonoBehaviour
                 //stage is complete. Check for any medals and display results
                 gameTimer.StopTimer();
                 uiHandler.SetActive(false);
-                resultsScreenHandler.SetActive(true);
+                GetStageCompletionResults();
+                //resultsScreenHandler.SetActive(true);
                 //ui.returnButton.gameObject.SetActive(true); //return to title
                 //ui.inputField.DeactivateInputField();
             }
@@ -449,9 +473,18 @@ public class GameManager : MonoBehaviour
 
     void GetStageCompletionResults()
     {
-        //collect data
+        resultsScreenHandler.SetActive(true);
 
-        //check medals
+        //collect data
+        rs.elapsedTimeValueUI.text = gameTimer.DisplayElapsedTime();
+        rs.totalWordsAttemptedUI.text = totalWordsAttempted.ToString();
+        rs.scoreUI.text = score.ToString();
+        rs.perfectWordCountUI.text = perfectWordCount.ToString();
+        rs.okWordCountUI.text = okWordCount.ToString();
+        rs.wrongWordCountUI.text = wrongWordCount.ToString();
+        rs.highestComboUI.text = highestCombo.ToString();
+    
+        //check & display medals
 
         //provide a share button so player can copy results
 
