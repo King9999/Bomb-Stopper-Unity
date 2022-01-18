@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
 
     //Used Words variables
     string[] usedWords;             //holds the last 5 words used. Any words in this list won't appear as a target word.
-    int maxUsedWords {get;} = 5;
+    int maxUsedWords {get;} = 10;
     int usedWordIndex;              //always points to last open space in the usedWords array.
 
     //JSON variables
@@ -487,6 +487,7 @@ public class GameManager : MonoBehaviour
         //check & display medals
 
         //provide a share button so player can copy results
+        //GUIUtility.systemCopyBuffer = "test";
 
         //send player back to title
     }

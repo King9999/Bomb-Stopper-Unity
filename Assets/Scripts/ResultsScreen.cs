@@ -17,6 +17,7 @@ public class ResultsScreen : MonoBehaviour
     public TextMeshProUGUI scoreUI;
 
     public static ResultsScreen instance;
+    TitleManager tm = TitleManager.instance;
 
     private void Awake()
     {
@@ -32,6 +33,16 @@ public class ResultsScreen : MonoBehaviour
     public void OnReturnButtonClicked()
     {
         StartCoroutine(ChangeToScreen("Title"));
+    }
+
+    public void OnShareButtonClicked()
+    {
+        //copy data to clipboard. This data first comes from game manager before it's copied
+        string results = "I just defused a bomb in Bomb Stopper!\n\n";
+        results += "Difficulty: " + tm.currentDifficulty + "\n";
+        results += "Score: " + scoreUI.text + "\n";
+        results += "Elapsed Time: " + elapsedTimeValueUI.text + "\n";
+        GUIUtility.systemCopyBuffer = results;
     }
 
     IEnumerator ChangeToScreen(string newScene)
