@@ -239,8 +239,9 @@ public class GameManager : MonoBehaviour
                 scoreAdded = false;     //new word, new opportunity to add to score
             }
 
-            //check if backspace or delete is pressed. Player takes a small penalty in these cases
-            if (Input.GetKeyDown(KeyCode.Backspace) || Input.GetKeyDown(KeyCode.Delete))
+            //check if backspace, delete, or directional arrows are pressed. Player takes a small penalty in these cases
+            if (Input.GetKeyDown(KeyCode.Backspace) || Input.GetKeyDown(KeyCode.Delete) || 
+                Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
             {
                 correctionWasMade = true;
             }
