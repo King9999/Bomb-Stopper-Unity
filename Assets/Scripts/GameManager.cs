@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     bool correctionWasMade;         //if true, player pressed delete or backspace
     int comboCount;                 //A combo is formed when player types at least 2 words consecutively without error or correction.
     bool comboCounted;              //prevents combo counter from increasing more than once if a combo was already performed on current word.
-    int score;
+    float score;
     int pointsPerLetter {get;} = 10;
     bool scoreAdded;                //prevents score from being added multiple times per frame.    
 
@@ -282,9 +282,10 @@ public class GameManager : MonoBehaviour
                         //add points
                         if (!scoreAdded && targetWordSelected)
                         {
-                            int bonus = pointsPerLetter * ui.inputField.text.Length * comboCount;
-                            score += bonus + (bonus / 2);
-                            Debug.Log("Bonus: " + (bonus + (bonus / 2)));
+                            float bonus = pointsPerLetter * ui.inputField.text.Length * 1 + (comboCount * 0.1f);
+                            score += Mathf.Round(bonus);
+                            //score += bonus + (bonus / 2);
+                            Debug.Log("Pts Added: " + Mathf.Round(bonus));
                             scoreAdded = true;
                         }
 
