@@ -45,7 +45,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   medals:
   - {fileID: 11400000, guid: b69344defc8abb740b379eb5103b6022, type: 2}
-  - {fileID: 11400000, guid: fb175c3f632f52b48a76a411890f9bba, type: 2}
   - {fileID: 11400000, guid: b50a2bbf62b220046bfe61fc87b979ee, type: 2}
   - {fileID: 11400000, guid: e5437f874ac62b44985cfc5df439397c, type: 2}
   - {fileID: 11400000, guid: 8db73c1f151904c49a423748db99d3d4, type: 2}
@@ -56,4 +55,3 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 77a0d249e8faed44c94f683d023482ac, type: 2}
   - {fileID: 11400000, guid: 9aadcbb894556794e9fcd40c8e108f54, type: 2}
   - {fileID: 11400000, guid: 043b399639d9f28409e53f26c436d476, type: 2}
-  instance: {fileID: 4144252128096253758}

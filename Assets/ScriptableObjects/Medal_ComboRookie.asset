@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26533e90618260046a4d4e8e15c6748f, type: 3}
   m_Name: Medal_ComboRookie
   m_EditorClassIdentifier: 
-  medalSprite: {fileID: 0}
+  medalSprite: {fileID: 21300000, guid: 5990bcda4258e14489b60ce47b224da1, type: 3}
   rank: 0
   medalAcquired: 1
   medalName: Combo Rookie

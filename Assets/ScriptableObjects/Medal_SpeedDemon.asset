@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26533e90618260046a4d4e8e15c6748f, type: 3}
   m_Name: Medal_SpeedDemon
   m_EditorClassIdentifier: 
-  medalSprite: {fileID: 0}
+  medalSprite: {fileID: 21300000, guid: 0ce36e9bae741654ab846291bf3a9b56, type: 3}
   rank: 1
   medalAcquired: 1
   medalName: Speed Demon
