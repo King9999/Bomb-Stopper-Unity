@@ -138,10 +138,11 @@ public class GameManager : MonoBehaviour
             medalObjects[i].medalDetailsUI.text = mm.medals[i].details;
             medalObjects[i].medalRank = mm.medals[i].rank;
             medalObjects[i].medalAcquired = mm.medals[i].medalAcquired;
+            medalObjects[i].medalSprite.sprite = mm.medals[i].medalSprite;
 
-            SpriteRenderer sr = medalObjects[i].GetComponent<SpriteRenderer>();
-            sr.sprite = mm.medals[i].medalSprite;
-            sr.transform.position = new Vector3(sr.transform.position.x - 2.5f, sr.transform.position.y, sr.transform.position.z);
+            //SpriteRenderer sr = medalObjects[i].GetComponent<SpriteRenderer>();
+            //sr.sprite = mm.medals[i].medalSprite;
+            //sr.transform.position = new Vector3(sr.transform.position.x - 2.5f, sr.transform.position.y, sr.transform.position.z);
 
             //medal objects are hidden by default
             medalObjects[i].gameObject.SetActive(false);
@@ -490,8 +491,17 @@ public class GameManager : MonoBehaviour
         rs.highestComboUI.text = highestCombo.ToString();
     
         //check & display medals
-        Vector3 medalPos = resultsScreenHandler.transform.position;
+        Vector3 medalPos = rs.medalOrganizer.transform.position;
+        //Vector3 spritePos = Camera.main.WorldToScreenPoint(transform.position);
+
+        //The player will always receive this medal
         medalObjects[(int)MedalManager.MedalName.BombDefused].gameObject.SetActive(true);
+        medalObjects[(int)MedalManager.MedalName.BombDefused].medalSprite.transform.position = new Vector3(medalPos.x - 290, 
+            medalPos.y, medalPos.z);
+        medalObjects[(int)MedalManager.MedalName.BombDefused].medalNameUI.transform.position = medalPos;
+        medalObjects[(int)MedalManager.MedalName.BombDefused].medalDetailsUI.transform.position = new Vector3(medalPos.x + 20, 
+            medalPos.y - 15, medalPos.z);
+
 
         //provide a share button so player can copy results
         //GUIUtility.systemCopyBuffer = "test";

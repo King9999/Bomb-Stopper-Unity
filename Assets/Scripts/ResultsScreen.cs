@@ -14,6 +14,7 @@ public class ResultsScreen : MonoBehaviour
     public TextMeshProUGUI wrongWordCountUI;
     public TextMeshProUGUI highestComboUI;
     public TextMeshProUGUI scoreUI;
+    public Transform medalOrganizer;        //used to arrange the medals 
 
     public static ResultsScreen instance;
     TitleManager tm = TitleManager.instance;
