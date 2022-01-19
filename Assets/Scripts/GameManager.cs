@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 //NOTE: Unable to add high score table as there's no reliable way to have persistent data on WebGL without using a server.
 public class GameManager : MonoBehaviour
@@ -41,7 +42,7 @@ public class GameManager : MonoBehaviour
     int wrongWordCount;
 
     //Medal variables
-    public MedalObject[] medalObjects;
+    public MedalObject[] medalObjects;  //array of earned medals
     public MedalObject medalPrefab;
 
     [Header("UI")]
@@ -140,17 +141,19 @@ public class GameManager : MonoBehaviour
 
             SpriteRenderer sr = medalObjects[i].GetComponent<SpriteRenderer>();
             sr.sprite = mm.medals[i].medalSprite;
+            sr.transform.position = new Vector3(sr.transform.position.x - 2.5f, sr.transform.position.y, sr.transform.position.z);
 
             //medal objects are hidden by default
             medalObjects[i].gameObject.SetActive(false);
 
         }
 
-      totalWordsAttempted = 0; 
-      highestCombo = 0;
-      perfectWordCount = 0;
-      okWordCount = 0;
-      wrongWordCount = 0;
+
+        totalWordsAttempted = 0; 
+        highestCombo = 0;
+        perfectWordCount = 0;
+        okWordCount = 0;
+        wrongWordCount = 0;
 
 
         //GUIUtility.systemCopyBuffer = "test";     //USE THIS TO COPY TEXT TO CLIPBOARD!
@@ -487,6 +490,8 @@ public class GameManager : MonoBehaviour
         rs.highestComboUI.text = highestCombo.ToString();
     
         //check & display medals
+        Vector3 medalPos = resultsScreenHandler.transform.position;
+        medalObjects[(int)MedalManager.MedalName.BombDefused].gameObject.SetActive(true);
 
         //provide a share button so player can copy results
         //GUIUtility.systemCopyBuffer = "test";

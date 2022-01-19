@@ -2,7 +2,10 @@ using UnityEngine;
 
 public class MedalManager : MonoBehaviour
 {
-    public Medal[] medals;          //12 total
+    public Medal[] medals;          //11 total
+
+    public enum MedalName {ASpecialKindOfPerson, BombDefused, ComboMaster, ComboRookie, DramaticFinish, ExpertDefuser, GodDefuser, 
+                            TenThousandClub, Perfect, SpeedDemon, OneThousandClub}
     public static MedalManager instance;
 
     void Awake()
