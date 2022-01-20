@@ -13,6 +13,7 @@ public class TitleManager : MonoBehaviour
     public Button normalButton;
     public Button hardButton;
     public TextMeshProUGUI modeDetails;     //description of difficulty settings
+    public Toggle specialToggle;
     
 
     [Header("------")]

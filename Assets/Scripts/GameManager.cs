@@ -490,17 +490,44 @@ public class GameManager : MonoBehaviour
         rs.wrongWordCountUI.text = wrongWordCount.ToString();
         rs.highestComboUI.text = highestCombo.ToString();
     
-        //check & display medals
+        //check & display medals. each time a medal is awarded, the next medal data's position must change.
         Vector3 medalPos = rs.medalOrganizer.transform.position;
-        //Vector3 spritePos = Camera.main.WorldToScreenPoint(transform.position);
 
-        //The player will always receive this medal
-        medalObjects[(int)MedalManager.MedalName.BombDefused].gameObject.SetActive(true);
+        //The player will always receive this medal in Normal or Hard
+        /*medalObjects[(int)MedalManager.MedalName.BombDefused].gameObject.SetActive(true);
         medalObjects[(int)MedalManager.MedalName.BombDefused].medalSprite.transform.position = new Vector3(medalPos.x - 290, 
             medalPos.y, medalPos.z);
         medalObjects[(int)MedalManager.MedalName.BombDefused].medalNameUI.transform.position = medalPos;
         medalObjects[(int)MedalManager.MedalName.BombDefused].medalDetailsUI.transform.position = new Vector3(medalPos.x + 20, 
-            medalPos.y - 15, medalPos.z);
+            medalPos.y - 15, medalPos.z);*/
+
+        if (tm.currentDifficulty == TitleManager.Difficulty.Normal)
+            rs.DisplayMedal(medalObjects[(int)MedalManager.MedalName.BombDefused], medalPos);
+        if (tm.currentDifficulty == TitleManager.Difficulty.Hard)
+            rs.DisplayMedal(medalObjects[(int)MedalManager.MedalName.ExpertDefuser], medalPos);
+
+        medalPos = new Vector3(medalPos.x, medalPos.y + 50, medalPos.z);
+
+        //One Thousand Club medal
+        if (score >= 1000)
+        {
+            rs.DisplayMedal(medalObjects[(int)MedalManager.MedalName.OneThousandClub], medalPos);
+            medalPos = new Vector3(medalPos.x, medalPos.y + 50, medalPos.z);
+        }
+
+        //Ten Thosuand Club Medal
+        if (score >= 10000)
+        {
+            rs.DisplayMedal(medalObjects[(int)MedalManager.MedalName.TenThousandClub], medalPos);
+            medalPos = new Vector3(medalPos.x, medalPos.y + 50, medalPos.z);
+        }
+
+        //A Special Kind of Person
+        if (tm.specialToggle.isOn)
+        {
+            rs.DisplayMedal(medalObjects[(int)MedalManager.MedalName.ASpecialKindOfPerson], medalPos);
+            medalPos = new Vector3(medalPos.x, medalPos.y + 50, medalPos.z);
+        }
 
 
         //provide a share button so player can copy results

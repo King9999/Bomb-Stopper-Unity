@@ -55,6 +55,14 @@ public class ResultsScreen : MonoBehaviour
         GUIUtility.systemCopyBuffer = results;
     }
 
+    public void DisplayMedal(MedalObject medal, Vector3 position)
+    {
+        medal.gameObject.SetActive(true);
+        medal.medalSprite.transform.position = new Vector3(position.x - 290, position.y, position.z);
+        medal.medalNameUI.transform.position = position;
+        medal.medalDetailsUI.transform.position = new Vector3(position.x + 20, position.y - 15, position.z);
+    }
+
     IEnumerator ChangeToScreen(string newScene)
     {
         while (screenTransition.value < 1)
