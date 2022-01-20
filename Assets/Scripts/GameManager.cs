@@ -492,43 +492,82 @@ public class GameManager : MonoBehaviour
     
         //check & display medals. each time a medal is awarded, the next medal data's position must change.
         Vector3 medalPos = rs.medalOrganizer.transform.position;
+        float yOffset = 50;
 
+    #region Medals
         //The player will always receive this medal in Normal or Hard
-        /*medalObjects[(int)MedalManager.MedalName.BombDefused].gameObject.SetActive(true);
-        medalObjects[(int)MedalManager.MedalName.BombDefused].medalSprite.transform.position = new Vector3(medalPos.x - 290, 
-            medalPos.y, medalPos.z);
-        medalObjects[(int)MedalManager.MedalName.BombDefused].medalNameUI.transform.position = medalPos;
-        medalObjects[(int)MedalManager.MedalName.BombDefused].medalDetailsUI.transform.position = new Vector3(medalPos.x + 20, 
-            medalPos.y - 15, medalPos.z);*/
-
         if (tm.currentDifficulty == TitleManager.Difficulty.Normal)
+        {
             rs.DisplayMedal(medalObjects[(int)MedalManager.MedalName.BombDefused], medalPos);
+            medalPos = new Vector3(medalPos.x, medalPos.y - yOffset, medalPos.z);
+        }
         if (tm.currentDifficulty == TitleManager.Difficulty.Hard)
+        {
             rs.DisplayMedal(medalObjects[(int)MedalManager.MedalName.ExpertDefuser], medalPos);
-
-        medalPos = new Vector3(medalPos.x, medalPos.y + 50, medalPos.z);
+            medalPos = new Vector3(medalPos.x, medalPos.y - yOffset, medalPos.z);
+        }
 
         //One Thousand Club medal
         if (score >= 1000)
         {
             rs.DisplayMedal(medalObjects[(int)MedalManager.MedalName.OneThousandClub], medalPos);
-            medalPos = new Vector3(medalPos.x, medalPos.y + 50, medalPos.z);
+            medalPos = new Vector3(medalPos.x, medalPos.y - yOffset, medalPos.z);
         }
 
         //Ten Thosuand Club Medal
         if (score >= 10000)
         {
             rs.DisplayMedal(medalObjects[(int)MedalManager.MedalName.TenThousandClub], medalPos);
-            medalPos = new Vector3(medalPos.x, medalPos.y + 50, medalPos.z);
+            medalPos = new Vector3(medalPos.x, medalPos.y - yOffset, medalPos.z);
         }
 
         //A Special Kind of Person
         if (tm.specialToggle.isOn)
         {
             rs.DisplayMedal(medalObjects[(int)MedalManager.MedalName.ASpecialKindOfPerson], medalPos);
-            medalPos = new Vector3(medalPos.x, medalPos.y + 50, medalPos.z);
+            medalPos = new Vector3(medalPos.x, medalPos.y - yOffset, medalPos.z);
         }
 
+        //Combo Rookie/Master
+        if (highestCombo >= 20)
+        {
+            rs.DisplayMedal(medalObjects[(int)MedalManager.MedalName.ComboMaster], medalPos);
+            medalPos = new Vector3(medalPos.x, medalPos.y - yOffset, medalPos.z);
+        }
+        else if (highestCombo >= 5)
+        {
+            rs.DisplayMedal(medalObjects[(int)MedalManager.MedalName.ComboRookie], medalPos);
+            medalPos = new Vector3(medalPos.x, medalPos.y - yOffset, medalPos.z);
+        }
+
+        //Dramatic Finish
+        if (gameTimer.time <= 5)
+        {
+            rs.DisplayMedal(medalObjects[(int)MedalManager.MedalName.DramaticFinish], medalPos);
+            medalPos = new Vector3(medalPos.x, medalPos.y - yOffset, medalPos.z);
+        }
+
+        //God Defuser
+        if (tm.currentDifficulty == TitleManager.Difficulty.Hard && tm.specialToggle.isOn)
+        {
+            rs.DisplayMedal(medalObjects[(int)MedalManager.MedalName.GodDefuser], medalPos);
+            medalPos = new Vector3(medalPos.x, medalPos.y - yOffset, medalPos.z);
+        }
+
+        //Perfect
+        if (okWordCount <= 0 && wrongWordCount <= 0)
+        {
+            rs.DisplayMedal(medalObjects[(int)MedalManager.MedalName.Perfect], medalPos);
+            medalPos = new Vector3(medalPos.x, medalPos.y - yOffset, medalPos.z);
+        }
+
+        //Speed Demon
+        if (gameTimer.initTime - gameTimer.time <= 45)
+        {
+            rs.DisplayMedal(medalObjects[(int)MedalManager.MedalName.SpeedDemon], medalPos);
+            medalPos = new Vector3(medalPos.x, medalPos.y - yOffset, medalPos.z);
+        }
+#endregion
 
         //provide a share button so player can copy results
         //GUIUtility.systemCopyBuffer = "test";

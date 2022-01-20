@@ -60,7 +60,7 @@ public class ResultsScreen : MonoBehaviour
         medal.gameObject.SetActive(true);
         medal.medalSprite.transform.position = new Vector3(position.x - 290, position.y, position.z);
         medal.medalNameUI.transform.position = position;
-        medal.medalDetailsUI.transform.position = new Vector3(position.x + 20, position.y - 15, position.z);
+        medal.medalDetailsUI.transform.position = new Vector3(position.x + 21, position.y - 16, position.z);
     }
 
     IEnumerator ChangeToScreen(string newScene)
