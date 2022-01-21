@@ -1,0 +1,3 @@
+TO DO LIST
+
+1. When reversed rule is active, need some kind of indicator to let player know a word is reversed and must be typed with original spelling.

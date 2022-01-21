@@ -5,11 +5,12 @@ using TMPro;
 update loop. */
 public class SpecialRules : MonoBehaviour
 {
-    public enum Rule {Reversed, ThreeStrikes, HiddenLetters, WordOverflow, ReducedTime, CaseSensitive}
+    public enum Rule {None, Reversed, ThreeStrikes, HiddenLetters, WordOverflow, ReducedTime, CaseSensitive}
     public Rule specialRule;
     int TotalRules {get;} = 6;
     public TextMeshProUGUI ruleName;
     string[] ruleNames;
+    public GameObject ruleDataContainer;
 
     //variables for specific rules
     //Reversed
@@ -39,6 +40,8 @@ public class SpecialRules : MonoBehaviour
 
     void Start()
     {
+        specialRule = Rule.None;    //default rule
+
         if (tm.specialToggle.isOn)
         {
             ruleNames = new string[TotalRules];
@@ -51,8 +54,9 @@ public class SpecialRules : MonoBehaviour
 
 
             //get a random rule
-            int randRule = Random.Range(0, TotalRules);
-            specialRule = (Rule)randRule;
+            int randRule = Random.Range(1, TotalRules + 1); //ignoring the "none" rule at index 0
+            //specialRule = (Rule)randRule;
+            specialRule = Rule.Reversed;
             ruleName.text = ruleNames[randRule];
         }
     }
@@ -63,7 +67,7 @@ public class SpecialRules : MonoBehaviour
         {
             case Rule.Reversed:
                 //write the target word backwards. Player must type word with the normal spelling
-                reverseRate = 1f;
+                reverseRate = 0.3f;
                 float chance = Random.Range(0, 1f);
                 if (chance <= reverseRate)
                 {

@@ -45,7 +45,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   specialRule: 0
+  ruleName: {fileID: 7240744034927562097}
+  ruleDataContainer: {fileID: 6948419901648319693}
   wordReversed: 0
+  originalWord: 
   strikes: 0
   gm: {fileID: 0}
 --- !u!1 &3908753637216885185

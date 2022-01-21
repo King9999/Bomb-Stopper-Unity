@@ -252,8 +252,7 @@ public class GameManager : MonoBehaviour
                             usedWordIndex = 0;
                         
                         //Check if we need to reverse the letters
-                        sr.specialRule = SpecialRules.Rule.Reversed;
-                        if (tm.specialToggle.isOn && sr.specialRule == SpecialRules.Rule.Reversed)
+                        if (sr.specialRule == SpecialRules.Rule.Reversed)
                         {
                             //run this set of rules
                             sr.ExecuteSpecialRule(sr.specialRule);
@@ -282,6 +281,10 @@ public class GameManager : MonoBehaviour
                 //compare the words and check if they match.
                 if (WordsMatch(ui.inputField.text, ui.targetWordUI.text))
                 {
+                    //additional check if reverse rule is active. Display the target word with correct spelling
+                    if (sr.specialRule == SpecialRules.Rule.Reversed && sr.wordReversed)
+                        ui.targetWordUI.text = sr.originalWord;
+
                     //show icon indicating a correct word. Show "Perfect!" if no corrections were made, "OK" otherwise
                     if (!correctionWasMade)
                     {
@@ -392,7 +395,7 @@ public class GameManager : MonoBehaviour
                     //highlight all of the incorrect letters in the target word.
                     //penalty is base penalty + (number of incorrect letters * 0.3 * difficulty)
                     int errorCount;
-                    if (tm.specialToggle.isOn && sr.specialRule == SpecialRules.Rule.Reversed)
+                    if (sr.specialRule == SpecialRules.Rule.Reversed && sr.wordReversed)
                         errorCount = IncorrectLetterTotal(ui.inputField.text, sr.originalWord);
                     else
                         errorCount = IncorrectLetterTotal(ui.inputField.text, ui.targetWordUI.text);
@@ -471,7 +474,7 @@ public class GameManager : MonoBehaviour
 
     bool WordsMatch(string typedWord, string targetWord)
     {
-        if (tm.specialToggle.isOn && sr.specialRule == SpecialRules.Rule.Reversed)
+        if (sr.specialRule == SpecialRules.Rule.Reversed && sr.wordReversed)
             return typedWord.ToLower() == sr.originalWord.ToLower();
         else
             return typedWord.ToLower() == targetWord.ToLower();
@@ -510,6 +513,12 @@ public class GameManager : MonoBehaviour
     void GetStageCompletionResults()
     {
         resultsScreenHandler.SetActive(true);
+
+        //remove all special rules UI
+        if (tm.specialToggle.isOn)
+        {
+            sr.gameObject.SetActive(false);
+        }
 
         //collect data
         rs.elapsedTimeValueUI.text = gameTimer.DisplayElapsedTime();
