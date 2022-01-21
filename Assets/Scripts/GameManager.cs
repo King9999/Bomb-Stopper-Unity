@@ -391,7 +391,12 @@ public class GameManager : MonoBehaviour
 
                     //highlight all of the incorrect letters in the target word.
                     //penalty is base penalty + (number of incorrect letters * 0.3 * difficulty)
-                    int errorCount = IncorrectLetterTotal(ui.inputField.text, ui.targetWordUI.text);
+                    int errorCount;
+                    if (tm.specialToggle.isOn && sr.specialRule == SpecialRules.Rule.Reversed)
+                        errorCount = IncorrectLetterTotal(ui.inputField.text, sr.originalWord);
+                    else
+                        errorCount = IncorrectLetterTotal(ui.inputField.text, ui.targetWordUI.text);
+
                     penaltyDuration = basePenalty + (errorCount * penaltyPerLetter);
                     Debug.Log("Penalty time is " + penaltyDuration);
                     if (!resultCoroutineOn)
@@ -466,7 +471,10 @@ public class GameManager : MonoBehaviour
 
     bool WordsMatch(string typedWord, string targetWord)
     {
-        return typedWord.ToLower() == targetWord.ToLower();
+        if (tm.specialToggle.isOn && sr.specialRule == SpecialRules.Rule.Reversed)
+            return typedWord.ToLower() == sr.originalWord.ToLower();
+        else
+            return typedWord.ToLower() == targetWord.ToLower();
     }
 
     //NOTE: This method was slowing down the game, probably because of too many string operations. I decided to only highlight the
