@@ -138,6 +138,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 498130115964375730, guid: 70e8859ddb8c2b2478cd88fc28854129, type: 3}
+      propertyPath: m_FillAmount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 498130116124727800, guid: 70e8859ddb8c2b2478cd88fc28854129, type: 3}
+      propertyPath: m_Value
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 498130117545339542, guid: 70e8859ddb8c2b2478cd88fc28854129, type: 3}
       propertyPath: m_Name
       value: Results Screen UI Handler

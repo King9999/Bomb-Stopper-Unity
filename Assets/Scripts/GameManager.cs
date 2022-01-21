@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
     int currentWordCount;
 
     //Used Words variables
-    string[] usedWords;             //holds the last 5 words used. Any words in this list won't appear as a target word.
+    string[] usedWords;             //holds the last words used. Any words in this list won't appear as a target word.
     int maxUsedWords {get;} = 10;
     int usedWordIndex;              //always points to last open space in the usedWords array.
 
@@ -69,6 +69,8 @@ public class GameManager : MonoBehaviour
     TitleManager tm = TitleManager.instance;
     MedalManager mm = MedalManager.instance;
     public ResultsScreen rs = ResultsScreen.instance;
+    public static GameManager instance;
+    SpecialRules sr = SpecialRules.instance;
 
     //coroutine checks & setup
     bool stunCoroutineOn;
@@ -76,6 +78,17 @@ public class GameManager : MonoBehaviour
     bool comboCountdownCoroutineOn;
     IEnumerator comboCountDown;
     #endregion
+
+    private void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject); 
+            return;
+        }
+
+        instance = this;
+    }
 
 
     // Start is called before the first frame update
@@ -226,12 +239,20 @@ public class GameManager : MonoBehaviour
 
                     if (!usedWordFound)
                     {
-                        //we can use this word
-                        ui.targetWordUI.text = newWord;
+                        if (tm.specialToggle.isOn && sr.specialRule == SpecialRules.Rule.Reversed)
+                        {
+                            //run this set of rules
+                            sr.ExecuteSpecialRule(sr.specialRule);
+                        }
+                        else
+                        {
+                            //we can use this word
+                            ui.targetWordUI.text = newWord;
 
-                        //add to used word list
-                        usedWords[usedWordIndex] = newWord;
-                        usedWordIndex++;
+                            //add to used word list
+                            usedWords[usedWordIndex] = newWord;
+                            usedWordIndex++;
+                        }
 
                         if (usedWordIndex >= usedWords.Length)
                             //oldest used word will be removed next time
