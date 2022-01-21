@@ -10,7 +10,7 @@ public class SpecialRules : MonoBehaviour
     public Rule specialRule;
 
     //instances
-    GameManager gm = GameManager.instance;
+    public GameManager gm = GameManager.instance;
     public static SpecialRules instance;
 
     void Awake()
@@ -29,6 +29,16 @@ public class SpecialRules : MonoBehaviour
         switch(rule)
         {
             case Rule.Reversed:
+                //write the target word backwards
+                string newWord = "";
+                int i = gm.ui.targetWordUI.text.Length;
+                while (i > 0)
+                {
+                    newWord += gm.ui.targetWordUI.text.Substring(i - 1, 1);
+                    i--;
+                }
+
+                Debug.Log(newWord);
                 break;
 
             case Rule.ThreeStrikes:

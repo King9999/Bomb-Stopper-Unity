@@ -70,7 +70,7 @@ public class GameManager : MonoBehaviour
     MedalManager mm = MedalManager.instance;
     public ResultsScreen rs = ResultsScreen.instance;
     public static GameManager instance;
-    SpecialRules sr = SpecialRules.instance;
+    public SpecialRules sr = SpecialRules.instance;
 
     //coroutine checks & setup
     bool stunCoroutineOn;
@@ -239,24 +239,25 @@ public class GameManager : MonoBehaviour
 
                     if (!usedWordFound)
                     {
+                        //we can use this word
+                        ui.targetWordUI.text = newWord;
+
+                        //add to used word list
+                        usedWords[usedWordIndex] = newWord;
+                        usedWordIndex++;
+                        
+
+                        if (usedWordIndex >= usedWords.Length)
+                            //oldest used word will be removed next time
+                            usedWordIndex = 0;
+                        
+                        //Check if we need to reverse the letters
+                        sr.specialRule = SpecialRules.Rule.Reversed;
                         if (tm.specialToggle.isOn && sr.specialRule == SpecialRules.Rule.Reversed)
                         {
                             //run this set of rules
                             sr.ExecuteSpecialRule(sr.specialRule);
                         }
-                        else
-                        {
-                            //we can use this word
-                            ui.targetWordUI.text = newWord;
-
-                            //add to used word list
-                            usedWords[usedWordIndex] = newWord;
-                            usedWordIndex++;
-                        }
-
-                        if (usedWordIndex >= usedWords.Length)
-                            //oldest used word will be removed next time
-                            usedWordIndex = 0;
                     }
                 }
                 targetWordSelected = true;
