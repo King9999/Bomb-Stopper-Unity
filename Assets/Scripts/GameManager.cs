@@ -257,8 +257,8 @@ public class GameManager : MonoBehaviour
                             //oldest used word will be removed next time
                             usedWordIndex = 0;
                         
-                        //Check if we need to reverse the letters
-                        if (sr.specialRule == SpecialRules.Rule.Reversed)
+                        //Check if we need to reverse the letters or hide letters
+                        if (sr.specialRule == SpecialRules.Rule.Reversed || sr.specialRule == SpecialRules.Rule.HiddenLetters)
                         {
                             //run this set of rules
                             sr.ExecuteSpecialRule(sr.specialRule);
