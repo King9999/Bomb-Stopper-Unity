@@ -288,7 +288,7 @@ public class GameManager : MonoBehaviour
                 if (WordsMatch(ui.inputField.text, ui.targetWordUI.text))
                 {
                     //additional check if reverse rule is active. Display the target word with correct spelling
-                    if (sr.specialRule == SpecialRules.Rule.Reversed && sr.wordReversed)
+                    if ((sr.specialRule == SpecialRules.Rule.Reversed && sr.wordReversed) || sr.specialRule == SpecialRules.Rule.HiddenLetters)
                         ui.targetWordUI.text = sr.originalWord;
 
                     //show icon indicating a correct word. Show "Perfect!" if no corrections were made, "OK" otherwise
@@ -401,7 +401,7 @@ public class GameManager : MonoBehaviour
                     //highlight all of the incorrect letters in the target word.
                     //penalty is base penalty + (number of incorrect letters * 0.3 * difficulty)
                     int errorCount;
-                    if (sr.specialRule == SpecialRules.Rule.Reversed && sr.wordReversed)
+                    if ((sr.specialRule == SpecialRules.Rule.Reversed && sr.wordReversed) || sr.specialRule == SpecialRules.Rule.HiddenLetters)
                         errorCount = IncorrectLetterTotal(ui.inputField.text, sr.originalWord);
                     else
                         errorCount = IncorrectLetterTotal(ui.inputField.text, ui.targetWordUI.text);
@@ -484,7 +484,7 @@ public class GameManager : MonoBehaviour
 
     bool WordsMatch(string typedWord, string targetWord)
     {
-        if (sr.specialRule == SpecialRules.Rule.Reversed && sr.wordReversed)
+        if ((sr.specialRule == SpecialRules.Rule.Reversed && sr.wordReversed) || sr.specialRule == SpecialRules.Rule.HiddenLetters)
             return typedWord.ToLower() == sr.originalWord.ToLower();
         else
             return typedWord.ToLower() == targetWord.ToLower();

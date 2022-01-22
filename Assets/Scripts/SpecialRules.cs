@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 /* This class contains all of the special rules. If enabled, various code is executed from here instead of the game manager 
 update loop. */
@@ -37,7 +38,7 @@ public class SpecialRules : MonoBehaviour
     public Image greenLight;
 
     [Header("'Hidden Letters' variables")]
-    public int hiddenLetterCount;
+    public int totalHiddenLetters;
 
     //instances
     public GameManager gm = GameManager.instance;
@@ -129,10 +130,46 @@ public class SpecialRules : MonoBehaviour
                 break;
             
             case Rule.HiddenLetters:
-                //check how letters are hidden
+                //check how many letters are hidden
                 originalWord = gm.ui.targetWordUI.text;
-                hiddenLetterCount = Mathf.RoundToInt(originalWord.Length / 4);
-                Debug.Log("Hidden Letters: " + hiddenLetterCount);
+                totalHiddenLetters = originalWord.Length / 4;    //minimum should be 1.
+                Debug.Log("Hidden Letters: " + totalHiddenLetters);
+
+                //create the new word
+                string newWord = "";
+                //string startColor = "<color=#00F0FF>";  //light blue
+                //string endColor = "</color>";
+                float successRate = 0.6f;          //the odds that a letter is hidden. Rate is halved after the first hidden letter.
+                int lettersHidden = 0;
+
+                int j = 0;
+                while (j < originalWord.Length)
+                {
+                    //check each letter that isn't the first or the last one, and determine if it should be hidden
+                    if (j != 0 && j != originalWord.Length - 1 && lettersHidden < totalHiddenLetters)
+                    {
+                        float hideChance = Random.Range(0, 1f);
+                        if (hideChance <= successRate)
+                        {
+                            //hide this letter
+                            newWord += "?";
+                            lettersHidden++;
+                        }
+                        else
+                        {
+                            newWord += originalWord.Substring(j, 1);
+                        }
+                    }
+                    else
+                    {
+                        newWord += originalWord.Substring(j, 1);
+                    }
+
+                    j++;
+                }
+
+                //display the updated word
+                gm.ui.targetWordUI.text = newWord;
                 break;
 
             case Rule.WordOverflow:
