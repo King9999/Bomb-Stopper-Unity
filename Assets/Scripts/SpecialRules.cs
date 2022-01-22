@@ -139,7 +139,7 @@ public class SpecialRules : MonoBehaviour
                 string newWord = "";
                 //string startColor = "<color=#00F0FF>";  //light blue
                 //string endColor = "</color>";
-                float successRate = 0.6f;          //the odds that a letter is hidden. Rate is halved after the first hidden letter.
+                float successRate = 0.5f;          //the odds that a letter is hidden. Rate is halved after the first hidden letter.
                 int lettersHidden = 0;
 
                 int j = 0;
@@ -154,10 +154,12 @@ public class SpecialRules : MonoBehaviour
                             //hide this letter
                             newWord += "?";
                             lettersHidden++;
+                            successRate = 0.5f;     //I reset to try to spread out the hidden letters.
                         }
                         else
                         {
                             newWord += originalWord.Substring(j, 1);
+                            successRate += 0.1f;    //increase likelhood of the next letter being hidden.
                         }
                     }
                     else
