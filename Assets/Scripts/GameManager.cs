@@ -77,6 +77,9 @@ public class GameManager : MonoBehaviour
     bool resultCoroutineOn;
     bool comboCountdownCoroutineOn;
     IEnumerator comboCountDown;
+
+    //other variables
+    [HideInInspector] public bool gameOver;           //reserved for the Three Strikes rule
     #endregion
 
     private void Awake()
@@ -169,6 +172,9 @@ public class GameManager : MonoBehaviour
         okWordCount = 0;
         wrongWordCount = 0;
 
+        //special rule check     
+        
+
 
         //GUIUtility.systemCopyBuffer = "test";     //USE THIS TO COPY TEXT TO CLIPBOARD!
         
@@ -208,7 +214,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("New score data: " + scoreStr);
             File.WriteAllText(filePath, scoreStr);*/
         //}
-        if (!gameTimer.TimeUp() && currentWordCount < totalWordCount)
+        if (!gameTimer.TimeUp() && !gameOver && currentWordCount < totalWordCount)
         {
             if (!targetWordSelected)
             {
@@ -413,6 +419,12 @@ public class GameManager : MonoBehaviour
                         stunCoroutineOn = true;
                         StartCoroutine(Stun(penaltyDuration));
                     }
+
+                    //'Three Strikes' rule check
+                    if (sr.specialRule == SpecialRules.Rule.ThreeStrikes)
+                    {
+                        sr.ExecuteSpecialRule(sr.specialRule);
+                    }
                     
                 }
                 
@@ -424,8 +436,9 @@ public class GameManager : MonoBehaviour
         }
         else //time is up or stage is complete
         {
-            if (gameTimer.TimeUp())
+            if (gameTimer.TimeUp() || gameOver)
             {
+                gameTimer.StopTimer();
                 //show animation of screen exploding
 
 
@@ -438,9 +451,6 @@ public class GameManager : MonoBehaviour
                 gameTimer.StopTimer();
                 uiHandler.SetActive(false);
                 GetStageCompletionResults();
-                //resultsScreenHandler.SetActive(true);
-                //ui.returnButton.gameObject.SetActive(true); //return to title
-                //ui.inputField.DeactivateInputField();
             }
         }
     }

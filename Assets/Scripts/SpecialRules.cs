@@ -28,11 +28,13 @@ public class SpecialRules : MonoBehaviour
     [Header("'3 Strikes' variables")]
     public GameObject threeStrikesRuleContainer;
 
-    public int strikes;
+    public int lightIndex;      //this is the iterator for the arrays below
     public int MaxStrikes {get;} = 3;
     public Image[] strikeLights;
-    public bool[] struckOut;
+    bool lightChanged;
+    bool changeStrikeLightCoroutineOn;
     public Image redLight;
+    public Image greenLight;
 
     //instances
     public GameManager gm = GameManager.instance;
@@ -53,9 +55,12 @@ public class SpecialRules : MonoBehaviour
     void Start()
     {
         specialRule = Rule.None;    //default rule
+        gameObject.SetActive(false);    //default state
 
         if (tm.specialToggle.isOn)
         {
+            gameObject.SetActive(true);
+
             ruleNames = new string[TotalRules];
             ruleNames[0] = "Reversed";
             ruleNames[1] = "3 Strikes";
@@ -69,7 +74,15 @@ public class SpecialRules : MonoBehaviour
             int randRule = Random.Range(1, TotalRules + 1); //ignoring the "none" rule at index 0
             //specialRule = (Rule)randRule;
             specialRule = Rule.ThreeStrikes;
-            ruleName.text = ruleNames[randRule - 1];    //I subtract 1 because I don't have a 6th index in ruleNames
+            ruleName.text = ruleNames[(int)specialRule - 1];    //I subtract 1 because I don't have a 6th index in ruleNames
+
+            //enable appropriate assets for certain rules as required
+            if (specialRule == Rule.ThreeStrikes)
+            {
+                threeStrikesRuleContainer.SetActive(true);
+                redLight.gameObject.SetActive(false);   //don't need this right away
+                greenLight.gameObject.SetActive(false);
+            }
         }
     }
 
@@ -108,6 +121,16 @@ public class SpecialRules : MonoBehaviour
                 break;
 
             case Rule.ThreeStrikes:
+                //turn one of the lights red
+                lightChanged = true;
+                //strikeLights[lightIndex].sprite = redLight.sprite;
+                //lightIndex++;
+
+                /*if (lightIndex >= MaxStrikes)
+                {
+                    //the end
+                    gm.gameOver = true;
+                }*/
                 break;
             
             case Rule.HiddenLetters:
@@ -139,6 +162,16 @@ public class SpecialRules : MonoBehaviour
                 StartCoroutine(AnimateReverseArrow());
             }
         }
+
+        //Three Strikes rule
+        if (lightChanged)
+        {
+            if (!changeStrikeLightCoroutineOn)
+            {
+                changeStrikeLightCoroutineOn = true;
+                StartCoroutine(ChangeStrikeLight());
+            }
+        }
     }
 
     //moves the reverse arrow to alert player
@@ -158,5 +191,34 @@ public class SpecialRules : MonoBehaviour
         
         reverseArrow.transform.position = originalPos;
         animateArrowCoroutineOn = false;
+    }
+
+    //light flashes green and red for a duration and then stays red.
+    IEnumerator ChangeStrikeLight()
+    {
+        float duration = 0.5f;
+        float currentTime = Time.time;
+
+        while (Time.time < currentTime + duration)
+        {
+            if(strikeLights[lightIndex].sprite != redLight.sprite)
+                strikeLights[lightIndex].sprite = redLight.sprite;
+            else
+                strikeLights[lightIndex].sprite = greenLight.sprite;
+            yield return new WaitForSeconds(0.05f);
+        }
+
+        //turn light red & check for game over
+        strikeLights[lightIndex].sprite = redLight.sprite;
+        lightIndex++;
+
+        if (lightIndex >= MaxStrikes)
+        {
+            //the end
+            gm.gameOver = true;
+        }
+
+        lightChanged = false;
+        changeStrikeLightCoroutineOn = false;
     }
 }
