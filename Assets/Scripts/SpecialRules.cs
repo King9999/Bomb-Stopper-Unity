@@ -15,7 +15,7 @@ public class SpecialRules : MonoBehaviour
     
 
     //variables for specific rules
-    [Header("Variables for 'Reversed' rule")]
+    [Header("'Reversed' variables")]
     public GameObject reversedRuleContainer;
     public bool wordReversed;
     float reverseRate;          //chance that a target word is spelled backwards
@@ -25,8 +25,14 @@ public class SpecialRules : MonoBehaviour
     bool animateArrowCoroutineOn;
 
     //Three Strikes
+    [Header("'3 Strikes' variables")]
+    public GameObject threeStrikesRuleContainer;
+
     public int strikes;
     public int MaxStrikes {get;} = 3;
+    public Image[] strikeLights;
+    public bool[] struckOut;
+    public Image redLight;
 
     //instances
     public GameManager gm = GameManager.instance;
@@ -62,8 +68,8 @@ public class SpecialRules : MonoBehaviour
             //get a random rule
             int randRule = Random.Range(1, TotalRules + 1); //ignoring the "none" rule at index 0
             //specialRule = (Rule)randRule;
-            specialRule = Rule.Reversed;
-            ruleName.text = ruleNames[randRule];
+            specialRule = Rule.ThreeStrikes;
+            ruleName.text = ruleNames[randRule - 1];    //I subtract 1 because I don't have a 6th index in ruleNames
         }
     }
 
