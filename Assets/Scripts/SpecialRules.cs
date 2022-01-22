@@ -1,5 +1,7 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
+using System.Collections;
 
 /* This class contains all of the special rules. If enabled, various code is executed from here instead of the game manager 
 update loop. */
@@ -10,13 +12,17 @@ public class SpecialRules : MonoBehaviour
     int TotalRules {get;} = 6;
     public TextMeshProUGUI ruleName;
     string[] ruleNames;
-    public GameObject ruleDataContainer;
+    
 
     //variables for specific rules
-    //Reversed
+    [Header("Variables for 'Reversed' rule")]
+    public GameObject reversedRuleContainer;
     public bool wordReversed;
     float reverseRate;          //chance that a target word is spelled backwards
     public string originalWord; //player must type this word to score.
+    public TextMeshProUGUI reverseIndicator;    //alerts player that a word is backwards
+    public Image reverseArrow;      //shows the direction a word must be read and typed
+    bool animateArrowCoroutineOn;
 
     //Three Strikes
     public int strikes;
@@ -84,10 +90,14 @@ public class SpecialRules : MonoBehaviour
 
                     gm.ui.targetWordUI.text = reversedWord;
                     Debug.Log(reversedWord);
+
+                    //alert player of reversed word
+                    reversedRuleContainer.SetActive(true);
                 }
                 else
                 {
                     wordReversed = false;
+                    reversedRuleContainer.SetActive(false);
                 }
                 break;
 
@@ -109,5 +119,38 @@ public class SpecialRules : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    void Update()
+    {
+        /*************COROUTINE CHECKS FOR VARIOUS RULES*************/
+        //'Reversed' rule
+        if (wordReversed)
+        {
+            if (!animateArrowCoroutineOn)
+            {
+                animateArrowCoroutineOn = true;
+                StartCoroutine(AnimateReverseArrow());
+            }
+        }
+    }
+
+    //moves the reverse arrow to alert player
+    IEnumerator AnimateReverseArrow()
+    {
+        Vector3 originalPos = reverseArrow.transform.position;
+        float duration = 0.5f;
+        float currentTime = Time.time;
+        float travelRate = 40;
+
+        while(Time.time < currentTime + duration)
+        {
+            reverseArrow.transform.position = new Vector3(reverseArrow.transform.position.x - travelRate * Time.deltaTime, reverseArrow.transform.position.y, 
+                reverseArrow.transform.position.z);
+            yield return null;
+        }
+        
+        reverseArrow.transform.position = originalPos;
+        animateArrowCoroutineOn = false;
     }
 }
