@@ -1,3 +1,4 @@
 TO DO LIST
 
-1. When reversed rule is active, need some kind of indicator to let player know a word is reversed and must be typed with original spelling.
+1. When reversed rule is active, need some kind of indicator to let player know a word is reversed and must be typed with original spelling. *DONE*
+2. Need to revise the word list so that more reasonable words are used. Try to avoid obscure/outdated words.

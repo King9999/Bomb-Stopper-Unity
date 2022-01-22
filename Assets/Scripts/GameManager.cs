@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     int pointsPerLetter {get;} = 10;
     bool scoreAdded;                //prevents score from being added multiple times per frame.    
 
-    int currentWordCount;
+    [HideInInspector]public int currentWordCount;
 
     //Used Words variables
     string[] usedWords;             //holds the last words used. Any words in this list won't appear as a target word.
@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     int usedWordIndex;              //always points to last open space in the usedWords array.
 
     //JSON variables
-    int totalWordCount;                 //number of words to complete to finish the level
+    [HideInInspector]public int totalWordCount;                 //number of words to complete to finish the level
     string difficultyId;
     float time;
 
@@ -173,7 +173,10 @@ public class GameManager : MonoBehaviour
         wrongWordCount = 0;
 
         //special rule check     
-        
+        if (sr.specialRule == SpecialRules.Rule.WordOverflow)
+        {
+            sr.ExecuteSpecialRule(sr.specialRule);
+        }
 
 
         //GUIUtility.systemCopyBuffer = "test";     //USE THIS TO COPY TEXT TO CLIPBOARD!
@@ -432,7 +435,10 @@ public class GameManager : MonoBehaviour
 
             //UI update
             ui.scoreValueUI.text = score.ToString();
-            ui.wordCountValueUI.text = currentWordCount + "/" + totalWordCount;
+            if (sr.specialRule == SpecialRules.Rule.WordOverflow)
+                ui.wordCountValueUI.text = currentWordCount + "/" + sr.startColor + totalWordCount + sr.endColor;
+            else
+                ui.wordCountValueUI.text = currentWordCount + "/" + totalWordCount;
         }
         else //time is up or stage is complete
         {

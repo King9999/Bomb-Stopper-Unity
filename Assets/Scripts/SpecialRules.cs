@@ -40,6 +40,11 @@ public class SpecialRules : MonoBehaviour
     [Header("'Hidden Letters' variables")]
     public int totalHiddenLetters;
 
+    [Header("Word Overflow variables")]
+    public int overflowAmount;          //amount of extra target words added. 50% of the initial target.
+    public string startColor = "<color=#00F0FF>";  //light blue
+    public string endColor = "</color>";
+
     //instances
     public GameManager gm = GameManager.instance;
     TitleManager tm = TitleManager.instance;
@@ -77,7 +82,7 @@ public class SpecialRules : MonoBehaviour
             //get a random rule
             int randRule = Random.Range(1, TotalRules + 1); //ignoring the "none" rule at index 0
             //specialRule = (Rule)randRule;
-            specialRule = Rule.HiddenLetters;
+            specialRule = Rule.WordOverflow;
             ruleName.text = ruleNames[(int)specialRule - 1];    //I subtract 1 because I don't have a 6th index in ruleNames
 
             //enable appropriate assets for certain rules as required
@@ -86,6 +91,12 @@ public class SpecialRules : MonoBehaviour
                 threeStrikesRuleContainer.SetActive(true);
                 redLight.gameObject.SetActive(false);   //don't need this right away
                 greenLight.gameObject.SetActive(false);
+            }
+
+            if (specialRule == Rule.WordOverflow)
+            {
+                //reduce text size
+                ruleName.fontSize -= 6;
             }
         }
     }
@@ -175,6 +186,13 @@ public class SpecialRules : MonoBehaviour
                 break;
 
             case Rule.WordOverflow:
+                overflowAmount = gm.totalWordCount / 2;
+                gm.totalWordCount += overflowAmount;
+
+                //change colour of target amount
+                string startColor = "<color=#00F0FF>";  //light blue
+                string endColor = "</color>";
+                gm.ui.wordCountValueUI.text = gm.currentWordCount + "/" + startColor + gm.totalWordCount + endColor;
                 break;
 
             case Rule.ReducedTime:
