@@ -19,8 +19,9 @@ public class GameManager : MonoBehaviour
     int comboCount;                 //A combo is formed when player types at least 2 words consecutively without error or correction.
     bool comboCounted;              //prevents combo counter from increasing more than once if a combo was already performed on current word.
     float score;
-    int pointsPerLetter {get;} = 10;
-    bool scoreAdded;                //prevents score from being added multiple times per frame.    
+    float pointsPerLetter {get;} = 10;
+    bool scoreAdded;                //prevents score from being added multiple times per frame.
+    float specialMod;               //more points are awarded if special rules are enabled.    
 
     [HideInInspector]public int currentWordCount;
 
@@ -177,7 +178,16 @@ public class GameManager : MonoBehaviour
         okWordCount = 0;
         wrongWordCount = 0;
 
-        //special rule check     
+        //special rule check
+        if (tm.specialToggle.isOn)
+        {
+            specialMod = 1.5f;
+        }
+        else
+        {
+            specialMod = 1;
+        }
+
         if (sr.specialRule == SpecialRules.Rule.WordOverflow)
         {
             sr.ExecuteSpecialRule(sr.specialRule);
@@ -330,7 +340,7 @@ public class GameManager : MonoBehaviour
                         if (!scoreAdded && targetWordSelected)
                         {
                             float bonus = pointsPerLetter * ui.inputField.text.Length * 1 + (comboCount * 0.2f);
-                            score += Mathf.Round(bonus);
+                            score += Mathf.Round(bonus) * specialMod;
                             Debug.Log("Pts Added: " + Mathf.Round(bonus));
                             scoreAdded = true;
                         }
@@ -368,7 +378,7 @@ public class GameManager : MonoBehaviour
                         //add points
                         if (!scoreAdded && targetWordSelected)
                         {
-                            score += pointsPerLetter * ui.inputField.text.Length;
+                            score += Mathf.Round(pointsPerLetter * ui.inputField.text.Length * specialMod);
                             scoreAdded = true;
                         }
 
@@ -577,10 +587,10 @@ public class GameManager : MonoBehaviour
             medalPos = new Vector3(medalPos.x, medalPos.y - yOffset, medalPos.z);
         }
 
-        //Ten Thosuand Club Medal
-        if (score >= 10000)
+        //Five Thosuand Club Medal
+        if (score >= 5000)
         {
-            rs.DisplayMedal(medalObjects[(int)MedalManager.MedalName.TenThousandClub], medalPos);
+            rs.DisplayMedal(medalObjects[(int)MedalManager.MedalName.FiveThousandClub], medalPos);
             medalPos = new Vector3(medalPos.x, medalPos.y - yOffset, medalPos.z);
         }
 

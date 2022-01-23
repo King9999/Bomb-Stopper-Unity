@@ -5,7 +5,7 @@ public class MedalManager : MonoBehaviour
     public Medal[] medals;          //11 total
 
     public enum MedalName {ASpecialKindOfPerson, BombDefused, ComboMaster, ComboRookie, DramaticFinish, ExpertDefuser, GodDefuser, 
-                            TenThousandClub, Perfect, SpeedDemon, OneThousandClub}
+                            FiveThousandClub, Perfect, SpeedDemon, OneThousandClub}
     public static MedalManager instance;
 
     void Awake()
