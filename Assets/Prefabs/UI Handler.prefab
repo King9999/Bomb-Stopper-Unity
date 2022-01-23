@@ -2187,6 +2187,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   time: 120
+  initTime: 0
   timerRunning: 0
   timerUI: {fileID: 6832036756536191124}
 --- !u!1 &6832036756086741410

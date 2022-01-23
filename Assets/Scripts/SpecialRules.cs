@@ -56,6 +56,12 @@ public class SpecialRules : MonoBehaviour
     public TextMeshProUGUI addedTimeUI;
     bool animateAddedTimeCoroutineOn;
 
+    [Header("Invisible variables")]
+    //string maskedWord;                  //all text in input field is replaced with this
+    [HideInInspector]public string originalTypedWord;
+    public string alphabet {get;} = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    int inputFieldIndex;                //tracks which   
+
     //instances
     public GameManager gm = GameManager.instance;
     TitleManager tm = TitleManager.instance;
@@ -95,7 +101,7 @@ public class SpecialRules : MonoBehaviour
             //int randRule = Random.Range(1, TotalRules + 1); //ignoring the "none" rule at index 0
             //int randRule = Random.Range(1, 6);
             //specialRule = (Rule)randRule;
-            specialRule = Rule.ReducedTime;
+            specialRule = Rule.Invisible;
             ruleName.text = ruleNames[(int)specialRule - 1];    //I subtract 1 because I don't have a 6th index in ruleNames
 
             if (specialRule == Rule.Reversed)
@@ -106,24 +112,29 @@ public class SpecialRules : MonoBehaviour
             }
 
             //enable appropriate assets for certain rules as required
-            if (specialRule == Rule.ThreeStrikes)
+            else if (specialRule == Rule.ThreeStrikes)
             {
                 threeStrikesRuleContainer.SetActive(true);
                 redLight.gameObject.SetActive(false);   //don't need this right away
                 greenLight.gameObject.SetActive(false);
             }
 
-            if (specialRule == Rule.WordOverflow)
+            else if (specialRule == Rule.WordOverflow)
             {
                 //reduce text size so it fits in the window
                 ruleName.fontSize -= 6;
             }
 
-            if (specialRule == Rule.ReducedTime)
+            else if (specialRule == Rule.ReducedTime)
             {
                 reducedTimeRuleContainer.SetActive(true);
                 addedTimeUI.gameObject.SetActive(false);    //hidden by default
             }
+
+            /*else if (specialRule == Rule.Invisible)
+            {
+                originalTypedWord = new List<char>();
+            }*/
         }
     }
 
@@ -228,6 +239,22 @@ public class SpecialRules : MonoBehaviour
                 gm.gameTimer.time += addedTime;
                 addedTimeUI.text = "+" + addedTime + " sec.";
                 Debug.Log("Time added: " + addedTime);
+                break;
+
+            case Rule.Invisible:
+                int k = 0;
+                //originalTypedWord = gm.ui.inputField.text;
+                string maskedWord = "";
+
+                //mask the word
+                while (k < gm.ui.inputField.text.Length)
+                {
+                    maskedWord += "*";
+                    k++;
+                }
+
+                gm.ui.inputField.text = maskedWord;
+                Debug.Log("Original word: " + originalTypedWord);
                 break;
 
             case Rule.CaseSensitive:

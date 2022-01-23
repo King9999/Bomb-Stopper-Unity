@@ -46,6 +46,19 @@ public class UI : MonoBehaviour
         instance = this;
     }
 
+    /*void Update()
+    {
+        int i = 0;
+        string hiddenWord = "";
+        while (i < inputField.text.Length)
+        {
+            hiddenWord += "*";
+            i++;
+        }
+
+        inputField.text = hiddenWord;
+    }*/
+
     IEnumerator ReduceStunMeter()
     {
         while (stunMeter.value > 0)

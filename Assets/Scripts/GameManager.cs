@@ -304,6 +304,29 @@ public class GameManager : MonoBehaviour
                 correctionWasMade = true;
             }
 
+            //Check for Invisible rule
+            if (sr.specialRule == SpecialRules.Rule.Invisible && Input.anyKeyDown)
+            {
+                //get what the player typed and add it to original word string. We only want to check the alphabet, and ignore anything else.
+                int i = 0;
+                bool keyFound = false;
+                
+                while (!keyFound && i < sr.alphabet.Length)
+                {
+                    if (Input.GetKeyDown(sr.alphabet.Substring(i,1).ToLower()))
+                    {
+                        sr.originalTypedWord += sr.alphabet.Substring(i,1).ToLower();
+                        Debug.Log("Typed " + sr.originalTypedWord);
+                        keyFound = true;
+                    }
+                    else
+                    {
+                        i++;
+                    }
+                }
+                sr.ExecuteSpecialRule(sr.specialRule);
+            }
+
            
             //check to see if amount of letters in input field matches the target word's letter count
             if (ui.inputField.text.Length >= ui.targetWordUI.text.Length)
@@ -317,6 +340,10 @@ public class GameManager : MonoBehaviour
                     //additional check if reverse rule is active. Display the target word with correct spelling
                     if ((sr.specialRule == SpecialRules.Rule.Reversed && sr.wordReversed) || sr.specialRule == SpecialRules.Rule.HiddenLetters)
                         ui.targetWordUI.text = sr.originalWord;
+                    
+                    //show the typed word if this rule is active.
+                    if (sr.specialRule == SpecialRules.Rule.Invisible)
+                        ui.inputField.text = sr.originalTypedWord;
 
                     //show icon indicating a correct word. Show "Perfect!" if no corrections were made, "OK" otherwise
                     if (!correctionWasMade)
@@ -443,6 +470,8 @@ public class GameManager : MonoBehaviour
                     int errorCount;
                     if ((sr.specialRule == SpecialRules.Rule.Reversed && sr.wordReversed) || sr.specialRule == SpecialRules.Rule.HiddenLetters)
                         errorCount = IncorrectLetterTotal(ui.inputField.text, sr.originalWord);
+                    else if (sr.specialRule == SpecialRules.Rule.Invisible)
+                        errorCount = IncorrectLetterTotal(sr.originalTypedWord, ui.targetWordUI.text);
                     else
                         errorCount = IncorrectLetterTotal(ui.inputField.text, ui.targetWordUI.text);
 
@@ -465,9 +494,17 @@ public class GameManager : MonoBehaviour
                     {
                         sr.ExecuteSpecialRule(sr.specialRule);
                     }
+
                     
                 }
-                
+
+                //'Invisible rule check
+                if (sr.specialRule == SpecialRules.Rule.Invisible)
+                {
+                    //we're done with the word, so we clear it.
+                    sr.originalTypedWord = "";
+                }
+               
             }
 
             //UI update
@@ -529,6 +566,8 @@ public class GameManager : MonoBehaviour
     {
         if ((sr.specialRule == SpecialRules.Rule.Reversed && sr.wordReversed) || sr.specialRule == SpecialRules.Rule.HiddenLetters)
             return typedWord.ToLower() == sr.originalWord.ToLower();
+        else if (sr.specialRule == SpecialRules.Rule.Invisible)
+            return sr.originalTypedWord.ToLower() == targetWord.ToLower();
         else
             return typedWord.ToLower() == targetWord.ToLower();
     }
