@@ -236,6 +236,13 @@ public class GameManager : MonoBehaviour
         {
             if (!targetWordSelected)
             {
+                //'Invisible rule check
+                if (sr.specialRule == SpecialRules.Rule.Invisible)
+                {
+                    //we're done with the word, so we clear it.
+                    sr.originalTypedWord = "";
+                }
+                
                 totalWordsAttempted++;          
                 //change the target word, taking care to make sure the same word isn't selected.
                 string previousWord = ui.targetWordUI.text;
@@ -334,16 +341,17 @@ public class GameManager : MonoBehaviour
                 //prevent player from adding any more input.
                 ui.inputField.DeactivateInputField();
 
+                //show the typed word if this rule is active.
+                if (sr.specialRule == SpecialRules.Rule.Invisible)
+                   ui.inputField.text = sr.originalTypedWord;
+
                 //compare the words and check if they match.
                 if (WordsMatch(ui.inputField.text, ui.targetWordUI.text))
                 {
                     //additional check if reverse rule is active. Display the target word with correct spelling
                     if ((sr.specialRule == SpecialRules.Rule.Reversed && sr.wordReversed) || sr.specialRule == SpecialRules.Rule.HiddenLetters)
                         ui.targetWordUI.text = sr.originalWord;
-                    
-                    //show the typed word if this rule is active.
-                    if (sr.specialRule == SpecialRules.Rule.Invisible)
-                        ui.inputField.text = sr.originalTypedWord;
+                   
 
                     //show icon indicating a correct word. Show "Perfect!" if no corrections were made, "OK" otherwise
                     if (!correctionWasMade)
@@ -498,12 +506,7 @@ public class GameManager : MonoBehaviour
                     
                 }
 
-                //'Invisible rule check
-                if (sr.specialRule == SpecialRules.Rule.Invisible)
-                {
-                    //we're done with the word, so we clear it.
-                    sr.originalTypedWord = "";
-                }
+         
                
             }
 
