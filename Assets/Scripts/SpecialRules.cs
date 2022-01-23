@@ -50,6 +50,8 @@ public class SpecialRules : MonoBehaviour
     float addedTime;                    //how much time in seconds is added to timer. Formula is base added time + (number of letters * 0.1 * perfect modifier)
     float baseAddedTime {get;} = 1;
     float perfectMod {get;} = 2;
+    public bool timeAdded;              //used to prevent time being added more than once per frame.
+    public float elapsedTime;           //need this because the elapsed time in the normal game uses different calculations
     public TextMeshProUGUI addedTimeUI;
 
     //instances
@@ -212,6 +214,11 @@ public class SpecialRules : MonoBehaviour
                 break;
 
             case Rule.ReducedTime:
+                //add time based on the word & conditions
+                float mod = gm.correctionWasMade ? 1 : perfectMod;
+                addedTime = baseAddedTime + (gm.ui.targetWordUI.text.Length * 0.1f * mod);
+                gm.gameTimer.time += addedTime;
+                Debug.Log("Time added: " + addedTime);
                 break;
 
             case Rule.CaseSensitive:
@@ -244,6 +251,23 @@ public class SpecialRules : MonoBehaviour
                 StartCoroutine(ChangeStrikeLight());
             }
         }
+
+        //Reduced Time rule
+        if (specialRule == Rule.ReducedTime)
+        {
+            elapsedTime += Time.deltaTime;
+        }
+    }
+
+    //Used with Reduced Time rule only
+    public string DisplayElapsedTime()
+    {
+        float minutes = Mathf.FloorToInt(elapsedTime / 60);
+        float seconds = Mathf.FloorToInt(elapsedTime % 60);
+
+        string timeText = string.Format("{0:0}:{1:00}", minutes, seconds);
+
+        return timeText;
     }
 
     //moves the reverse arrow to alert player

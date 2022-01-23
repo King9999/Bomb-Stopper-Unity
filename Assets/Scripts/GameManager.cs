@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     WordLists dictionary;
 
     bool targetWordSelected;
-    bool correctionWasMade;         //if true, player pressed delete or backspace
+    [HideInInspector]public bool correctionWasMade;         //if true, player pressed delete or backspace
     int comboCount;                 //A combo is formed when player types at least 2 words consecutively without error or correction.
     bool comboCounted;              //prevents combo counter from increasing more than once if a combo was already performed on current word.
     float score;
@@ -283,14 +283,19 @@ public class GameManager : MonoBehaviour
                         }
                     }
                 }
+
+                //resetting various bools so that certain code executes again.
                 targetWordSelected = true;
-                comboCounted = false;   //new word, no combo occurred yet
-                scoreAdded = false;     //new word, new opportunity to add to score
+                comboCounted = false;   
+                scoreAdded = false;     
+                if (sr.specialRule == SpecialRules.Rule.ReducedTime)
+                {
+                    sr.timeAdded = false;
+                }
             }
 
             //check if backspace, delete, or directional arrows are pressed. Player takes a small penalty in these cases
-            if (Input.GetKeyDown(KeyCode.Backspace) || Input.GetKeyDown(KeyCode.Delete) || 
-                Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
+            if (Input.GetKeyDown(KeyCode.Backspace) || Input.GetKeyDown(KeyCode.Delete) || Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
             {
                 //Under the Three Strikes rule, any attempt at a correction counts as a strike
                 if (sr.specialRule == SpecialRules.Rule.ThreeStrikes)
@@ -340,9 +345,16 @@ public class GameManager : MonoBehaviour
                         if (!scoreAdded && targetWordSelected)
                         {
                             float bonus = pointsPerLetter * ui.inputField.text.Length * 1 + (comboCount * 0.2f);
-                            score += Mathf.Round(bonus) * specialMod;
+                            score += Mathf.Round(bonus * specialMod);
                             Debug.Log("Pts Added: " + Mathf.Round(bonus));
                             scoreAdded = true;
+                        }
+
+                        //add time if Reduced Time rule is enabled
+                        if (sr.specialRule == SpecialRules.Rule.ReducedTime && !sr.timeAdded)
+                        {
+                            sr.ExecuteSpecialRule(sr.specialRule);
+                            sr.timeAdded = true;
                         }
 
 
@@ -380,6 +392,13 @@ public class GameManager : MonoBehaviour
                         {
                             score += Mathf.Round(pointsPerLetter * ui.inputField.text.Length * specialMod);
                             scoreAdded = true;
+                        }
+
+                        //add time if Reduced Time rule is enabled
+                        if (sr.specialRule == SpecialRules.Rule.ReducedTime && !sr.timeAdded)
+                        {
+                            sr.ExecuteSpecialRule(sr.specialRule);
+                            sr.timeAdded = true;
                         }
 
                         //reset combo & coroutine
@@ -555,7 +574,11 @@ public class GameManager : MonoBehaviour
         }
 
         //collect data
-        rs.elapsedTimeValueUI.text = gameTimer.DisplayElapsedTime();
+        if (sr.specialRule == SpecialRules.Rule.ReducedTime)
+            rs.elapsedTimeValueUI.text = sr.DisplayElapsedTime();
+        else
+            rs.elapsedTimeValueUI.text = gameTimer.DisplayElapsedTime();
+
         rs.totalWordsAttemptedUI.text = totalWordsAttempted.ToString();
         rs.scoreUI.text = score.ToString();
         rs.perfectWordCountUI.text = perfectWordCount.ToString();
@@ -635,7 +658,8 @@ public class GameManager : MonoBehaviour
         }
 
         //Speed Demon
-        if (gameTimer.initTime - gameTimer.time <= 45)
+        float elapsedTime = (sr.specialRule == SpecialRules.Rule.ReducedTime) ? sr.elapsedTime : gameTimer.initTime - gameTimer.time;
+        if (elapsedTime <= 45)
         {
             rs.DisplayMedal(medalObjects[(int)MedalManager.MedalName.SpeedDemon], medalPos);
             medalPos = new Vector3(medalPos.x, medalPos.y - yOffset, medalPos.z);

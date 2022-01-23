@@ -552,7 +552,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59600f76096d0ec45adb11abd65079dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  details: Enable modifiers to the game. What you get is random!
+  details: 'Enable modifiers to the game. What you get is random!
+
+    More points
+    are awarded for each complete word.'
   highlight: {fileID: 5804349404776947804}
   tm: {fileID: 0}
 --- !u!1 &1936308337

@@ -40,6 +40,8 @@ public class Timer : MonoBehaviour
         //update timer display
         if (time <= 10)
             timerUI.color = Color.red;
+        else
+            timerUI.color = Color.white;
 
         timerUI.text = DisplayTimer();
     }
