@@ -46,6 +46,12 @@ public class SpecialRules : MonoBehaviour
     public string startColor = "<color=#00F0FF>";  //light blue
     public string endColor = "</color>";
 
+    [Header("Reduced time variables")]
+    float addedTime;                    //how much time in seconds is added to timer. Formula is base added time + (number of letters * 0.1 * perfect modifier)
+    float baseAddedTime {get;} = 1;
+    float perfectMod {get;} = 2;
+    public TextMeshProUGUI addedTimeUI;
+
     //instances
     public GameManager gm = GameManager.instance;
     TitleManager tm = TitleManager.instance;
@@ -83,9 +89,9 @@ public class SpecialRules : MonoBehaviour
 
             //get a random rule
             //int randRule = Random.Range(1, TotalRules + 1); //ignoring the "none" rule at index 0
-            int randRule = Random.Range(1, 6);
-            specialRule = (Rule)randRule;
-            //specialRule = Rule.WordOverflow;
+            //int randRule = Random.Range(1, 6);
+            //specialRule = (Rule)randRule;
+            specialRule = Rule.ReducedTime;
             ruleName.text = ruleNames[(int)specialRule - 1];    //I subtract 1 because I don't have a 6th index in ruleNames
 
             if (specialRule == Rule.Reversed)

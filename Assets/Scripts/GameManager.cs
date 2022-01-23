@@ -142,7 +142,7 @@ public class GameManager : MonoBehaviour
             gameTimer.SetTimer(10);
         else
             gameTimer.SetTimer(time);
-            
+
         gameTimer.StartTimer();
 
         usedWords = new string[maxUsedWords];
@@ -329,9 +329,8 @@ public class GameManager : MonoBehaviour
                         //add points
                         if (!scoreAdded && targetWordSelected)
                         {
-                            float bonus = pointsPerLetter * ui.inputField.text.Length * 1 + (comboCount * 0.1f);
+                            float bonus = pointsPerLetter * ui.inputField.text.Length * 1 + (comboCount * 0.2f);
                             score += Mathf.Round(bonus);
-                            //score += bonus + (bonus / 2);
                             Debug.Log("Pts Added: " + Mathf.Round(bonus));
                             scoreAdded = true;
                         }
