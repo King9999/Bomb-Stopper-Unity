@@ -277,6 +277,10 @@ public class GameManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Backspace) || Input.GetKeyDown(KeyCode.Delete) || 
                 Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
             {
+                //Under the Three Strikes rule, any attempt at a correction counts as a strike
+                if (sr.specialRule == SpecialRules.Rule.ThreeStrikes)
+                    sr.ExecuteSpecialRule(sr.specialRule);
+                    
                 correctionWasMade = true;
             }
 

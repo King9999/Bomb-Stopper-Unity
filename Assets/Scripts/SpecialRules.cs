@@ -80,9 +80,10 @@ public class SpecialRules : MonoBehaviour
 
 
             //get a random rule
-            int randRule = Random.Range(1, TotalRules + 1); //ignoring the "none" rule at index 0
-            //specialRule = (Rule)randRule;
-            specialRule = Rule.WordOverflow;
+            //int randRule = Random.Range(1, TotalRules + 1); //ignoring the "none" rule at index 0
+            int randRule = Random.Range(1, 5);
+            specialRule = (Rule)randRule;
+            //specialRule = Rule.WordOverflow;
             ruleName.text = ruleNames[(int)specialRule - 1];    //I subtract 1 because I don't have a 6th index in ruleNames
 
             //enable appropriate assets for certain rules as required
