@@ -137,7 +137,12 @@ public class GameManager : MonoBehaviour
         resultsScreenHandler.SetActive(false);
 
         //timer setup
-        gameTimer.SetTimer(time);
+        //If Reduced Time rule is set, player starts with 10 seconds
+        if (sr.specialRule == SpecialRules.Rule.ReducedTime)
+            gameTimer.SetTimer(10);
+        else
+            gameTimer.SetTimer(time);
+            
         gameTimer.StartTimer();
 
         usedWords = new string[maxUsedWords];
@@ -280,7 +285,7 @@ public class GameManager : MonoBehaviour
                 //Under the Three Strikes rule, any attempt at a correction counts as a strike
                 if (sr.specialRule == SpecialRules.Rule.ThreeStrikes)
                     sr.ExecuteSpecialRule(sr.specialRule);
-                    
+
                 correctionWasMade = true;
             }
 

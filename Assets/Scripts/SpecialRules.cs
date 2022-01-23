@@ -8,9 +8,9 @@ using System.Collections.Generic;
 update loop. */
 public class SpecialRules : MonoBehaviour
 {
-    public enum Rule {None, Reversed, ThreeStrikes, HiddenLetters, WordOverflow, ReducedTime, CaseSensitive}
+    public enum Rule {None, Reversed, ThreeStrikes, HiddenLetters, WordOverflow, ReducedTime, Invisible, CaseSensitive}
     public Rule specialRule;
-    int TotalRules {get;} = 6;
+    int TotalRules {get;} = 7;
     public TextMeshProUGUI ruleName;
     string[] ruleNames;
     
@@ -19,7 +19,8 @@ public class SpecialRules : MonoBehaviour
     [Header("'Reversed' variables")]
     public GameObject reversedRuleContainer;
     public bool wordReversed;
-    float reverseRate;          //chance that a target word is spelled backwards
+    float reverseRate;              //chance that a target word is spelled backwards
+    float initRate {get;} = 0.3f;
     public string originalWord;     //player must type this word to score. This variable is also used with the Hidden Letter rule.
     public TextMeshProUGUI reverseIndicator;    //alerts player that a word is backwards
     public Image reverseArrow;      //shows the direction a word must be read and typed
@@ -76,15 +77,23 @@ public class SpecialRules : MonoBehaviour
             ruleNames[2] = "Hidden Letters";
             ruleNames[3] = "Words Overflowing";
             ruleNames[4] = "Reduced Time";
-            ruleNames[5] = "CaSe SeNsItive";
+            ruleNames[5] = "Invisible";
+            ruleNames[6] = "CaSe SeNsItive";
 
 
             //get a random rule
             //int randRule = Random.Range(1, TotalRules + 1); //ignoring the "none" rule at index 0
-            int randRule = Random.Range(1, 5);
+            int randRule = Random.Range(1, 6);
             specialRule = (Rule)randRule;
             //specialRule = Rule.WordOverflow;
             ruleName.text = ruleNames[(int)specialRule - 1];    //I subtract 1 because I don't have a 6th index in ruleNames
+
+            if (specialRule == Rule.Reversed)
+            {
+                //I've changed this rule so that the reverse rate will increase whenever a word isn't reversed. The rate will reset once
+                //a word is modified.
+                reverseRate = initRate;
+            }
 
             //enable appropriate assets for certain rules as required
             if (specialRule == Rule.ThreeStrikes)
@@ -96,7 +105,7 @@ public class SpecialRules : MonoBehaviour
 
             if (specialRule == Rule.WordOverflow)
             {
-                //reduce text size
+                //reduce text size so it fits in the window
                 ruleName.fontSize -= 6;
             }
         }
@@ -108,7 +117,7 @@ public class SpecialRules : MonoBehaviour
         {
             case Rule.Reversed:
                 //write the target word backwards. Player must type word with the normal spelling
-                reverseRate = 0.3f;
+                //reverseRate = 0.3f;
                 float chance = Random.Range(0, 1f);
                 if (chance <= reverseRate)
                 {
@@ -128,11 +137,13 @@ public class SpecialRules : MonoBehaviour
 
                     //alert player of reversed word
                     reversedRuleContainer.SetActive(true);
+                    reverseRate = initRate;
                 }
                 else
                 {
                     wordReversed = false;
                     reversedRuleContainer.SetActive(false);
+                    reverseRate += 0.02f;   //goes up 2%
                 }
                 break;
 
@@ -149,16 +160,14 @@ public class SpecialRules : MonoBehaviour
 
                 //create the new word
                 string newWord = "";
-                //string startColor = "<color=#00F0FF>";  //light blue
-                //string endColor = "</color>";
-                float successRate = 0.5f;          //the odds that a letter is hidden. Rate is halved after the first hidden letter.
+                float successRate = 0.5f;          //the odds that a letter is hidden.
                 int lettersHidden = 0;
 
                 int j = 0;
                 while (j < originalWord.Length)
                 {
                     //check each letter that isn't the first or the last one, and determine if it should be hidden
-                    if (j != 0 && j != originalWord.Length - 1 && lettersHidden < totalHiddenLetters)
+                    if (lettersHidden < totalHiddenLetters && j != 0 && j != originalWord.Length - 1)
                     {
                         float hideChance = Random.Range(0, 1f);
                         if (hideChance <= successRate)
