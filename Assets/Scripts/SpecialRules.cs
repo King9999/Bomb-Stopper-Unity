@@ -43,16 +43,18 @@ public class SpecialRules : MonoBehaviour
 
     [Header("Word Overflow variables")]
     public int overflowAmount;          //amount of extra target words added. 50% of the initial target.
-    public string startColor = "<color=#00F0FF>";  //light blue
-    public string endColor = "</color>";
+    [HideInInspector]public string startColor = "<color=#00F0FF>";  //light blue
+    [HideInInspector]public string endColor = "</color>";
 
     [Header("Reduced time variables")]
+    public GameObject reducedTimeRuleContainer;
     float addedTime;                    //how much time in seconds is added to timer. Formula is base added time + (number of letters * 0.1 * perfect modifier)
     float baseAddedTime {get;} = 1;
     float perfectMod {get;} = 2;
     public bool timeAdded;              //used to prevent time being added more than once per frame.
     public float elapsedTime;           //need this because the elapsed time in the normal game uses different calculations
     public TextMeshProUGUI addedTimeUI;
+    bool animateAddedTimeCoroutineOn;
 
     //instances
     public GameManager gm = GameManager.instance;
@@ -115,6 +117,12 @@ public class SpecialRules : MonoBehaviour
             {
                 //reduce text size so it fits in the window
                 ruleName.fontSize -= 6;
+            }
+
+            if (specialRule == Rule.ReducedTime)
+            {
+                reducedTimeRuleContainer.SetActive(true);
+                addedTimeUI.gameObject.SetActive(false);    //hidden by default
             }
         }
     }
@@ -218,6 +226,7 @@ public class SpecialRules : MonoBehaviour
                 float mod = gm.correctionWasMade ? 1 : perfectMod;
                 addedTime = baseAddedTime + (gm.ui.targetWordUI.text.Length * 0.1f * mod);
                 gm.gameTimer.time += addedTime;
+                addedTimeUI.text = "+" + addedTime + " sec.";
                 Debug.Log("Time added: " + addedTime);
                 break;
 
@@ -256,6 +265,15 @@ public class SpecialRules : MonoBehaviour
         if (specialRule == Rule.ReducedTime)
         {
             elapsedTime += Time.deltaTime;
+        }
+
+        if (timeAdded)
+        {
+            if (!animateAddedTimeCoroutineOn)
+            {
+                animateAddedTimeCoroutineOn = true;
+                StartCoroutine(AnimateAddedTime());
+            }
         }
     }
 
@@ -316,5 +334,35 @@ public class SpecialRules : MonoBehaviour
 
         lightChanged = false;
         changeStrikeLightCoroutineOn = false;
+    }
+
+    //Used with Reduced Time rule. 
+    IEnumerator AnimateAddedTime()
+    {
+        Vector3 originalPos = addedTimeUI.transform.position;
+        float duration = 0.5f;
+        float currentTime = Time.time;
+        float distance = 20;
+        addedTimeUI.gameObject.SetActive(true);
+
+        while(Time.time < currentTime + duration)
+        {
+            addedTimeUI.transform.position = new Vector3(addedTimeUI.transform.position.x, addedTimeUI.transform.position.y - distance * Time.deltaTime,
+             addedTimeUI.transform.position.z);
+            yield return null;
+        }
+
+        //time fades gradually after it reaches its position.
+        while(addedTimeUI.alpha > 0)
+        {
+            addedTimeUI.alpha -= 2 * Time.deltaTime;
+            yield return null;
+        }
+        
+        //reset
+        addedTimeUI.alpha = 1;
+        addedTimeUI.transform.position = originalPos;
+        addedTimeUI.gameObject.SetActive(false);
+        animateAddedTimeCoroutineOn = false;
     }
 }
