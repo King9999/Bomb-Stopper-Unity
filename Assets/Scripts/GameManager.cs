@@ -284,7 +284,8 @@ public class GameManager : MonoBehaviour
                             usedWordIndex = 0;
                         
                         //Check if we need to reverse the letters or hide letters
-                        if (sr.specialRule == SpecialRules.Rule.Reversed || sr.specialRule == SpecialRules.Rule.HiddenLetters)
+                        if (sr.specialRule == SpecialRules.Rule.Reversed || sr.specialRule == SpecialRules.Rule.HiddenLetters || 
+                            sr.specialRule == SpecialRules.Rule.CaseSensitive)
                         {
                             //run this set of rules
                             sr.ExecuteSpecialRule(sr.specialRule);
@@ -647,6 +648,8 @@ public class GameManager : MonoBehaviour
             return typedWord.ToLower() == sr.originalWord.ToLower();
         else if (sr.specialRule == SpecialRules.Rule.Invisible)
             return sr.originalTypedWord.ToLower() == targetWord.ToLower();
+        else if (sr.specialRule == SpecialRules.Rule.CaseSensitive)
+            return typedWord == targetWord;    //words must match exactly, including case
         else
             return typedWord.ToLower() == targetWord.ToLower();
     }
@@ -661,17 +664,39 @@ public class GameManager : MonoBehaviour
         string startColor = "<color=#E53C3C>";  //I can append this to a string to add colour to individual letters.
         string endColor = "</color>";
 
-        for (int i = 0; i < targetWord.Length; i++)
+         //check if Case Sensitive rule is in place
+        if (sr.specialRule == SpecialRules.Rule.CaseSensitive)
         {
-            if (typedWord.ToLower().Substring(i,1) != targetWord.ToLower().Substring(i,1))
+            for (int i = 0; i < targetWord.Length; i++)
             {
-                errorTotal++;
-                //change colour of letter
-                result += startColor + targetWord.Substring(i,1) + endColor;
+            
+                if (typedWord.Substring(i,1) != targetWord.Substring(i,1))
+                {
+                    errorTotal++;
+                    //change colour of letter
+                    result += startColor + targetWord.Substring(i,1) + endColor;
+                }
+                else
+                {
+                    result += targetWord.Substring(i,1);
+                }
             }
-            else
+        }
+        else //regular check
+        {
+            for (int i = 0; i < targetWord.Length; i++)
             {
-                result += targetWord.Substring(i,1);
+            
+                if (typedWord.ToLower().Substring(i,1) != targetWord.ToLower().Substring(i,1))
+                {
+                    errorTotal++;
+                    //change colour of letter
+                    result += startColor + targetWord.Substring(i,1) + endColor;
+                }
+                else
+                {
+                    result += targetWord.Substring(i,1);
+                }
             }
         }
 
