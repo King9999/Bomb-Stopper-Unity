@@ -767,8 +767,8 @@ public class GameManager : MonoBehaviour
             medalPos = new Vector3(medalPos.x, medalPos.y - yOffset, medalPos.z);
         }
 
-        //Five Thosuand Club Medal
-        if (score >= 5000)
+        //Ten Thosuand Club Medal
+        if (score >= 10000)
         {
             rs.DisplayMedal(medalObjects[(int)MedalManager.MedalName.FiveThousandClub], medalPos);
             medalPos = new Vector3(medalPos.x, medalPos.y - yOffset, medalPos.z);
