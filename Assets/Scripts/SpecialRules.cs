@@ -59,8 +59,9 @@ public class SpecialRules : MonoBehaviour
     [Header("Invisible variables")]
     //string maskedWord;                  //all text in input field is replaced with this
     [HideInInspector]public string originalTypedWord;
-    public string alphabet {get;} = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    int inputFieldIndex;                //tracks which   
+    public List<string> wordCopy;
+    public int wordCopyIndex;
+    public string alphabet {get;} = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";   //used to find what player types
 
     //instances
     public GameManager gm = GameManager.instance;
@@ -131,10 +132,11 @@ public class SpecialRules : MonoBehaviour
                 addedTimeUI.gameObject.SetActive(false);    //hidden by default
             }
 
-            /*else if (specialRule == Rule.Invisible)
+            else if (specialRule == Rule.Invisible)
             {
-                originalTypedWord = new List<char>();
-            }*/
+                wordCopyIndex = 0;
+                wordCopy = new List<string>();
+            }
         }
     }
 
@@ -254,7 +256,7 @@ public class SpecialRules : MonoBehaviour
                 }
 
                 gm.ui.inputField.text = maskedWord;
-                Debug.Log("Original word: " + originalTypedWord);
+                //Debug.Log("Original word: " + originalTypedWord);
                 break;
 
             case Rule.CaseSensitive:

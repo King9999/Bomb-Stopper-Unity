@@ -1,8 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
-using UnityEngine.SceneManagement;
-using System.Collections.Generic;
 
 //NOTE: Unable to add high score table as there's no reliable way to have persistent data on WebGL without using a server.
 public class GameManager : MonoBehaviour
@@ -239,10 +237,10 @@ public class GameManager : MonoBehaviour
                 //'Invisible rule check
                 if (sr.specialRule == SpecialRules.Rule.Invisible)
                 {
-                    //we're done with the word, so we clear it.
+                    //we're done with the previous word, so we clear it.
                     sr.originalTypedWord = "";
                 }
-                
+
                 totalWordsAttempted++;          
                 //change the target word, taking care to make sure the same word isn't selected.
                 string previousWord = ui.targetWordUI.text;
@@ -308,6 +306,54 @@ public class GameManager : MonoBehaviour
                 if (sr.specialRule == SpecialRules.Rule.ThreeStrikes)
                     sr.ExecuteSpecialRule(sr.specialRule);
 
+                if (sr.specialRule == SpecialRules.Rule.Invisible)
+                {
+                    //lots of stuff happens here
+                    if (Input.GetKeyDown(KeyCode.LeftArrow))
+                    {
+                        if (sr.wordCopyIndex - 1 >= 0)
+                            sr.wordCopyIndex--;
+                        else
+                            Debug.Log("At beginning of word");
+                    }
+                    if (Input.GetKeyDown(KeyCode.RightArrow))
+                    {
+                        if (sr.wordCopyIndex + 1 <= sr.wordCopy.Count)
+                                 sr.wordCopyIndex++;
+                            else
+                                Debug.Log("At end of word");
+                        
+                    }
+
+                    if (sr.wordCopy[sr.wordCopyIndex] != null)
+                        Debug.Log("Current Letter: " + sr.wordCopy[sr.wordCopyIndex]);
+
+                    if (Input.GetKeyDown(KeyCode.Delete) && sr.wordCopyIndex < sr.wordCopy.Count)
+                    {
+                        sr.wordCopy.RemoveAt(sr.wordCopyIndex);
+                        //sr.wordCopyIndex--;
+                        string remaining = "";
+                        foreach(string l in sr.wordCopy)
+                        {
+                            remaining += l;
+                        }
+                        Debug.Log("Remaining Letters: " + remaining);
+                    }
+
+                    if (Input.GetKeyDown(KeyCode.Backspace) && sr.wordCopyIndex - 1 >= 0)
+                    {
+                        sr.wordCopy.RemoveAt(sr.wordCopyIndex - 1);
+                        sr.wordCopyIndex--;
+                        string remaining = "";
+                        foreach(string l in sr.wordCopy)
+                        {
+                            remaining += l;
+                        }
+                        Debug.Log("Remaining Letters: " + remaining);
+                    }
+                  
+                }
+
                 correctionWasMade = true;
             }
 
@@ -323,7 +369,9 @@ public class GameManager : MonoBehaviour
                     if (Input.GetKeyDown(sr.alphabet.Substring(i,1).ToLower()))
                     {
                         sr.originalTypedWord += sr.alphabet.Substring(i,1).ToLower();
-                        Debug.Log("Typed " + sr.originalTypedWord);
+                        sr.wordCopy.Add(sr.alphabet.Substring(i,1).ToLower());
+                        sr.wordCopyIndex++;
+                        Debug.Log("last letter typed: " + sr.wordCopy[sr.wordCopyIndex - 1]);
                         keyFound = true;
                     }
                     else
