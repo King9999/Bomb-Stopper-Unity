@@ -239,6 +239,9 @@ public class GameManager : MonoBehaviour
                 {
                     //we're done with the previous word, so we clear it.
                     sr.originalTypedWord = "";
+                    sr.wordCopy.Clear();
+                    sr.wordCopy.Add('_');
+                    sr.wordCopyIndex = 0;
                 }
 
                 totalWordsAttempted++;          
@@ -325,31 +328,50 @@ public class GameManager : MonoBehaviour
                         
                     }
 
-                    if (sr.wordCopy[sr.wordCopyIndex] != null)
-                        Debug.Log("Current Letter: " + sr.wordCopy[sr.wordCopyIndex]);
+                    Debug.Log("Current Letter: " + sr.wordCopy[sr.wordCopyIndex]);
 
-                    if (Input.GetKeyDown(KeyCode.Delete) && sr.wordCopy[sr.wordCopyIndex] != "_")
+                    if (Input.GetKeyDown(KeyCode.Delete) && sr.wordCopy[sr.wordCopyIndex] != '_')
                     {
                         sr.wordCopy.RemoveAt(sr.wordCopyIndex);
-                        //sr.wordCopyIndex--;
-                        string remaining = "";
+
+                        //overwrite originalTypedWord
+                        sr.originalTypedWord = "";
+                        foreach(char letter in sr.wordCopy)
+                        {
+                            if (letter != '_')
+                                sr.originalTypedWord += letter;
+                        }
+                        Debug.Log("Updated word: " + sr.originalTypedWord);
+
+                        /*string remaining = "";
                         foreach(string l in sr.wordCopy)
                         {
                             remaining += l;
                         }
-                        Debug.Log("Remaining Letters: " + remaining);
+                        Debug.Log("Remaining Letters: " + remaining);*/
                     }
 
                     if (Input.GetKeyDown(KeyCode.Backspace) && sr.wordCopyIndex - 1 >= 0 && sr.wordCopy.Count > 1)  //can't delete the space
                     {
                         sr.wordCopy.RemoveAt(sr.wordCopyIndex - 1);
                         sr.wordCopyIndex--;
-                        string remaining = "";
+
+                        //overwrite originalTypedWord
+                        sr.originalTypedWord = "";
+                        foreach(char letter in sr.wordCopy)
+                        {
+                            if (letter != '_')
+                                sr.originalTypedWord += letter;
+                            
+                        }
+                        Debug.Log("Updated word: " + sr.originalTypedWord);
+
+                        /*string remaining = "";
                         foreach(string l in sr.wordCopy)
                         {
                             remaining += l;
                         }
-                        Debug.Log("Remaining Letters: " + remaining);
+                        Debug.Log("Remaining Letters: " + remaining);*/
                     }
                   
                 }
@@ -363,16 +385,19 @@ public class GameManager : MonoBehaviour
                 //get what the player typed and add it to original word string. We only want to check the alphabet, and ignore anything else.
                 int i = 0;
                 bool keyFound = false;
-                
-                while (!keyFound && i < sr.alphabet.Length)
+                string lowerAlphabet = sr.alphabet.ToLower();
+                char[] alphabetArray = lowerAlphabet.ToCharArray();
+    
+
+                while (!keyFound && i < alphabetArray.Length)
                 {
-                    if (Input.GetKeyDown(sr.alphabet.Substring(i,1).ToLower()))
+                    if (Input.GetKeyDown(alphabetArray[i].ToString()))
                     {
                         sr.originalTypedWord += sr.alphabet.Substring(i,1).ToLower();
 
                         //new letters are always inserted before the space
-                        sr.wordCopy.Add("_");
-                        sr.wordCopy[sr.wordCopyIndex] = sr.alphabet.Substring(i,1).ToLower();
+                        sr.wordCopy.Add('_');
+                        sr.wordCopy[sr.wordCopyIndex] = alphabetArray[i];
                         sr.wordCopyIndex++;
                         Debug.Log("last letter typed: " + sr.wordCopy[sr.wordCopyIndex - 1]);
                         keyFound = true;

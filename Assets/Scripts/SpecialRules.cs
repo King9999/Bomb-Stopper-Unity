@@ -59,7 +59,7 @@ public class SpecialRules : MonoBehaviour
     [Header("Invisible variables")]
     //string maskedWord;                  //all text in input field is replaced with this
     [HideInInspector]public string originalTypedWord;
-    public List<string> wordCopy;
+    public List<char> wordCopy;
     public int wordCopyIndex;
     public string alphabet {get;} = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";   //used to find what player types
 
@@ -135,8 +135,8 @@ public class SpecialRules : MonoBehaviour
             else if (specialRule == Rule.Invisible)
             {
                 wordCopyIndex = 0;
-                wordCopy = new List<string>();
-                wordCopy.Add("_");  //must add a space in order to mimic the input field exactly. Any letters must be added in front of the space.
+                wordCopy = new List<char>();
+                wordCopy.Add('_');  //must add a space in order to mimic the input field exactly. Any letters must be added in front of the space.
             }
         }
     }
