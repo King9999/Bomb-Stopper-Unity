@@ -102,7 +102,7 @@ public class SpecialRules : MonoBehaviour
             //int randRule = Random.Range(1, TotalRules + 1); //ignoring the "none" rule at index 0
             //int randRule = Random.Range(1, 6);
             //specialRule = (Rule)randRule;
-            specialRule = Rule.Invisible;
+            specialRule = Rule.CaseSensitive;
             ruleName.text = ruleNames[(int)specialRule - 1];    //I subtract 1 because I don't have a 6th index in ruleNames
 
             if (specialRule == Rule.Reversed)
@@ -246,7 +246,6 @@ public class SpecialRules : MonoBehaviour
 
             case Rule.Invisible:
                 int k = 0;
-                //originalTypedWord = gm.ui.inputField.text;
                 string maskedWord = "";
 
                 //mask the word
@@ -257,10 +256,37 @@ public class SpecialRules : MonoBehaviour
                 }
 
                 gm.ui.inputField.text = maskedWord;
-                //Debug.Log("Original word: " + originalTypedWord);
                 break;
 
             case Rule.CaseSensitive:
+                //convert some or all letters to uppercase
+                originalWord = gm.ui.targetWordUI.text;
+
+                //create the new word
+                string updatedWord = "";
+                float changeRate = 0.5f;          //the odds that a letter is changed to uppercase.
+
+                int n = 0;
+                while (n < originalWord.Length)
+                {
+                    float upperCaseChance = Random.Range(0, 1f);
+                    if (upperCaseChance <= changeRate)
+                    {
+                        //change letter to uppercase
+                        updatedWord += originalWord.Substring(n, 1).ToUpper();
+                        changeRate = 0.5f;
+                    }
+                    else
+                    {
+                        updatedWord += originalWord.Substring(n, 1);
+                        changeRate += 0.1f;    //increase chance of the next letter being changed to uppercase.
+                    }
+                   
+                    n++;
+                }
+
+                //display the updated word
+                gm.ui.targetWordUI.text = updatedWord;
                 break;
 
             default:
