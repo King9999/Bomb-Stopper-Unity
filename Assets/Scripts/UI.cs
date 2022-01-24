@@ -19,6 +19,7 @@ public class UI : MonoBehaviour
     public TextMeshProUGUI penaltyUI;   //displays how much time is added to penalty per incorrect letter.
     public TextMeshProUGUI wordCountUI; //total number of words that need to be completed to finish the stage.
     public TextMeshProUGUI scoreValueUI;
+    public TextMeshProUGUI pointValueUI;    //amount of points for completed word
     public TextMeshProUGUI wordCountValueUI;
     public Button returnButton;         //sends player back to title screen.
 

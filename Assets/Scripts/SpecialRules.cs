@@ -99,11 +99,11 @@ public class SpecialRules : MonoBehaviour
 
 
             //get a random rule
-            //int randRule = Random.Range(1, TotalRules + 1); //ignoring the "none" rule at index 0
+            int randRule = Random.Range(1, TotalRules + 1); //ignoring the "none" rule at index 0
             //int randRule = Random.Range(1, 6);
-            //specialRule = (Rule)randRule;
-            specialRule = Rule.CaseSensitive;
-            ruleName.text = ruleNames[(int)specialRule - 1];    //I subtract 1 because I don't have a 6th index in ruleNames
+            specialRule = (Rule)randRule;
+            //specialRule = Rule.CaseSensitive;
+            ruleName.text = ruleNames[(int)specialRule - 1];    //I subtract 1 to get the correct rule in ruleNames
 
             if (specialRule == Rule.Reversed)
             {

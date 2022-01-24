@@ -19,7 +19,8 @@ public class GameManager : MonoBehaviour
     float score;
     float pointsPerLetter {get;} = 10;
     bool scoreAdded;                //prevents score from being added multiple times per frame.
-    float specialMod;               //more points are awarded if special rules are enabled.    
+    float specialMod;               //more points are awarded if special rules are enabled.
+    float pointsAdded;                    //amount of points for a complete word    
 
     [HideInInspector]public int currentWordCount;
 
@@ -75,6 +76,7 @@ public class GameManager : MonoBehaviour
     bool stunCoroutineOn;
     bool resultCoroutineOn;
     bool comboCountdownCoroutineOn;
+    bool animatePointsCoroutineOn;
     IEnumerator comboCountDown;
 
     //other variables
@@ -134,6 +136,7 @@ public class GameManager : MonoBehaviour
         ui.comboHandler.gameObject.SetActive(false);        //this too
         ui.returnButton.gameObject.SetActive(false);
         resultsScreenHandler.SetActive(false);
+        ui.pointValueUI.gameObject.SetActive(false);
 
         //timer setup
         //If Reduced Time rule is set, player starts with 10 seconds
@@ -456,9 +459,9 @@ public class GameManager : MonoBehaviour
                         //add points
                         if (!scoreAdded && targetWordSelected)
                         {
-                            float bonus = pointsPerLetter * ui.inputField.text.Length * 1 + (comboCount * 0.2f);
-                            score += Mathf.Round(bonus * specialMod);
-                            Debug.Log("Pts Added: " + Mathf.Round(bonus));
+                            pointsAdded = pointsPerLetter * ui.inputField.text.Length * (1 + comboCount * 0.33f);
+                            score += Mathf.Round(pointsAdded * specialMod);
+                            Debug.Log("Pts Added: " + Mathf.Round(pointsAdded * specialMod));
                             scoreAdded = true;
                         }
 
@@ -496,13 +499,19 @@ public class GameManager : MonoBehaviour
                             stunCoroutineOn = true;
                             StartCoroutine(Stun(0.5f, false)); //I have this here so player can confirm that they typed the correct word
                         }
+                        if(!animatePointsCoroutineOn)
+                        {
+                            animatePointsCoroutineOn = true;
+                            StartCoroutine(AnimatePoints(Mathf.Round(pointsAdded * specialMod)));
+                        }
                     }
                     else    //an OK match
                     {
                         //add points
                         if (!scoreAdded && targetWordSelected)
                         {
-                            score += Mathf.Round(pointsPerLetter * ui.inputField.text.Length * specialMod);
+                            pointsAdded = Mathf.Round(pointsPerLetter * ui.inputField.text.Length * specialMod);
+                            score += pointsAdded;
                             scoreAdded = true;
                         }
 
@@ -534,6 +543,11 @@ public class GameManager : MonoBehaviour
                         {
                             stunCoroutineOn = true;
                             StartCoroutine(Stun(basePenalty));
+                        }
+                        if(!animatePointsCoroutineOn)
+                        {
+                            animatePointsCoroutineOn = true;
+                            StartCoroutine(AnimatePoints(pointsAdded));
                         }
                         
                     }
@@ -746,8 +760,8 @@ public class GameManager : MonoBehaviour
             medalPos = new Vector3(medalPos.x, medalPos.y - yOffset, medalPos.z);
         }
 
-        //One Thousand Club medal
-        if (score >= 1000)
+        //Two Thousand Club medal
+        if (score >= 2000)
         {
             rs.DisplayMedal(medalObjects[(int)MedalManager.MedalName.OneThousandClub], medalPos);
             medalPos = new Vector3(medalPos.x, medalPos.y - yOffset, medalPos.z);
@@ -911,6 +925,42 @@ public class GameManager : MonoBehaviour
         comboCount = 0;
         ui.comboHandler.gameObject.SetActive(false);
         comboCountdownCoroutineOn = false;
+    }
+
+    IEnumerator AnimatePoints(float pointValue)
+    {
+        Vector3 originalPos = ui.pointValueUI.transform.position;
+        float duration = 0.5f;
+        float currentTime = Time.time;
+        float distance = 20;
+        ui.pointValueUI.text = pointValue + " pts.";
+
+        //colour of text depends on whether player got a perfect word
+        if (!correctionWasMade)
+            ui.pointValueUI.color = perfectWordColor;
+        else
+            ui.pointValueUI.color = new Color(0.1f, 0.7f, 0.9f);   //light blue colour
+        ui.pointValueUI.gameObject.SetActive(true);
+
+        while(Time.time < currentTime + duration)
+        {
+            ui.pointValueUI.transform.position = new Vector3(ui.pointValueUI.transform.position.x, ui.pointValueUI.transform.position.y + distance * Time.deltaTime,
+             ui.pointValueUI.transform.position.z);
+            yield return null;
+        }
+
+        //time fades gradually after it reaches its position.
+        while(ui.pointValueUI.alpha > 0)
+        {
+            ui.pointValueUI.alpha -= 2 * Time.deltaTime;
+            yield return null;
+        }
+        
+        //reset
+        ui.pointValueUI.alpha = 1;
+        ui.pointValueUI.transform.position = originalPos;
+        ui.pointValueUI.gameObject.SetActive(false);
+        animatePointsCoroutineOn = false;
     }
 #endregion
 
