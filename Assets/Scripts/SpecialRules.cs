@@ -136,6 +136,7 @@ public class SpecialRules : MonoBehaviour
             {
                 wordCopyIndex = 0;
                 wordCopy = new List<string>();
+                wordCopy.Add("_");  //must add a space in order to mimic the input field exactly. Any letters must be added in front of the space.
             }
         }
     }

@@ -16,5 +16,4 @@ MonoBehaviour:
   rank: 1
   medalAcquired: 1
   medalName: Dramatic Finish
-  details: Awarded for completing a stage with 5 seconds or less remaining on the
-    timer
+  details: Awarded for completing a stage with 5 seconds or less remaining

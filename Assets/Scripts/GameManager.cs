@@ -318,7 +318,7 @@ public class GameManager : MonoBehaviour
                     }
                     if (Input.GetKeyDown(KeyCode.RightArrow))
                     {
-                        if (sr.wordCopyIndex + 1 <= sr.wordCopy.Count)
+                        if (sr.wordCopyIndex + 1 < sr.wordCopy.Count)
                                  sr.wordCopyIndex++;
                             else
                                 Debug.Log("At end of word");
@@ -328,7 +328,7 @@ public class GameManager : MonoBehaviour
                     if (sr.wordCopy[sr.wordCopyIndex] != null)
                         Debug.Log("Current Letter: " + sr.wordCopy[sr.wordCopyIndex]);
 
-                    if (Input.GetKeyDown(KeyCode.Delete) && sr.wordCopyIndex < sr.wordCopy.Count)
+                    if (Input.GetKeyDown(KeyCode.Delete) && sr.wordCopy[sr.wordCopyIndex] != "_")
                     {
                         sr.wordCopy.RemoveAt(sr.wordCopyIndex);
                         //sr.wordCopyIndex--;
@@ -340,7 +340,7 @@ public class GameManager : MonoBehaviour
                         Debug.Log("Remaining Letters: " + remaining);
                     }
 
-                    if (Input.GetKeyDown(KeyCode.Backspace) && sr.wordCopyIndex - 1 >= 0)
+                    if (Input.GetKeyDown(KeyCode.Backspace) && sr.wordCopyIndex - 1 >= 0 && sr.wordCopy.Count > 1)  //can't delete the space
                     {
                         sr.wordCopy.RemoveAt(sr.wordCopyIndex - 1);
                         sr.wordCopyIndex--;
@@ -369,7 +369,10 @@ public class GameManager : MonoBehaviour
                     if (Input.GetKeyDown(sr.alphabet.Substring(i,1).ToLower()))
                     {
                         sr.originalTypedWord += sr.alphabet.Substring(i,1).ToLower();
-                        sr.wordCopy.Add(sr.alphabet.Substring(i,1).ToLower());
+
+                        //new letters are always inserted before the space
+                        sr.wordCopy.Add("_");
+                        sr.wordCopy[sr.wordCopyIndex] = sr.alphabet.Substring(i,1).ToLower();
                         sr.wordCopyIndex++;
                         Debug.Log("last letter typed: " + sr.wordCopy[sr.wordCopyIndex - 1]);
                         keyFound = true;
