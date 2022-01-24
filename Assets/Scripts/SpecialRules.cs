@@ -100,9 +100,8 @@ public class SpecialRules : MonoBehaviour
 
             //get a random rule
             int randRule = Random.Range(1, TotalRules + 1); //ignoring the "none" rule at index 0
-            //int randRule = Random.Range(1, 6);
-            specialRule = (Rule)randRule;
-            //specialRule = Rule.CaseSensitive;
+            //specialRule = (Rule)randRule;
+            specialRule = Rule.WordOverflow;
             ruleName.text = ruleNames[(int)specialRule - 1];    //I subtract 1 to get the correct rule in ruleNames
 
             if (specialRule == Rule.Reversed)
@@ -124,12 +123,22 @@ public class SpecialRules : MonoBehaviour
             {
                 //reduce text size so it fits in the window
                 ruleName.fontSize -= 6;
+
+                //add 50% more to the total word count
+                /*overflowAmount = gm.totalWordCount / 2;
+                gm.totalWordCount += overflowAmount;
+
+                //change colour of target amount
+                string startColor = "<color=#00F0FF>";  //light blue
+                string endColor = "</color>";
+                gm.ui.wordCountValueUI.text = gm.currentWordCount + "/" + startColor + gm.totalWordCount + endColor;*/
             }
 
             else if (specialRule == Rule.ReducedTime)
             {
                 reducedTimeRuleContainer.SetActive(true);
                 addedTimeUI.gameObject.SetActive(false);    //hidden by default
+                gm.gameTimer.SetTimer(10);
             }
 
             else if (specialRule == Rule.Invisible)

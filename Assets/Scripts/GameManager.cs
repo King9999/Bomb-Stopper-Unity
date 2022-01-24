@@ -140,9 +140,9 @@ public class GameManager : MonoBehaviour
 
         //timer setup
         //If Reduced Time rule is set, player starts with 10 seconds
-        if (sr.specialRule == SpecialRules.Rule.ReducedTime)
-            gameTimer.SetTimer(10);
-        else
+        if (sr.specialRule != SpecialRules.Rule.ReducedTime)
+            //gameTimer.SetTimer(10);
+        //else
             gameTimer.SetTimer(time);
 
         gameTimer.StartTimer();
