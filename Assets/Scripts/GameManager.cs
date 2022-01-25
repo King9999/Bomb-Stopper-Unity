@@ -162,6 +162,7 @@ public class GameManager : MonoBehaviour
             medalObjects[i].medalRank = mm.medals[i].rank;
             medalObjects[i].medalAcquired = mm.medals[i].medalAcquired;
             medalObjects[i].medalSprite.sprite = mm.medals[i].medalSprite;
+            medalObjects[i].transform.SetParent(rs.medalOrganizer); //objects must go into canvas so that it's hidden behind the screen transistion.
 
             //SpriteRenderer sr = medalObjects[i].GetComponent<SpriteRenderer>();
             //sr.sprite = mm.medals[i].medalSprite;
