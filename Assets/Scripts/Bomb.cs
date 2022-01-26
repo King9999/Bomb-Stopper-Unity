@@ -10,7 +10,7 @@ public class Bomb : MonoBehaviour
     public Slider bombFuse;
     float initTime {get;} = 120;       //the usual game time. I use this instead of gameTimer.initTime because 
                                         //gameTimer.initTime can change.
-    bool reduceFuseCoroutineOn;
+    bool pulseBombCoroutineOn;
 
     GameManager gm;
 
@@ -18,27 +18,23 @@ public class Bomb : MonoBehaviour
     void Start()
     {
         bombFuse.value = 1;
-        gm = GameManager.instance;  //this is here in case the instance isn't initialized yet.
+        gm = GameManager.instance;  //this is here to ensure the instance isn't null at runtime.
 
         if (gm != null)
         {
-            Debug.Log("Gm not null");
+            Debug.Log("Game Manager not null");
             StartCoroutine(ReduceFuse());
         }
     }
 
     void Update()
     {
-         /*if (gm != null)
-         {
-             if (!reduceFuseCoroutineOn)
-             {
-                reduceFuseCoroutineOn = true;
-                StartCoroutine(ReduceFuse());
-             }
-         }*/
+        if (!pulseBombCoroutineOn)
+        {
+            pulseBombCoroutineOn = true;
+            StartCoroutine(PulseBomb());
+        }
     }
-
 
     //reduce fuse based on the timer.
     IEnumerator ReduceFuse()
@@ -48,7 +44,34 @@ public class Bomb : MonoBehaviour
             bombFuse.value = gm.gameTimer.time / initTime;
             yield return null;
         }
-
         
+    }
+
+    IEnumerator PulseBomb()
+    {
+        float scaleValue = 0.2f;
+        Vector3 targetScale = new Vector3 (bombBody.transform.localScale.x + scaleValue, bombBody.transform.localScale.y + scaleValue, 1);
+        Vector3 originalScale = bombBody.transform.localScale;
+        float deltaScale = Time.deltaTime / 2;
+
+        while (bombBody.transform.localScale.x < targetScale.x)
+        {
+            bombBody.transform.localScale = new Vector3(bombBody.transform.localScale.x + deltaScale, 
+                bombBody.transform.localScale.y + deltaScale, 1);
+            yield return null;
+        }
+
+        //shrink back to normal
+        while (bombBody.transform.localScale.x > originalScale.x)
+        {
+            bombBody.transform.localScale = new Vector3(bombBody.transform.localScale.x - deltaScale, 
+                bombBody.transform.localScale.y - deltaScale, 1);
+            yield return null;
+        }
+
+        //ensure scale is back to normal.
+        bombBody.transform.localScale = originalScale;
+        pulseBombCoroutineOn = false;
+
     }
 }
