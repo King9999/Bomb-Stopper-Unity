@@ -1,6 +1,7 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 <<<<<<< HEAD
+<<<<<<< HEAD
 --- !u!1 &1594501541233947
 GameObject:
   m_ObjectHideFlags: 0
@@ -4951,6 +4952,8 @@ RectTransform:
   m_AnchoredPosition: {x: -19.4, y: 58.2}
   m_SizeDelta: {x: 6.8884, y: 7.2106}
   m_Pivot: {x: 0.5, y: 0.5}
+=======
+>>>>>>> parent of e1a03c3 (Added particle system)
 =======
 >>>>>>> parent of e1a03c3 (Added particle system)
 --- !u!1 &5614457201984635361

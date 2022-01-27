@@ -527,6 +527,7 @@ RectTransform:
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
 <<<<<<< HEAD
+<<<<<<< HEAD
 --- !u!1 &1719802309
 GameObject:
   m_ObjectHideFlags: 0
@@ -593,10 +594,15 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
 =======
+=======
+>>>>>>> parent of e1a03c3 (Added particle system)
 --- !u!224 &1466149144 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 9211800044147759915, guid: aa01878de292b4f409ee9a65f3d75c25, type: 3}
   m_PrefabInstance: {fileID: 9211800042753061427}
+<<<<<<< HEAD
+>>>>>>> parent of e1a03c3 (Added particle system)
+=======
 >>>>>>> parent of e1a03c3 (Added particle system)
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1724470002
@@ -1088,8 +1094,11 @@ PrefabInstance:
     m_TransformParent: {fileID: 902483466}
     m_Modifications:
 <<<<<<< HEAD
+<<<<<<< HEAD
     - target: {fileID: 2286748625810664714, guid: aa01878de292b4f409ee9a65f3d75c25, type: 3}
 =======
+=======
+>>>>>>> parent of e1a03c3 (Added particle system)
     - target: {fileID: 9211800043419717497, guid: aa01878de292b4f409ee9a65f3d75c25, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
