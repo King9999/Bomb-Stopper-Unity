@@ -15,11 +15,11 @@ C:/_Projects/Bomb Stopper Unity
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-63476
+52078
 Successfully changed project path to: C:/_Projects/Bomb Stopper Unity
 C:/_Projects/Bomb Stopper Unity
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 54.89 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 53.00 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2020.3.12f1 (b3b2c6512326)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.3.12f1/Editor/Data/Resources/UnitySubsystems
@@ -35,40 +35,40 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.3.12f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.3.12f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.3.12f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56668
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56844
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.12f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.12f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.004107 seconds.
+Registered in 0.003595 seconds.
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 53.09 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 53.64 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.704 seconds
+- Completed reload, in  1.661 seconds
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.007390 seconds.
+Registered in 0.006215 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 52.86 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 51.30 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.407 seconds
+- Completed reload, in  1.381 seconds
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.06 seconds
-Refreshing native plugins compatible for Editor in 0.51 ms, found 3 plugins.
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.05 seconds
+Refreshing native plugins compatible for Editor in 0.50 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 2108 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 2109 Unused Serialized files (Serialized files now loaded: 0)
 System memory in use before: 95.5 MB.
 System memory in use after: 95.5 MB.
 
-Unloading 33 unused Assets to reduce memory usage. Loaded Objects now: 2543.
-Total: 2.623400 ms (FindLiveObjects: 0.219900 ms CreateObjectMapping: 0.056100 ms MarkObjects: 2.186600 ms  DeleteObjects: 0.159300 ms)
+Unloading 33 unused Assets to reduce memory usage. Loaded Objects now: 2544.
+Total: 2.511100 ms (FindLiveObjects: 0.213800 ms CreateObjectMapping: 0.056200 ms MarkObjects: 2.092800 ms  DeleteObjects: 0.147200 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
@@ -82,144 +82,864 @@ AssetImportParameters requested are different than current active one (requested
   custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
 Received Import Request.
-  path: Assets/Sprites/fuse.png
-  artifactKey: Guid(0df971e1e0f16cf4fa38278da10cd9c3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Sprites/fuse.png using Guid(0df971e1e0f16cf4fa38278da10cd9c3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4b8b624dd21f25dca4693f1887b7840e') in 0.129295 seconds 
-  Import took 0.133610 seconds .
+  path: Assets/Scenes/Game.unity
+  artifactKey: Guid(2cda990e2423bbf4892e6590ba056729) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scenes/Game.unity using Guid(2cda990e2423bbf4892e6590ba056729) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e6039615cfe31d00e5339e4bb42e8aae') in 0.020262 seconds 
+  Import took 0.023663 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000218 seconds.
-  path: Assets/Sprites/bomb.png
-  artifactKey: Guid(ec08562421a80964aa392fd1331e2260) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Sprites/bomb.png using Guid(ec08562421a80964aa392fd1331e2260) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '697b0c4183179ec3b3556ec1fc712734') in 0.016384 seconds 
-  Import took 0.019970 seconds .
+  Time since last request: 16.847047 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '082f32976df1c9bf214f211f6892f7e7') in 0.065032 seconds 
+  Import took 0.068584 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 124.808910 seconds.
-  path: Assets/Sprites/bomb.png
-  artifactKey: Guid(ec08562421a80964aa392fd1331e2260) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Sprites/bomb.png using Guid(ec08562421a80964aa392fd1331e2260) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5d7bb9d61a717181f0e8ebeda0919714') in 0.012530 seconds 
-  Import took 0.016235 seconds .
+  Time since last request: 73.853786 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd765e3c92913e20e1d197adca3e266d4') in 0.006541 seconds 
+  Import took 0.010308 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 12.308409 seconds.
-  path: Assets/Sprites/medal_bronze.png
-  artifactKey: Guid(5990bcda4258e14489b60ce47b224da1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Sprites/medal_bronze.png using Guid(5990bcda4258e14489b60ce47b224da1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '21c5096cbd8d1cd8da07aa051d4951ff') in 0.036013 seconds 
-  Import took 0.040150 seconds .
+  Time since last request: 12.820956 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'aaf09b28b844f1a679e28639bb8d4100') in 0.006107 seconds 
+  Import took 0.009756 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 7.987205 seconds.
-  path: Assets/Sprites/check_mark.png
-  artifactKey: Guid(e8aef9ab197c61341bb2656599e7a799) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Sprites/check_mark.png using Guid(e8aef9ab197c61341bb2656599e7a799) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fcf32d268a70087899eb1413129108ad') in 0.020021 seconds 
-  Import took 0.024088 seconds .
+  Time since last request: 6.841118 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ddc650f68b55642aea4c5a2738a75055') in 0.006467 seconds 
+  Import took 0.010123 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.008424 seconds.
-  path: Assets/Sprites/arrowLeft.png
-  artifactKey: Guid(9ea435ff285d1cb4fab441603acc4bc5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Sprites/arrowLeft.png using Guid(9ea435ff285d1cb4fab441603acc4bc5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '68369f53014b2e9a3d7c1fb687350467') in 0.029271 seconds 
-  Import took 0.033073 seconds .
+  Time since last request: 1.811306 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2b639f1c7b9352f4b90102fabca2273b') in 0.006524 seconds 
+  Import took 0.010564 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000202 seconds.
-  path: Assets/Sprites/greenlight.png
-  artifactKey: Guid(7db7ff540e36c9e4f9f3a8aa0046ffc2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Sprites/greenlight.png using Guid(7db7ff540e36c9e4f9f3a8aa0046ffc2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c3843b0d9342a20754b087c21778e185') in 0.017735 seconds 
-  Import took 0.021126 seconds .
+  Time since last request: 1.397392 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5e20f976daab84ebbb66af05f8795d56') in 0.006263 seconds 
+  Import took 0.010163 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000274 seconds.
-  path: Assets/Sprites/checkmark.png
-  artifactKey: Guid(ae9f707206c1a6f448db933209c19f1a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Sprites/checkmark.png using Guid(ae9f707206c1a6f448db933209c19f1a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1d1265df103e259a9912ebc555284bd5') in 0.036083 seconds 
-  Import took 0.040688 seconds .
+  Time since last request: 1.605928 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1e0038939352ba0db354959c7c47e6da') in 0.007186 seconds 
+  Import took 0.010910 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000237 seconds.
-  path: Assets/Sprites/fuse.png
-  artifactKey: Guid(0df971e1e0f16cf4fa38278da10cd9c3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Sprites/fuse.png using Guid(0df971e1e0f16cf4fa38278da10cd9c3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2e6d3bc94cd0ac3fcf8df827e14adc7a') in 0.010150 seconds 
-  Import took 0.013985 seconds .
+  Time since last request: 4.807930 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3b3970f8762bf8f967d650f53f4496e4') in 0.006667 seconds 
+  Import took 0.010880 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000196 seconds.
-  path: Assets/Sprites/bg.png
-  artifactKey: Guid(15cab5f0083f7a447a48188905c30a99) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Sprites/bg.png using Guid(15cab5f0083f7a447a48188905c30a99) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f55570beb7df25522b081db108b280f6') in 0.017747 seconds 
-  Import took 0.021397 seconds .
+  Time since last request: 8.460466 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9308b580c2a3c014d965e67a20a99f93') in 0.006673 seconds 
+  Import took 0.010735 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000193 seconds.
-  path: Assets/Sprites/bomb.png
-  artifactKey: Guid(ec08562421a80964aa392fd1331e2260) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Sprites/bomb.png using Guid(ec08562421a80964aa392fd1331e2260) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b022c043a30639852306d59aa5b3b73c') in 0.012018 seconds 
-  Import took 0.015553 seconds .
+  Time since last request: 33.854217 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '04b7bb5910aceaf5fc3e1917c993b245') in 0.006234 seconds 
+  Import took 0.009855 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000162 seconds.
-  path: Assets/Sprites/medal_silver.png
-  artifactKey: Guid(0ce36e9bae741654ab846291bf3a9b56) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Sprites/medal_silver.png using Guid(0ce36e9bae741654ab846291bf3a9b56) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '30dea863e52231f7de3ddcd1d3760ac8') in 0.021556 seconds 
-  Import took 0.024896 seconds .
+  Time since last request: 9.267829 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '911bb70aa965e2549950ff056d7b13eb') in 0.008126 seconds 
+  Import took 0.012728 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000232 seconds.
-  path: Assets/Sprites/medal_gold.png
-  artifactKey: Guid(2df91d1495484f446838bdd9cf1c7b8e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Sprites/medal_gold.png using Guid(2df91d1495484f446838bdd9cf1c7b8e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6f0c9604d6ba2ae30915bfc5b15590f9') in 0.022026 seconds 
-  Import took 0.025908 seconds .
+  Time since last request: 20.810610 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b976346a0d43ddd0f99b421afe5e4cac') in 0.006729 seconds 
+  Import took 0.010575 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000179 seconds.
-  path: Assets/Sprites/redlight.png
-  artifactKey: Guid(00ec4095467d97646b6fd3d040f871fe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Sprites/redlight.png using Guid(00ec4095467d97646b6fd3d040f871fe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1c5cf4addf8f77e205def02e2b81daef') in 0.025336 seconds 
-  Import took 0.028733 seconds .
+  Time since last request: 3.615089 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f2ef6fc0854cb9f8f74ec85eda67871b') in 0.006445 seconds 
+  Import took 0.010114 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000178 seconds.
-  path: Assets/Sprites/button1.png
-  artifactKey: Guid(3e0411eeadb5d474ea19b5258f5843b6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Sprites/button1.png using Guid(3e0411eeadb5d474ea19b5258f5843b6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '338287d3d27292fa8eaec9098e5f07d2') in 0.014644 seconds 
-  Import took 0.018077 seconds .
+  Time since last request: 2.010827 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5ff53f3ccb2b8365d69b2dcbebd92705') in 0.006426 seconds 
+  Import took 0.010054 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000184 seconds.
-  path: Assets/Sprites/redlight.png
-  artifactKey: Guid(00ec4095467d97646b6fd3d040f871fe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Sprites/redlight.png using Guid(00ec4095467d97646b6fd3d040f871fe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1c5cf4addf8f77e205def02e2b81daef') in 0.011838 seconds 
-  Import took 0.015305 seconds .
+  Time since last request: 1.806785 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '80af399c33e622f8f7ad1522ab1ce3ad') in 0.006362 seconds 
+  Import took 0.010023 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 117.802729 seconds.
-  path: Assets/Sprites/bomb.png
-  artifactKey: Guid(ec08562421a80964aa392fd1331e2260) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Sprites/bomb.png using Guid(ec08562421a80964aa392fd1331e2260) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd881f5e05994e646411639b57408ffc5') in 0.015037 seconds 
-  Import took 0.018978 seconds .
+  Time since last request: 7.262834 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ff8129663e6b69d57c1d88b456b86694') in 0.006291 seconds 
+  Import took 0.010241 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.012523 seconds.
-  path: Assets/Sprites/bomb.png
-  artifactKey: Guid(ec08562421a80964aa392fd1331e2260) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Sprites/bomb.png using Guid(ec08562421a80964aa392fd1331e2260) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd881f5e05994e646411639b57408ffc5') in 0.013882 seconds 
-  Import took 0.017657 seconds .
+  Time since last request: 4.230183 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '51e56bcdf20d87865ffb68addee4e10d') in 0.006217 seconds 
+  Import took 0.010045 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 2.810023 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '825a79d2e6b8fd3b08179ee234d07e7d') in 0.006272 seconds 
+  Import took 0.010194 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 2.203335 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cac7512f30ed9cef35e6bf8af2e07aae') in 0.006650 seconds 
+  Import took 0.010674 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 2.611081 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bd1fcc5f6496d6b4881c37f7ecf109c0') in 0.006845 seconds 
+  Import took 0.010794 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 3.814826 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5b84a5f6d992d3b94dbb539ce35fda70') in 0.005890 seconds 
+  Import took 0.009506 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 4.439740 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b81c756751602a9a29d0b8320596cd52') in 0.005831 seconds 
+  Import took 0.009467 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.395576 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '178dc751041045c839903462d4c5d9af') in 0.010477 seconds 
+  Import took 0.015646 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 2.003295 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6275c83d0e5569a199a97a8ef0936673') in 0.005956 seconds 
+  Import took 0.009544 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.400482 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f1a9e99e1fd17f6275766b59c439aa55') in 0.006244 seconds 
+  Import took 0.009951 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.607314 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '653ec4b9857513c1b06c2582f308e6a7') in 0.007230 seconds 
+  Import took 0.012556 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 44.926531 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '39da000f14935e56db5eca297cc436ca') in 0.007771 seconds 
+  Import took 0.011986 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.208548 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'dc6c85f1bc782771e32f1cb5646a8245') in 0.005730 seconds 
+  Import took 0.009367 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 2.215362 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '43ee4924eeccef3e5de16eab9198d5fd') in 0.006125 seconds 
+  Import took 0.009687 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.184543 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '79ddac260039d99655ba9da6762afeb1') in 0.005674 seconds 
+  Import took 0.009623 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.400027 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c2468782d0e48fe9d28213c92d42024e') in 0.006288 seconds 
+  Import took 0.010425 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.998558 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e8f20174b0ff59d89a0ca0de6687de09') in 0.006171 seconds 
+  Import took 0.010354 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.196334 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0ca95964c1833a23eb1f3aedbdf0d111') in 0.008048 seconds 
+  Import took 0.013482 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.402129 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd08a2135f9a1fd3623020c60656d2f89') in 0.006302 seconds 
+  Import took 0.009944 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 2.000535 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a201bea6a44f5cc97e4067d3fe25c913') in 0.007733 seconds 
+  Import took 0.012845 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.993077 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6f4860a99100561a9f7f6949f5bef58f') in 0.006572 seconds 
+  Import took 0.010291 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.193635 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '922d3edb5b7995c94593f79ed2921884') in 0.007134 seconds 
+  Import took 0.011189 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 2.831235 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2187411c5aeca2f535e2e76a6760a7bb') in 0.006513 seconds 
+  Import took 0.010164 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 4.415873 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '916c223c3fd88ea7ebb043dac8847797') in 0.006890 seconds 
+  Import took 0.011406 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.207156 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd2e68e5a794edbcaab3ffdf49382914f') in 0.006184 seconds 
+  Import took 0.010969 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 2.610976 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '591d9814f0a3124bdcf26e40b9396d93') in 0.007429 seconds 
+  Import took 0.011430 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 3.626762 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fe5a3f34c20beb0f0451a9d010b3d01b') in 0.007432 seconds 
+  Import took 0.011411 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.194510 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '54a9dee0c418aab0d167ea1eade395d8') in 0.005959 seconds 
+  Import took 0.009692 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.605212 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'abb0b564d2d4717e81505f0a42dcc178') in 0.005906 seconds 
+  Import took 0.009540 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 2.402908 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2ca98e34e712abba48ae74440571934e') in 0.005867 seconds 
+  Import took 0.009553 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 4.416065 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3081d3644cb512ceda620d213c5b6e77') in 0.005835 seconds 
+  Import took 0.009411 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 2.410134 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b62e469671a094b20f68abd0792040f5') in 0.006829 seconds 
+  Import took 0.010713 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 2.011883 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4584568cbeaedf4ab164563014c7ae84') in 0.007141 seconds 
+  Import took 0.010645 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.796578 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ce6c6665653d7689c92ba252f6076501') in 0.006971 seconds 
+  Import took 0.011124 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 2.814161 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '08929ca8bc1b096f2a8cff136d2b71a2') in 0.007389 seconds 
+  Import took 0.011491 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.400565 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0e6741f781c382715edd72a57a021b47') in 0.006326 seconds 
+  Import took 0.009952 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.799661 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '36742af9be4ff167d93a5dbc132f3d0b') in 0.006122 seconds 
+  Import took 0.009680 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.395398 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7abc6fb487a6eb6bb406d612df1dd081') in 0.006913 seconds 
+  Import took 0.011064 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.408295 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd4188431a4e12cfb0e48aebcc6b8dffc') in 0.007766 seconds 
+  Import took 0.011513 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.994659 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2360cfc68bee50188a26226f7e8dca3c') in 0.006228 seconds 
+  Import took 0.010216 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.598658 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4655c143611618192e7301525048fdc9') in 0.010542 seconds 
+  Import took 0.016146 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 2.002635 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '354abeb614e50f0de096e83c884e7979') in 0.006573 seconds 
+  Import took 0.011683 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.400149 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6d99c43a329887e0e8878a3be3437f9e') in 0.006367 seconds 
+  Import took 0.010103 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 2.814566 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f2180ec7e3633e3041eaea0008c895e2') in 0.008770 seconds 
+  Import took 0.014272 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 41.235790 seconds.
+  path: Assets/Scripts/Bomb.cs
+  artifactKey: Guid(9982b8049550f314ea4434f4e5e21a1f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Bomb.cs using Guid(9982b8049550f314ea4434f4e5e21a1f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '26bd3409c588a22edee92164ebaf3cd6') in 0.005600 seconds 
+  Import took 0.009140 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.001385 seconds.
+  path: Assets/Scripts/Bomb.cs
+  artifactKey: Guid(9982b8049550f314ea4434f4e5e21a1f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Bomb.cs using Guid(9982b8049550f314ea4434f4e5e21a1f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '26bd3409c588a22edee92164ebaf3cd6') in 0.002989 seconds 
+  Import took 0.006403 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.006421 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 0.48 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.197 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.54 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2091 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 94.3 MB.
+System memory in use after: 94.2 MB.
+
+Unloading 21 unused Assets to reduce memory usage. Loaded Objects now: 2548.
+Total: 2.421300 ms (FindLiveObjects: 0.222000 ms CreateObjectMapping: 0.053200 ms MarkObjects: 2.017400 ms  DeleteObjects: 0.127600 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 90.074717 seconds.
+  path: Assets/Scripts/Bomb.cs
+  artifactKey: Guid(9982b8049550f314ea4434f4e5e21a1f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Bomb.cs using Guid(9982b8049550f314ea4434f4e5e21a1f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '101d9dbf9ba7fdea3134662450ad9be2') in 0.006385 seconds 
+  Import took 0.009666 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.005770 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 0.53 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.198 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.53 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2091 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 94.3 MB.
+System memory in use after: 94.3 MB.
+
+Unloading 21 unused Assets to reduce memory usage. Loaded Objects now: 2552.
+Total: 2.651100 ms (FindLiveObjects: 0.213600 ms CreateObjectMapping: 0.055800 ms MarkObjects: 2.242800 ms  DeleteObjects: 0.137700 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.006040 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 0.51 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.187 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.48 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2091 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 94.3 MB.
+System memory in use after: 94.3 MB.
+
+Unloading 21 unused Assets to reduce memory usage. Loaded Objects now: 2556.
+Total: 2.263800 ms (FindLiveObjects: 0.205300 ms CreateObjectMapping: 0.049400 ms MarkObjects: 1.890000 ms  DeleteObjects: 0.118100 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 476.094975 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6b7aa036e137013ba2deeaa8956bf482') in 0.047983 seconds 
+  Import took 0.052359 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 27.747391 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0553a488b05af2cc0f146a257dd186fa') in 0.009172 seconds 
+  Import took 0.013423 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 28.042689 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ca7c2718af400ec926ec68141d31dbf3') in 0.008869 seconds 
+  Import took 0.013231 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 214.301228 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd12cdad088c10efa239f8bb955acd933') in 0.007192 seconds 
+  Import took 0.011093 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 7.653396 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7ddf6f93af520f5273ff9af39af75e09') in 0.007106 seconds 
+  Import took 0.010835 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 6.030877 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8217b18293d919c9e73d80eea6211015') in 0.007028 seconds 
+  Import took 0.011189 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.005588 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 0.51 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.175 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.51 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2091 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 94.3 MB.
+System memory in use after: 94.3 MB.
+
+Unloading 21 unused Assets to reduce memory usage. Loaded Objects now: 2560.
+Total: 2.920600 ms (FindLiveObjects: 0.295000 ms CreateObjectMapping: 0.071400 ms MarkObjects: 2.404300 ms  DeleteObjects: 0.148500 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 261.678626 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a7c8ac3e52270d67612e7452dc5b0f01') in 0.046565 seconds 
+  Import took 0.050366 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 12.620285 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'eb985f0815088c6319bb43ce7bc969b3') in 0.009456 seconds 
+  Import took 0.013815 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.751849 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '75b0b76a501bbbaa11b5379f64129f3e') in 0.010183 seconds 
+  Import took 0.014587 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 34.170828 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '01a551f6fa0bff30171b82ecd988bcb0') in 0.007696 seconds 
+  Import took 0.011405 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 241.644075 seconds.
+  path: Assets/Scenes/Game.unity
+  artifactKey: Guid(2cda990e2423bbf4892e6590ba056729) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scenes/Game.unity using Guid(2cda990e2423bbf4892e6590ba056729) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fbb17330347e63d475a5808bca845c37') in 0.003569 seconds 
+  Import took 0.007179 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.005963 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 0.50 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.119 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.49 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2091 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 94.4 MB.
+System memory in use after: 94.3 MB.
+
+Unloading 21 unused Assets to reduce memory usage. Loaded Objects now: 2564.
+Total: 2.518200 ms (FindLiveObjects: 0.207900 ms CreateObjectMapping: 0.053100 ms MarkObjects: 2.131400 ms  DeleteObjects: 0.124600 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.005752 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 0.52 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.170 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.54 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2091 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 94.4 MB.
+System memory in use after: 94.4 MB.
+
+Unloading 21 unused Assets to reduce memory usage. Loaded Objects now: 2568.
+Total: 2.654800 ms (FindLiveObjects: 0.232300 ms CreateObjectMapping: 0.054900 ms MarkObjects: 2.225100 ms  DeleteObjects: 0.141200 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.006541 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 0.52 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.181 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.56 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2091 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 94.4 MB.
+System memory in use after: 94.4 MB.
+
+Unloading 21 unused Assets to reduce memory usage. Loaded Objects now: 2572.
+Total: 2.433400 ms (FindLiveObjects: 0.226200 ms CreateObjectMapping: 0.052500 ms MarkObjects: 2.024300 ms  DeleteObjects: 0.129300 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 516.158866 seconds.
+  path: Assets/Scenes/Game.unity
+  artifactKey: Guid(2cda990e2423bbf4892e6590ba056729) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scenes/Game.unity using Guid(2cda990e2423bbf4892e6590ba056729) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5644bcb3b068cd268509cb4a2fe2b5be') in 0.014604 seconds 
+  Import took 0.018209 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 89.518661 seconds.
+  path: Assets/Scenes/Game.unity
+  artifactKey: Guid(2cda990e2423bbf4892e6590ba056729) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scenes/Game.unity using Guid(2cda990e2423bbf4892e6590ba056729) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2db90187cbb0b46b155c383169c1250d') in 0.003638 seconds 
+  Import took 0.007065 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.005985 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 0.53 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.216 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.52 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2091 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 94.4 MB.
+System memory in use after: 94.4 MB.
+
+Unloading 21 unused Assets to reduce memory usage. Loaded Objects now: 2576.
+Total: 2.474800 ms (FindLiveObjects: 0.232800 ms CreateObjectMapping: 0.055800 ms MarkObjects: 2.059600 ms  DeleteObjects: 0.125400 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 40.662728 seconds.
+  path: Assets/Prefabs/Bomb.prefab
+  artifactKey: Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Bomb.prefab using Guid(aa01878de292b4f409ee9a65f3d75c25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a97745e9920b00b4db4a79a0b0016a39') in 0.055392 seconds 
+  Import took 0.058989 seconds .
 
