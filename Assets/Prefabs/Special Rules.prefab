@@ -148,7 +148,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -52.3, y: 67.1}
+  m_AnchoredPosition: {x: -270, y: -83}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1199112425034980110
@@ -218,6 +218,9 @@ MonoBehaviour:
   timeAdded: 0
   elapsedTime: 0
   addedTimeUI: {fileID: 3406280415614390996}
+  originalTypedWord: 
+  wordCopy: 
+  wordCopyIndex: 0
   gm: {fileID: 0}
 --- !u!1 &2946648322775907373
 GameObject:
@@ -612,7 +615,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 41.9}
+  m_AnchoredPosition: {x: -207, y: -109}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &5622509035081038880

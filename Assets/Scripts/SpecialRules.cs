@@ -101,7 +101,7 @@ public class SpecialRules : MonoBehaviour
             //get a random rule
             int randRule = Random.Range(1, TotalRules + 1); //ignoring the "none" rule at index 0
             specialRule = (Rule)randRule;
-            //specialRule = Rule.WordOverflow;
+            //specialRule = Rule.Reversed;
             ruleName.text = ruleNames[(int)specialRule - 1];    //I subtract 1 to get the correct rule in ruleNames
 
             if (specialRule == Rule.Reversed)
@@ -350,7 +350,7 @@ public class SpecialRules : MonoBehaviour
         Vector3 originalPos = reverseArrow.transform.position;
         float duration = 0.5f;
         float currentTime = Time.time;
-        float travelRate = 40;
+        float travelRate = 1;
 
         while(Time.time < currentTime + duration)
         {
@@ -398,7 +398,7 @@ public class SpecialRules : MonoBehaviour
         Vector3 originalPos = addedTimeUI.transform.position;
         float duration = 0.5f;
         float currentTime = Time.time;
-        float distance = 20;
+        float distance = 1;
         addedTimeUI.gameObject.SetActive(true);
 
         while(Time.time < currentTime + duration)
