@@ -13,10 +13,6 @@ public class Bomb : MonoBehaviour
     public Slider bombFuse;
     float initTime {get;} = 120;       //the usual game time. I use this instead of gameTimer.initTime because 
                                         //gameTimer.initTime can change.
-
-    public Transform[] sparkPoints;     //these points are where the spark travels along the fuse
-    
-    //coroutine bools
     bool pulseBombCoroutineOn;
     bool flashBombCoroutineOn;
 
