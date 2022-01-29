@@ -752,66 +752,66 @@ public class GameManager : MonoBehaviour
         //The player will always receive this medal in Normal or Hard
         if (tm.currentDifficulty == TitleManager.Difficulty.Normal)
         {
-            rs.DisplayMedal(medalObjects[(int)MedalManager.MedalName.BombDefused], medalPos);
+            StartCoroutine(rs.DisplayMedal(medalObjects[(int)MedalManager.MedalName.BombDefused], medalPos));
             medalPos = new Vector3(medalPos.x, medalPos.y - yOffset, medalPos.z);
         }
         if (tm.currentDifficulty == TitleManager.Difficulty.Hard)
         {
-            rs.DisplayMedal(medalObjects[(int)MedalManager.MedalName.ExpertDefuser], medalPos);
+            StartCoroutine(rs.DisplayMedal(medalObjects[(int)MedalManager.MedalName.ExpertDefuser], medalPos));
             medalPos = new Vector3(medalPos.x, medalPos.y - yOffset, medalPos.z);
         }
 
         //Two Thousand Club medal
         if (score >= 2000)
         {
-            rs.DisplayMedal(medalObjects[(int)MedalManager.MedalName.OneThousandClub], medalPos);
+            StartCoroutine(rs.DisplayMedal(medalObjects[(int)MedalManager.MedalName.OneThousandClub], medalPos));
             medalPos = new Vector3(medalPos.x, medalPos.y - yOffset, medalPos.z);
         }
 
         //Ten Thosuand Club Medal
         if (score >= 10000)
         {
-            rs.DisplayMedal(medalObjects[(int)MedalManager.MedalName.FiveThousandClub], medalPos);
+            StartCoroutine(rs.DisplayMedal(medalObjects[(int)MedalManager.MedalName.FiveThousandClub], medalPos));
             medalPos = new Vector3(medalPos.x, medalPos.y - yOffset, medalPos.z);
         }
 
         //A Special Kind of Person
         if (tm.specialToggle.isOn)
         {
-            rs.DisplayMedal(medalObjects[(int)MedalManager.MedalName.ASpecialKindOfPerson], medalPos);
+            StartCoroutine(rs.DisplayMedal(medalObjects[(int)MedalManager.MedalName.ASpecialKindOfPerson], medalPos));
             medalPos = new Vector3(medalPos.x, medalPos.y - yOffset, medalPos.z);
         }
 
         //Combo Rookie/Master
         if (highestCombo >= 20)
         {
-            rs.DisplayMedal(medalObjects[(int)MedalManager.MedalName.ComboMaster], medalPos);
+            StartCoroutine(rs.DisplayMedal(medalObjects[(int)MedalManager.MedalName.ComboMaster], medalPos));
             medalPos = new Vector3(medalPos.x, medalPos.y - yOffset, medalPos.z);
         }
         else if (highestCombo >= 5)
         {
-            rs.DisplayMedal(medalObjects[(int)MedalManager.MedalName.ComboRookie], medalPos);
+            StartCoroutine(rs.DisplayMedal(medalObjects[(int)MedalManager.MedalName.ComboRookie], medalPos));
             medalPos = new Vector3(medalPos.x, medalPos.y - yOffset, medalPos.z);
         }
 
         //Dramatic Finish
         if (gameTimer.time <= 5)
         {
-            rs.DisplayMedal(medalObjects[(int)MedalManager.MedalName.DramaticFinish], medalPos);
+            StartCoroutine(rs.DisplayMedal(medalObjects[(int)MedalManager.MedalName.DramaticFinish], medalPos));
             medalPos = new Vector3(medalPos.x, medalPos.y - yOffset, medalPos.z);
         }
 
         //God Defuser
         if (tm.currentDifficulty == TitleManager.Difficulty.Hard && tm.specialToggle.isOn)
         {
-            rs.DisplayMedal(medalObjects[(int)MedalManager.MedalName.GodDefuser], medalPos);
+            StartCoroutine(rs.DisplayMedal(medalObjects[(int)MedalManager.MedalName.GodDefuser], medalPos));
             medalPos = new Vector3(medalPos.x, medalPos.y - yOffset, medalPos.z);
         }
 
         //Perfect
         if (okWordCount <= 0 && wrongWordCount <= 0)
         {
-            rs.DisplayMedal(medalObjects[(int)MedalManager.MedalName.Perfect], medalPos);
+            StartCoroutine(rs.DisplayMedal(medalObjects[(int)MedalManager.MedalName.Perfect], medalPos));
             medalPos = new Vector3(medalPos.x, medalPos.y - yOffset, medalPos.z);
         }
 
@@ -819,7 +819,7 @@ public class GameManager : MonoBehaviour
         float elapsedTime = (sr.specialRule == SpecialRules.Rule.ReducedTime) ? sr.elapsedTime : gameTimer.initTime - gameTimer.time;
         if (elapsedTime <= 45)
         {
-            rs.DisplayMedal(medalObjects[(int)MedalManager.MedalName.SpeedDemon], medalPos);
+            StartCoroutine(rs.DisplayMedal(medalObjects[(int)MedalManager.MedalName.SpeedDemon], medalPos));
             medalPos = new Vector3(medalPos.x, medalPos.y - yOffset, medalPos.z);
         }
 #endregion

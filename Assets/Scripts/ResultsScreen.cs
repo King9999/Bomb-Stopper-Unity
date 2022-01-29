@@ -94,12 +94,31 @@ public class ResultsScreen : MonoBehaviour
         GUIUtility.systemCopyBuffer = results;
     }
 
-    public void DisplayMedal(MedalObject medal, Vector3 position)
+    public IEnumerator DisplayMedal(MedalObject medal, Vector3 position)
     {
-        medal.gameObject.SetActive(true);
+        //I changed this method to be a coroutine that gradually increases the alpha of each medal UI element.
+        //medal.gameObject.SetActive(true);
+        Color medalColor = medal.medalSprite.color;
+        medal.medalSprite.color = new Color(medalColor.r, medalColor.g, medalColor.b, 0);
+        medal.medalNameUI.alpha = 0;
+        medal.medalDetailsUI.alpha = 0;
+        
         medal.medalSprite.transform.position = new Vector3(position.x - 290, position.y, position.z);
         medal.medalNameUI.transform.position = position;
         medal.medalDetailsUI.transform.position = new Vector3(position.x + 21, position.y - 16, position.z);
+
+        //animate medal
+        medal.gameObject.SetActive(true);
+        float alpha = 0;
+        while (alpha < 1)
+        {
+            alpha += Time.deltaTime;
+            medal.medalSprite.color = new Color(medalColor.r, medalColor.g, medalColor.b, alpha);
+            medal.medalNameUI.alpha = alpha;
+            medal.medalDetailsUI.alpha = alpha;
+            yield return null;
+        }
+
     }
 
     IEnumerator ChangeToScreen(string newScene)
