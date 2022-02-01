@@ -173,7 +173,7 @@ public class SpecialRules : MonoBehaviour
                 {
                     wordReversed = false;
                     reversedRuleContainer.SetActive(false);
-                    reverseRate += 0.02f;   //goes up 2%
+                    reverseRate += 0.05f;   //goes up 5%
                 }
                 break;
 
