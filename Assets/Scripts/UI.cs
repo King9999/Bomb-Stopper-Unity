@@ -22,6 +22,8 @@ public class UI : MonoBehaviour
     public TextMeshProUGUI pointValueUI;    //amount of points for completed word
     public TextMeshProUGUI wordCountValueUI;
     public Button returnButton;         //sends player back to title screen.
+    public TextMeshProUGUI readyText;
+    public Image readyBackground;
 
     [Header("Sliders")]
     public Slider stunMeter;
@@ -32,9 +34,12 @@ public class UI : MonoBehaviour
     public GameObject stunMeterHandler; //need this to hide stun meter when necessary.
     public GameObject comboHandler;     //manages all UI pertaining to combos
     public GameObject scoreHandler;
-    public GameObject wordCountHandler;            
+    public GameObject wordCountHandler;   
+    public GameObject startGameHandler;        
 
+    //instances
     public static UI instance;
+    GameManager gm;     
 
     private void Awake()
     {
@@ -47,19 +52,10 @@ public class UI : MonoBehaviour
         instance = this;
     }
 
-    /*void Update()
+    void Start()
     {
-        int i = 0;
-        string hiddenWord = "";
-        while (i < inputField.text.Length)
-        {
-            hiddenWord += "*";
-            i++;
-        }
-
-        inputField.text = hiddenWord;
-    }*/
-
+        gm = GameManager.instance; 
+    }
     IEnumerator ReduceStunMeter()
     {
         while (stunMeter.value > 0)
@@ -88,5 +84,45 @@ public class UI : MonoBehaviour
 
         SceneManager.LoadScene(newScene);
 
+    }
+
+    //displays the ready background and text and begins stage when animation is finished.
+    public IEnumerator BeginStage()
+    {
+        //shrink the ready text and fade it
+        float duration = 1f;
+        float currentTime = Time.time;
+
+        while(Time.time < currentTime + duration)
+        {
+            readyText.alpha -= Time.deltaTime;
+            float scaleRate = 0.2f * Time.deltaTime;
+            readyText.transform.localScale = new Vector3(readyText.transform.localScale.x - scaleRate, readyText.transform.localScale.y - scaleRate, readyText.transform.localScale.z);
+            yield return null;
+        }
+
+        //Display "GO!"
+        readyText.alpha = 1;
+        readyText.fontSize = 160;
+        readyText.transform.localScale = new Vector3(1,1,1);
+        readyText.text = "GO!";
+
+        //expand briefly, then disappear
+        currentTime = Time.time;
+        duration = 0.5f;
+        while (Time.time < currentTime + duration)
+        {
+            float scaleRate = 0.6f * Time.deltaTime;
+            readyText.transform.localScale = new Vector3(readyText.transform.localScale.x + scaleRate, readyText.transform.localScale.y + scaleRate, readyText.transform.localScale.z);
+            readyText.alpha -= 2 * Time.deltaTime;
+            yield return null;
+        }
+
+        //start game
+        startGameHandler.SetActive(false);
+        inputField.ActivateInputField();
+        gm.gameTimer.StartTimer();
+        gm.gameStarted = true;
+        
     }
 }

@@ -54,6 +54,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Timers")]
     public Timer gameTimer;
+    Timer countdownTimer;               //no other action can occur while this is not 0
     public float penaltyDuration;
     float currentTime;              
     float basePenalty { get; } = 1;    //time in seconds. base penalty is getting the word correct but making a correction.
@@ -81,6 +82,7 @@ public class GameManager : MonoBehaviour
 
     //other variables
     [HideInInspector] public bool gameOver;           //reserved for the Three Strikes rule
+    [HideInInspector]public bool gameStarted;         //becomes true after countdown to begin game ends.
     #endregion
 
     private void Awake()
@@ -104,7 +106,7 @@ public class GameManager : MonoBehaviour
         dictionary = JsonUtility.FromJson<WordLists>(wordFile.text);
 
         //places the cursor in input field so player can start typing immediately.
-        UI.instance.inputField.ActivateInputField();
+        //ui.inputField.ActivateInputField();
 
         //tm.currentDifficulty = TitleManager.Difficulty.Normal;
         difficultyMod = AdjustDifficultyMod(difficultyMod);
@@ -131,6 +133,8 @@ public class GameManager : MonoBehaviour
         wrongWordColor = new Color(0.9f, 0.2f, 0.2f);       //red
         perfectWordColor = new Color(1, 0.84f, 0);           //gold
         ui.screenTransition.value = 0;
+        ui.targetWordUI.text = "";
+        ui.inputField.DeactivateInputField();               //deactivated by default until countdown to begin stage
 
         ui.stunMeterHandler.gameObject.SetActive(false);   //hidden by default
         ui.comboHandler.gameObject.SetActive(false);        //this too
@@ -145,7 +149,7 @@ public class GameManager : MonoBehaviour
         //else
             gameTimer.SetTimer(time);
 
-        gameTimer.StartTimer();
+        //gameTimer.StartTimer();
 
         usedWords = new string[maxUsedWords];
 
@@ -195,6 +199,9 @@ public class GameManager : MonoBehaviour
             sr.ExecuteSpecialRule(sr.specialRule);
         }
 
+        //begin countdown to start game
+        StartCoroutine(ui.BeginStage());
+
 
         //GUIUtility.systemCopyBuffer = "test";     //USE THIS TO COPY TEXT TO CLIPBOARD!
         
@@ -234,295 +241,330 @@ public class GameManager : MonoBehaviour
             Debug.Log("New score data: " + scoreStr);
             File.WriteAllText(filePath, scoreStr);*/
         //}
-        if (!gameTimer.TimeUp() && !gameOver && currentWordCount < totalWordCount)
+        if (gameStarted)
         {
-            if (!targetWordSelected)
+            if (!gameTimer.TimeUp() && !gameOver && currentWordCount < totalWordCount)
             {
-                //'Invisible rule check
-                if (sr.specialRule == SpecialRules.Rule.Invisible)
+                if (!targetWordSelected)
                 {
-                    //we're done with the previous word, so we clear it.
-                    sr.originalTypedWord = "";
-                    sr.wordCopy.Clear();
-                    sr.wordCopy.Add('_');
-                    sr.wordCopyIndex = 0;
+                    //'Invisible rule check
+                    if (sr.specialRule == SpecialRules.Rule.Invisible)
+                    {
+                        //we're done with the previous word, so we clear it.
+                        sr.originalTypedWord = "";
+                        sr.wordCopy.Clear();
+                        sr.wordCopy.Add('_');
+                        sr.wordCopyIndex = 0;
+                    }
+
+                    totalWordsAttempted++;          
+                    //change the target word, taking care to make sure the same word isn't selected.
+                    string previousWord = ui.targetWordUI.text;
+                    bool usedWordFound = false;
+                    while (previousWord == ui.targetWordUI.text || usedWordFound)
+                    {
+                        int randWord = Random.Range(0, dictionary.wordList[(int)tm.currentDifficulty].words.Length);
+                        string newWord = dictionary.wordList[(int)tm.currentDifficulty].words[randWord].word;
+
+                        //check if word was already used
+                        int i = 0;
+                        usedWordFound = false;
+                        while(!usedWordFound && i < usedWords.Length)
+                        {
+                            if (usedWords[i] != null && newWord.ToLower() == usedWords[i].ToLower())
+                            {
+                                //don't use this word, find another
+                                usedWordFound = true;
+                            }
+                            else
+                            {
+                                i++;
+                            }
+                        }
+
+                        if (!usedWordFound)
+                        {
+                            //we can use this word
+                            ui.targetWordUI.text = newWord;
+
+                            //add to used word list
+                            usedWords[usedWordIndex] = newWord;
+                            usedWordIndex++;
+                            
+
+                            if (usedWordIndex >= usedWords.Length)
+                                //oldest used word will be removed next time
+                                usedWordIndex = 0;
+                            
+                            //Check if we need to reverse the letters or hide letters
+                            if (sr.specialRule == SpecialRules.Rule.Reversed || sr.specialRule == SpecialRules.Rule.HiddenLetters || 
+                                sr.specialRule == SpecialRules.Rule.CaseSensitive)
+                            {
+                                //run this set of rules
+                                sr.ExecuteSpecialRule(sr.specialRule);
+                            }
+                        }
+                    }
+
+                    //resetting various bools so that certain code executes again.
+                    targetWordSelected = true;
+                    comboCounted = false;   
+                    scoreAdded = false;     
+                    if (sr.specialRule == SpecialRules.Rule.ReducedTime)
+                    {
+                        sr.timeAdded = false;
+                    }
                 }
 
-                totalWordsAttempted++;          
-                //change the target word, taking care to make sure the same word isn't selected.
-                string previousWord = ui.targetWordUI.text;
-                bool usedWordFound = false;
-                while (previousWord == ui.targetWordUI.text || usedWordFound)
+                //check if backspace, delete, or directional arrows are pressed. Player takes a small penalty in these cases
+                if (Input.GetKeyDown(KeyCode.Backspace) || Input.GetKeyDown(KeyCode.Delete) || Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
                 {
-                    int randWord = Random.Range(0, dictionary.wordList[(int)tm.currentDifficulty].words.Length);
-                    string newWord = dictionary.wordList[(int)tm.currentDifficulty].words[randWord].word;
+                    //Under the Three Strikes rule, any attempt at a correction counts as a strike
+                    if (sr.specialRule == SpecialRules.Rule.ThreeStrikes)
+                        sr.ExecuteSpecialRule(sr.specialRule);
 
-                    //check if word was already used
-                    int i = 0;
-                    usedWordFound = false;
-                    while(!usedWordFound && i < usedWords.Length)
+                    if (sr.specialRule == SpecialRules.Rule.Invisible)
                     {
-                        if (usedWords[i] != null && newWord.ToLower() == usedWords[i].ToLower())
+                        //lots of stuff happens here
+                        if (Input.GetKeyDown(KeyCode.LeftArrow))
                         {
-                            //don't use this word, find another
-                            usedWordFound = true;
+                            if (sr.wordCopyIndex - 1 >= 0)
+                                sr.wordCopyIndex--;
+                            else
+                                Debug.Log("At beginning of word");
+                        }
+                        if (Input.GetKeyDown(KeyCode.RightArrow))
+                        {
+                            if (sr.wordCopyIndex + 1 < sr.wordCopy.Count)
+                                    sr.wordCopyIndex++;
+                                else
+                                    Debug.Log("At end of word");
+                            
+                        }
+
+                        Debug.Log("Current Letter: " + sr.wordCopy[sr.wordCopyIndex]);
+
+                        if (Input.GetKeyDown(KeyCode.Delete) && sr.wordCopy[sr.wordCopyIndex] != '_')
+                        {
+                            sr.wordCopy.RemoveAt(sr.wordCopyIndex);
+
+                            //overwrite originalTypedWord
+                            sr.originalTypedWord = "";
+                            foreach(char letter in sr.wordCopy)
+                            {
+                                if (letter != '_')
+                                    sr.originalTypedWord += letter;
+                            }
+                            Debug.Log("Updated word: " + sr.originalTypedWord);
+
+                            /*string remaining = "";
+                            foreach(string l in sr.wordCopy)
+                            {
+                                remaining += l;
+                            }
+                            Debug.Log("Remaining Letters: " + remaining);*/
+                        }
+
+                        if (Input.GetKeyDown(KeyCode.Backspace) && sr.wordCopyIndex - 1 >= 0 && sr.wordCopy.Count > 1)  //can't delete the space
+                        {
+                            sr.wordCopy.RemoveAt(sr.wordCopyIndex - 1);
+                            sr.wordCopyIndex--;
+
+                            //overwrite originalTypedWord
+                            sr.originalTypedWord = "";
+                            foreach(char letter in sr.wordCopy)
+                            {
+                                if (letter != '_')
+                                    sr.originalTypedWord += letter;
+                                
+                            }
+                            Debug.Log("Updated word: " + sr.originalTypedWord);
+
+                            /*string remaining = "";
+                            foreach(string l in sr.wordCopy)
+                            {
+                                remaining += l;
+                            }
+                            Debug.Log("Remaining Letters: " + remaining);*/
+                        }
+                    
+                    }
+
+                    correctionWasMade = true;
+                }
+
+                //Check for Invisible rule
+                if (sr.specialRule == SpecialRules.Rule.Invisible && Input.anyKeyDown)
+                {
+                    //get what the player typed and add it to original word string. We only want to check the alphabet, and ignore anything else.
+                    int i = 0;
+                    bool keyFound = false;
+                    string lowerAlphabet = sr.alphabet.ToLower();
+                    char[] alphabetArray = lowerAlphabet.ToCharArray();
+        
+
+                    while (!keyFound && i < alphabetArray.Length)
+                    {
+                        if (Input.GetKeyDown(alphabetArray[i].ToString()))
+                        {
+                            sr.originalTypedWord += sr.alphabet.Substring(i,1).ToLower();
+
+                            //new letters are always inserted before the space
+                            sr.wordCopy.Add('_');
+                            sr.wordCopy[sr.wordCopyIndex] = alphabetArray[i];
+                            sr.wordCopyIndex++;
+                            Debug.Log("last letter typed: " + sr.wordCopy[sr.wordCopyIndex - 1]);
+                            keyFound = true;
                         }
                         else
                         {
                             i++;
                         }
                     }
-
-                    if (!usedWordFound)
-                    {
-                        //we can use this word
-                        ui.targetWordUI.text = newWord;
-
-                        //add to used word list
-                        usedWords[usedWordIndex] = newWord;
-                        usedWordIndex++;
-                        
-
-                        if (usedWordIndex >= usedWords.Length)
-                            //oldest used word will be removed next time
-                            usedWordIndex = 0;
-                        
-                        //Check if we need to reverse the letters or hide letters
-                        if (sr.specialRule == SpecialRules.Rule.Reversed || sr.specialRule == SpecialRules.Rule.HiddenLetters || 
-                            sr.specialRule == SpecialRules.Rule.CaseSensitive)
-                        {
-                            //run this set of rules
-                            sr.ExecuteSpecialRule(sr.specialRule);
-                        }
-                    }
-                }
-
-                //resetting various bools so that certain code executes again.
-                targetWordSelected = true;
-                comboCounted = false;   
-                scoreAdded = false;     
-                if (sr.specialRule == SpecialRules.Rule.ReducedTime)
-                {
-                    sr.timeAdded = false;
-                }
-            }
-
-            //check if backspace, delete, or directional arrows are pressed. Player takes a small penalty in these cases
-            if (Input.GetKeyDown(KeyCode.Backspace) || Input.GetKeyDown(KeyCode.Delete) || Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
-            {
-                //Under the Three Strikes rule, any attempt at a correction counts as a strike
-                if (sr.specialRule == SpecialRules.Rule.ThreeStrikes)
                     sr.ExecuteSpecialRule(sr.specialRule);
-
-                if (sr.specialRule == SpecialRules.Rule.Invisible)
-                {
-                    //lots of stuff happens here
-                    if (Input.GetKeyDown(KeyCode.LeftArrow))
-                    {
-                        if (sr.wordCopyIndex - 1 >= 0)
-                            sr.wordCopyIndex--;
-                        else
-                            Debug.Log("At beginning of word");
-                    }
-                    if (Input.GetKeyDown(KeyCode.RightArrow))
-                    {
-                        if (sr.wordCopyIndex + 1 < sr.wordCopy.Count)
-                                 sr.wordCopyIndex++;
-                            else
-                                Debug.Log("At end of word");
-                        
-                    }
-
-                    Debug.Log("Current Letter: " + sr.wordCopy[sr.wordCopyIndex]);
-
-                    if (Input.GetKeyDown(KeyCode.Delete) && sr.wordCopy[sr.wordCopyIndex] != '_')
-                    {
-                        sr.wordCopy.RemoveAt(sr.wordCopyIndex);
-
-                        //overwrite originalTypedWord
-                        sr.originalTypedWord = "";
-                        foreach(char letter in sr.wordCopy)
-                        {
-                            if (letter != '_')
-                                sr.originalTypedWord += letter;
-                        }
-                        Debug.Log("Updated word: " + sr.originalTypedWord);
-
-                        /*string remaining = "";
-                        foreach(string l in sr.wordCopy)
-                        {
-                            remaining += l;
-                        }
-                        Debug.Log("Remaining Letters: " + remaining);*/
-                    }
-
-                    if (Input.GetKeyDown(KeyCode.Backspace) && sr.wordCopyIndex - 1 >= 0 && sr.wordCopy.Count > 1)  //can't delete the space
-                    {
-                        sr.wordCopy.RemoveAt(sr.wordCopyIndex - 1);
-                        sr.wordCopyIndex--;
-
-                        //overwrite originalTypedWord
-                        sr.originalTypedWord = "";
-                        foreach(char letter in sr.wordCopy)
-                        {
-                            if (letter != '_')
-                                sr.originalTypedWord += letter;
-                            
-                        }
-                        Debug.Log("Updated word: " + sr.originalTypedWord);
-
-                        /*string remaining = "";
-                        foreach(string l in sr.wordCopy)
-                        {
-                            remaining += l;
-                        }
-                        Debug.Log("Remaining Letters: " + remaining);*/
-                    }
-                  
                 }
 
-                correctionWasMade = true;
-            }
-
-            //Check for Invisible rule
-            if (sr.specialRule == SpecialRules.Rule.Invisible && Input.anyKeyDown)
-            {
-                //get what the player typed and add it to original word string. We only want to check the alphabet, and ignore anything else.
-                int i = 0;
-                bool keyFound = false;
-                string lowerAlphabet = sr.alphabet.ToLower();
-                char[] alphabetArray = lowerAlphabet.ToCharArray();
-    
-
-                while (!keyFound && i < alphabetArray.Length)
+            
+                //check to see if amount of letters in input field matches the target word's letter count
+                if (ui.inputField.text.Length >= ui.targetWordUI.text.Length)
                 {
-                    if (Input.GetKeyDown(alphabetArray[i].ToString()))
+                    //prevent player from adding any more input.
+                    ui.inputField.DeactivateInputField();
+
+                    //show the typed word if this rule is active.
+                    if (sr.specialRule == SpecialRules.Rule.Invisible)
+                    ui.inputField.text = sr.originalTypedWord;
+
+                    //compare the words and check if they match.
+                    if (WordsMatch(ui.inputField.text, ui.targetWordUI.text))
                     {
-                        sr.originalTypedWord += sr.alphabet.Substring(i,1).ToLower();
+                        //additional check if reverse rule is active. Display the target word with correct spelling
+                        if ((sr.specialRule == SpecialRules.Rule.Reversed && sr.wordReversed) || sr.specialRule == SpecialRules.Rule.HiddenLetters)
+                            ui.targetWordUI.text = sr.originalWord;
+                    
 
-                        //new letters are always inserted before the space
-                        sr.wordCopy.Add('_');
-                        sr.wordCopy[sr.wordCopyIndex] = alphabetArray[i];
-                        sr.wordCopyIndex++;
-                        Debug.Log("last letter typed: " + sr.wordCopy[sr.wordCopyIndex - 1]);
-                        keyFound = true;
-                    }
-                    else
-                    {
-                        i++;
-                    }
-                }
-                sr.ExecuteSpecialRule(sr.specialRule);
-            }
-
-           
-            //check to see if amount of letters in input field matches the target word's letter count
-            if (ui.inputField.text.Length >= ui.targetWordUI.text.Length)
-            {
-                //prevent player from adding any more input.
-                ui.inputField.DeactivateInputField();
-
-                //show the typed word if this rule is active.
-                if (sr.specialRule == SpecialRules.Rule.Invisible)
-                   ui.inputField.text = sr.originalTypedWord;
-
-                //compare the words and check if they match.
-                if (WordsMatch(ui.inputField.text, ui.targetWordUI.text))
-                {
-                    //additional check if reverse rule is active. Display the target word with correct spelling
-                    if ((sr.specialRule == SpecialRules.Rule.Reversed && sr.wordReversed) || sr.specialRule == SpecialRules.Rule.HiddenLetters)
-                        ui.targetWordUI.text = sr.originalWord;
-                   
-
-                    //show icon indicating a correct word. Show "Perfect!" if no corrections were made, "OK" otherwise
-                    if (!correctionWasMade)
-                    {
-
-                        //add to combo count
-                        if (!comboCounted && targetWordSelected)
+                        //show icon indicating a correct word. Show "Perfect!" if no corrections were made, "OK" otherwise
+                        if (!correctionWasMade)
                         {
-                            comboCount++;
-                            //is this the highest combo so far?
-                            if (highestCombo < comboCount)
-                                highestCombo = comboCount;
 
-                            Debug.Log("Combo Count: " + comboCount);
-                            comboCounted = true;
-
-                            //if a combo is already in progress, must reset the coroutine
-                            if (comboTimer > 0)
+                            //add to combo count
+                            if (!comboCounted && targetWordSelected)
                             {
+                                comboCount++;
+                                //is this the highest combo so far?
+                                if (highestCombo < comboCount)
+                                    highestCombo = comboCount;
+
+                                Debug.Log("Combo Count: " + comboCount);
+                                comboCounted = true;
+
+                                //if a combo is already in progress, must reset the coroutine
+                                if (comboTimer > 0)
+                                {
+                                    StopCoroutine(comboCountDown);
+                                    comboCountdownCoroutineOn = false;
+                                }
+                            }
+
+                            //add points
+                            if (!scoreAdded && targetWordSelected)
+                            {
+                                pointsAdded = pointsPerLetter * ui.inputField.text.Length * (1 + comboCount * 0.33f);
+                                score += Mathf.Round(pointsAdded * specialMod);
+                                Debug.Log("Pts Added: " + Mathf.Round(pointsAdded * specialMod));
+                                scoreAdded = true;
+                            }
+
+                            //add time if Reduced Time rule is enabled
+                            if (sr.specialRule == SpecialRules.Rule.ReducedTime && !sr.timeAdded)
+                            {
+                                sr.ExecuteSpecialRule(sr.specialRule);
+                                sr.timeAdded = true;
+                            }
+
+
+                            if (comboCount > 1)
+                            {
+                                //run coroutine. The timer duration is base combo timer + (number of letters * 0.1)
+                                if (!comboCountdownCoroutineOn)
+                                {
+                                    comboCountdownCoroutineOn = true;
+                                    comboTimer = baseComboTimer + (ui.inputField.text.Length * 0.1f);
+                                    comboCountDown = CountdownComboTimer(comboTimer);
+                                    StartCoroutine(comboCountDown);
+                                    Debug.Log("Combo duration: " + comboTimer);
+                                }
+                            }
+
+
+                            if (!resultCoroutineOn)
+                            {
+                                resultCoroutineOn = true;
+                                StartCoroutine(ShowResult("Perfect!", perfectWordColor));
+                                currentWordCount++;
+                                perfectWordCount++;
+                            }
+                            if (!stunCoroutineOn)
+                            {
+                                stunCoroutineOn = true;
+                                StartCoroutine(Stun(0.5f, false)); //I have this here so player can confirm that they typed the correct word
+                            }
+                            if(!animatePointsCoroutineOn)
+                            {
+                                animatePointsCoroutineOn = true;
+                                StartCoroutine(AnimatePoints(Mathf.Round(pointsAdded * specialMod)));
+                            }
+                        }
+                        else    //an OK match
+                        {
+                            //add points
+                            if (!scoreAdded && targetWordSelected)
+                            {
+                                pointsAdded = Mathf.Round(pointsPerLetter * ui.inputField.text.Length * specialMod);
+                                score += pointsAdded;
+                                scoreAdded = true;
+                            }
+
+                            //add time if Reduced Time rule is enabled
+                            if (sr.specialRule == SpecialRules.Rule.ReducedTime && !sr.timeAdded)
+                            {
+                                sr.ExecuteSpecialRule(sr.specialRule);
+                                sr.timeAdded = true;
+                            }
+
+                            //reset combo & coroutine
+                            comboCount = 0;
+                            if (comboCountdownCoroutineOn)
+                            {
+                                ui.comboHandler.gameObject.SetActive(false);
                                 StopCoroutine(comboCountDown);
                                 comboCountdownCoroutineOn = false;
                             }
-                        }
 
-                        //add points
-                        if (!scoreAdded && targetWordSelected)
-                        {
-                            pointsAdded = pointsPerLetter * ui.inputField.text.Length * (1 + comboCount * 0.33f);
-                            score += Mathf.Round(pointsAdded * specialMod);
-                            Debug.Log("Pts Added: " + Mathf.Round(pointsAdded * specialMod));
-                            scoreAdded = true;
-                        }
-
-                        //add time if Reduced Time rule is enabled
-                        if (sr.specialRule == SpecialRules.Rule.ReducedTime && !sr.timeAdded)
-                        {
-                            sr.ExecuteSpecialRule(sr.specialRule);
-                            sr.timeAdded = true;
-                        }
-
-
-                        if (comboCount > 1)
-                        {
-                            //run coroutine. The timer duration is base combo timer + (number of letters * 0.1)
-                            if (!comboCountdownCoroutineOn)
+                            //In the case of an "OK" match, player is slightly penalized.
+                            if (!resultCoroutineOn)
                             {
-                                comboCountdownCoroutineOn = true;
-                                comboTimer = baseComboTimer + (ui.inputField.text.Length * 0.1f);
-                                comboCountDown = CountdownComboTimer(comboTimer);
-                                StartCoroutine(comboCountDown);
-                                Debug.Log("Combo duration: " + comboTimer);
+                                resultCoroutineOn = true;
+                                StartCoroutine(ShowResult("OK", Color.white, basePenalty));
+                                currentWordCount++;
+                                okWordCount++;
                             }
+                            if (!stunCoroutineOn)
+                            {
+                                stunCoroutineOn = true;
+                                StartCoroutine(Stun(basePenalty));
+                            }
+                            if(!animatePointsCoroutineOn)
+                            {
+                                animatePointsCoroutineOn = true;
+                                StartCoroutine(AnimatePoints(pointsAdded));
+                            }
+                            
                         }
 
-
-                        if (!resultCoroutineOn)
-                        {
-                            resultCoroutineOn = true;
-                            StartCoroutine(ShowResult("Perfect!", perfectWordColor));
-                            currentWordCount++;
-                            perfectWordCount++;
-                        }
-                        if (!stunCoroutineOn)
-                        {
-                            stunCoroutineOn = true;
-                            StartCoroutine(Stun(0.5f, false)); //I have this here so player can confirm that they typed the correct word
-                        }
-                        if(!animatePointsCoroutineOn)
-                        {
-                            animatePointsCoroutineOn = true;
-                            StartCoroutine(AnimatePoints(Mathf.Round(pointsAdded * specialMod)));
-                        }
                     }
-                    else    //an OK match
+                    else    //incorrect word
                     {
-                        //add points
-                        if (!scoreAdded && targetWordSelected)
-                        {
-                            pointsAdded = Mathf.Round(pointsPerLetter * ui.inputField.text.Length * specialMod);
-                            score += pointsAdded;
-                            scoreAdded = true;
-                        }
-
-                        //add time if Reduced Time rule is enabled
-                        if (sr.specialRule == SpecialRules.Rule.ReducedTime && !sr.timeAdded)
-                        {
-                            sr.ExecuteSpecialRule(sr.specialRule);
-                            sr.timeAdded = true;
-                        }
-
                         //reset combo & coroutine
                         comboCount = 0;
                         if (comboCountdownCoroutineOn)
@@ -532,100 +574,68 @@ public class GameManager : MonoBehaviour
                             comboCountdownCoroutineOn = false;
                         }
 
-                        //In the case of an "OK" match, player is slightly penalized.
+                        //highlight all of the incorrect letters in the target word.
+                        //penalty is base penalty + (number of incorrect letters * 0.3 * difficulty)
+                        int errorCount;
+                        if ((sr.specialRule == SpecialRules.Rule.Reversed && sr.wordReversed) || sr.specialRule == SpecialRules.Rule.HiddenLetters)
+                            errorCount = IncorrectLetterTotal(ui.inputField.text, sr.originalWord);
+                        else if (sr.specialRule == SpecialRules.Rule.Invisible)
+                            errorCount = IncorrectLetterTotal(sr.originalTypedWord, ui.targetWordUI.text);
+                        else
+                            errorCount = IncorrectLetterTotal(ui.inputField.text, ui.targetWordUI.text);
+
+                        penaltyDuration = basePenalty + (errorCount * penaltyPerLetter);
+                        Debug.Log("Penalty time is " + penaltyDuration);
                         if (!resultCoroutineOn)
                         {
                             resultCoroutineOn = true;
-                            StartCoroutine(ShowResult("OK", Color.white, basePenalty));
-                            currentWordCount++;
-                            okWordCount++;
+                            StartCoroutine(ShowResult("Incorrect", wrongWordColor, penaltyDuration));
+                            wrongWordCount++;
                         }
                         if (!stunCoroutineOn)
                         {
                             stunCoroutineOn = true;
-                            StartCoroutine(Stun(basePenalty));
+                            StartCoroutine(Stun(penaltyDuration));
                         }
-                        if(!animatePointsCoroutineOn)
+
+                        //'Three Strikes' rule check
+                        if (sr.specialRule == SpecialRules.Rule.ThreeStrikes)
                         {
-                            animatePointsCoroutineOn = true;
-                            StartCoroutine(AnimatePoints(pointsAdded));
+                            sr.ExecuteSpecialRule(sr.specialRule);
                         }
+
                         
                     }
 
+            
+                
                 }
-                else    //incorrect word
+
+                //UI update
+                ui.scoreValueUI.text = score.ToString();
+                if (sr.specialRule == SpecialRules.Rule.WordOverflow)
+                    ui.wordCountValueUI.text = currentWordCount + "/" + sr.startColor + totalWordCount + sr.endColor;
+                else
+                    ui.wordCountValueUI.text = currentWordCount + "/" + totalWordCount;
+            }
+            else //time is up or stage is complete
+            {
+                if (gameTimer.TimeUp() || gameOver)
                 {
-                    //reset combo & coroutine
-                    comboCount = 0;
-                    if (comboCountdownCoroutineOn)
-                    {
-                        ui.comboHandler.gameObject.SetActive(false);
-                        StopCoroutine(comboCountDown);
-                        comboCountdownCoroutineOn = false;
-                    }
+                    gameTimer.StopTimer();
+                    //show animation of screen exploding
 
-                    //highlight all of the incorrect letters in the target word.
-                    //penalty is base penalty + (number of incorrect letters * 0.3 * difficulty)
-                    int errorCount;
-                    if ((sr.specialRule == SpecialRules.Rule.Reversed && sr.wordReversed) || sr.specialRule == SpecialRules.Rule.HiddenLetters)
-                        errorCount = IncorrectLetterTotal(ui.inputField.text, sr.originalWord);
-                    else if (sr.specialRule == SpecialRules.Rule.Invisible)
-                        errorCount = IncorrectLetterTotal(sr.originalTypedWord, ui.targetWordUI.text);
-                    else
-                        errorCount = IncorrectLetterTotal(ui.inputField.text, ui.targetWordUI.text);
 
-                    penaltyDuration = basePenalty + (errorCount * penaltyPerLetter);
-                    Debug.Log("Penalty time is " + penaltyDuration);
-                    if (!resultCoroutineOn)
-                    {
-                        resultCoroutineOn = true;
-                        StartCoroutine(ShowResult("Incorrect", wrongWordColor, penaltyDuration));
-                        wrongWordCount++;
-                    }
-                    if (!stunCoroutineOn)
-                    {
-                        stunCoroutineOn = true;
-                        StartCoroutine(Stun(penaltyDuration));
-                    }
-
-                    //'Three Strikes' rule check
-                    if (sr.specialRule == SpecialRules.Rule.ThreeStrikes)
-                    {
-                        sr.ExecuteSpecialRule(sr.specialRule);
-                    }
-
-                    
+                    ui.returnButton.gameObject.SetActive(true); //return to title
+                    ui.inputField.DeactivateInputField();
                 }
-
-         
-               
-            }
-
-            //UI update
-            ui.scoreValueUI.text = score.ToString();
-            if (sr.specialRule == SpecialRules.Rule.WordOverflow)
-                ui.wordCountValueUI.text = currentWordCount + "/" + sr.startColor + totalWordCount + sr.endColor;
-            else
-                ui.wordCountValueUI.text = currentWordCount + "/" + totalWordCount;
-        }
-        else //time is up or stage is complete
-        {
-            if (gameTimer.TimeUp() || gameOver)
-            {
-                gameTimer.StopTimer();
-                //show animation of screen exploding
-
-
-                ui.returnButton.gameObject.SetActive(true); //return to title
-                ui.inputField.DeactivateInputField();
-            }
-            else
-            {
-                //stage is complete. Check for any medals and display results
-                gameTimer.StopTimer();
-                uiHandler.SetActive(false);
-                GetStageCompletionResults();
+                else
+                {
+                    //stage is complete. Check for any medals and display results
+                    gameTimer.StopTimer();
+                    uiHandler.SetActive(false);
+                    GetStageCompletionResults();
+                }
             }
         }
     }
@@ -963,6 +973,7 @@ public class GameManager : MonoBehaviour
         ui.pointValueUI.gameObject.SetActive(false);
         animatePointsCoroutineOn = false;
     }
+
 #endregion
 
 
