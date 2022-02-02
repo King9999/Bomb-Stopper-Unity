@@ -165,16 +165,29 @@ public class UI : MonoBehaviour
 
     public IEnumerator Stun(float stunDuration, bool stunMeterOn = true)
     {
-        //shake the screen
-        //uiHandler.transform.position = new Vector3(uiHandler.transform.position.x + 100, 
-            //uiHandler.transform.position.y, uiHandler.transform.position.z);
-        
-        //show stun meter if there was a correction/word is wrong
+        //shake the screen. Light stun for OK words, heavy stun for incorrect words
         if (stunMeterOn)
         {
+            float duration = 0.2f;
+            float currentTime = Time.time;
+            Vector3 originalPos = gm.uiHandler.transform.position;
+            while(Time.time < currentTime + duration)
+            {
+                float stunIntensity = gm.WordsMatch(inputField.text, targetWordUI.text) ? 5 : 30;
+                gm.uiHandler.transform.position = originalPos;
+                float xPos = Random.Range(gm.uiHandler.transform.position.x, gm.uiHandler.transform.position.x + stunIntensity);
+                float yPos = Random.Range(gm.uiHandler.transform.position.y, gm.uiHandler.transform.position.y + stunIntensity);
+                gm.uiHandler.transform.position = new Vector3(xPos, yPos, gm.uiHandler.transform.position.z);
+                yield return null;
+            }
+            
+            gm.uiHandler.transform.position = originalPos;
+
+            //show stun meter if there was a correction/word is wrong
+        
             stunMeterHandler.gameObject.SetActive(true);
             stunMeter.value = stunMeter.maxValue;
-            float currentTime = Time.time;
+            currentTime = Time.time;
             while (Time.time < currentTime + stunDuration)
             {
                 //update stun meter. The meter starts full, then gradually goes down.

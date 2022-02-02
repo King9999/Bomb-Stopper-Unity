@@ -433,7 +433,7 @@ public class GameManager : MonoBehaviour
 
                     //show the typed word if this rule is active.
                     if (sr.specialRule == SpecialRules.Rule.Invisible)
-                    ui.inputField.text = sr.originalTypedWord;
+                        ui.inputField.text = sr.originalTypedWord;
 
                     //compare the words and check if they match.
                     if (WordsMatch(ui.inputField.text, ui.targetWordUI.text))
@@ -672,7 +672,7 @@ public class GameManager : MonoBehaviour
         return difficultyScale;
     }
 
-    bool WordsMatch(string typedWord, string targetWord)
+    public bool WordsMatch(string typedWord, string targetWord)
     {
         if ((sr.specialRule == SpecialRules.Rule.Reversed && sr.wordReversed) || sr.specialRule == SpecialRules.Rule.HiddenLetters)
             return typedWord.ToLower() == sr.originalWord.ToLower();
