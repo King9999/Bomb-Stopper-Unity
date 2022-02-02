@@ -39,7 +39,17 @@ public class UI : MonoBehaviour
 
     //instances
     public static UI instance;
-    GameManager gm;     
+    GameManager gm;
+
+    //coroutine bools
+    [HideInInspector]public bool resultCoroutineOn;
+    [HideInInspector]public bool stunCoroutineOn;
+    [HideInInspector]public bool comboCountdownCoroutineOn;
+    [HideInInspector]public bool animatePointsCoroutineOn;
+
+    //other
+    [HideInInspector]public Color perfectWordColor;
+    [HideInInspector]public Color wrongWordColor;
 
     private void Awake()
     {
@@ -54,7 +64,10 @@ public class UI : MonoBehaviour
 
     void Start()
     {
-        gm = GameManager.instance; 
+        gm = GameManager.instance;
+
+        wrongWordColor = new Color(0.9f, 0.2f, 0.2f);        //red
+        perfectWordColor = new Color(1, 0.84f, 0);           //gold 
     }
     IEnumerator ReduceStunMeter()
     {
@@ -124,5 +137,118 @@ public class UI : MonoBehaviour
         gm.gameTimer.StartTimer();
         gm.gameStarted = true;
         
+    }
+
+    //display a result. Can specify the amount of time to display message.
+    public IEnumerator ShowResult(string result, Color textColor, float duration = 0.5f)
+    {
+        resultUI.text = result;
+        resultUI.color = textColor;
+
+        //display the result for a second. Show a pulse effect
+        resultUI.transform.localScale = new Vector3(1.5f, 1.5f, 1);
+        while (resultUI.transform.localScale.x > 1)
+        {
+            resultUI.transform.localScale = new Vector3(resultUI.transform.localScale.x - 5f * Time.deltaTime, 
+                resultUI.transform.localScale.y - 5f * Time.deltaTime, 1);
+            yield return null;
+        }
+
+        //ensure scale is back to normal
+        resultUI.transform.localScale = new Vector3(1, 1, 1);
+
+        yield return new WaitForSeconds(duration);
+        resultUI.text = "";
+        resultCoroutineOn = false;
+    }
+
+    public IEnumerator Stun(float stunDuration, bool stunMeterOn = true)
+    {
+        //shake the screen
+        //uiHandler.transform.position = new Vector3(uiHandler.transform.position.x + 100, 
+            //uiHandler.transform.position.y, uiHandler.transform.position.z);
+        
+        //show stun meter if there was a correction/word is wrong
+        if (stunMeterOn)
+        {
+            stunMeterHandler.gameObject.SetActive(true);
+            stunMeter.value = stunMeter.maxValue;
+            float currentTime = Time.time;
+            while (Time.time < currentTime + stunDuration)
+            {
+                //update stun meter. The meter starts full, then gradually goes down.
+                stunMeter.value = stunMeter.maxValue - ((Time.time - currentTime) / stunDuration);
+                yield return null;
+            }
+
+            stunMeterHandler.gameObject.SetActive(false);
+
+        }
+        else //got a perfect word
+            yield return new WaitForSeconds(stunDuration);
+        
+
+         //clear the field and select new word
+        inputField.text = "";
+        gm.targetWordSelected = false;
+        gm.correctionWasMade = false;
+        stunCoroutineOn = false;
+        inputField.ActivateInputField();
+    }
+
+    public IEnumerator CountdownComboTimer(float duration)
+    {
+        comboHandler.gameObject.SetActive(true);
+        comboMeter.value = comboMeter.maxValue;
+        comboValueUI.text = gm.comboCount.ToString();
+
+        float currentTime = Time.time;
+        while (Time.time < currentTime + duration)
+        {
+            //update combo meter. The meter starts full, then gradually goes down.
+            comboMeter.value = comboMeter.maxValue - ((Time.time - currentTime) / duration);
+            yield return null;
+        }
+
+        //if we get here, combo has ended
+        gm.comboCount = 0;
+        comboHandler.gameObject.SetActive(false);
+        comboCountdownCoroutineOn = false;
+    }
+
+    public IEnumerator AnimatePoints(float pointValue)
+    {
+        Vector3 originalPos = pointValueUI.transform.position;
+        float duration = 0.5f;
+        float currentTime = Time.time;
+        float distance = 20;
+        pointValueUI.text = pointValue + " pts.";
+
+        //colour of text depends on whether player got a perfect word
+        if (!gm.correctionWasMade)
+            pointValueUI.color = perfectWordColor;
+        else
+            pointValueUI.color = new Color(0.1f, 0.7f, 0.9f);   //light blue colour
+        pointValueUI.gameObject.SetActive(true);
+
+        while(Time.time < currentTime + duration)
+        {
+            pointValueUI.transform.position = new Vector3(pointValueUI.transform.position.x, pointValueUI.transform.position.y + distance * Time.deltaTime,
+             pointValueUI.transform.position.z);
+            yield return null;
+        }
+
+        //time fades gradually after it reaches its position.
+        while(pointValueUI.alpha > 0)
+        {
+            pointValueUI.alpha -= 2 * Time.deltaTime;
+            yield return null;
+        }
+        
+        //reset
+        pointValueUI.alpha = 1;
+        pointValueUI.transform.position = originalPos;
+        pointValueUI.gameObject.SetActive(false);
+        animatePointsCoroutineOn = false;
     }
 }
