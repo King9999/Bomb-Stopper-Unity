@@ -485,6 +485,11 @@ public class GameManager : MonoBehaviour
 
                             if (comboCount > 1)
                             {
+                                if (!ui.animateComboValueCoroutineOn)
+                                {
+                                    ui.animateComboValueCoroutineOn = true;
+                                    StartCoroutine(ui.AnimateComboValue());
+                                }
                                 //run coroutine. The timer duration is base combo timer + (number of letters * 0.1)
                                 if (!ui.comboCountdownCoroutineOn)
                                 {

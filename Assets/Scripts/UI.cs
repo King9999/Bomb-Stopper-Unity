@@ -46,6 +46,7 @@ public class UI : MonoBehaviour
     [HideInInspector]public bool stunCoroutineOn;
     [HideInInspector]public bool comboCountdownCoroutineOn;
     [HideInInspector]public bool animatePointsCoroutineOn;
+    [HideInInspector]public bool animateComboValueCoroutineOn;
 
     //other
     [HideInInspector]public Color perfectWordColor;
@@ -250,5 +251,20 @@ public class UI : MonoBehaviour
         pointValueUI.transform.position = originalPos;
         pointValueUI.gameObject.SetActive(false);
         animatePointsCoroutineOn = false;
+    }
+
+    public IEnumerator AnimateComboValue()
+    {
+        comboValueUI.transform.localScale = new Vector3(2f, 2f, 1);
+        while (comboValueUI.transform.localScale.x > 1)
+        {
+            float scaleRate = 2f * Time.deltaTime;
+            comboValueUI.transform.localScale = new Vector3(comboValueUI.transform.localScale.x - scaleRate, comboValueUI.transform.localScale.y - scaleRate, 1);
+            yield return null;
+        }
+
+        //ensure scale is back to normal
+        comboValueUI.transform.localScale = new Vector3(1, 1, 1);
+        animateComboValueCoroutineOn = false;
     }
 }
