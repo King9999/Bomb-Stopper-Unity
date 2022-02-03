@@ -79,7 +79,7 @@
 			]	
 		},
 		{
-			"difficultyId": "Normal", "time": 120, "wordCount": 30,
+			"difficultyId": "Normal", "time": 90, "wordCount": 30,
 			"words":
 			[
 				{"word":"acquit"},
@@ -156,7 +156,7 @@
 			]	
 		},
 		{
-			"difficultyId": "Hard", "time": 180, "wordCount": 40,
+			"difficultyId": "Hard", "time": 150, "wordCount": 40,
 			"words":
 			[
 				{"word":"tensorial"},
