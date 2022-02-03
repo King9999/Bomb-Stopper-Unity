@@ -66,12 +66,11 @@ public class Bomb : MonoBehaviour
             {
                 float moveSpeed = 10;
                 Vector3 direction = (sparkPoints[currentPoint + 1].position - sparkPoints[currentPoint].position).normalized;
-                    spark.transform.position += direction * moveSpeed * Time.deltaTime;
+                spark.transform.position += direction * moveSpeed * Time.deltaTime;
                 
                 //if spark is close to the destination, want it to "snap" to the destination point so it doesn't overshoot
                 float diffX = Mathf.Abs(sparkPoints[currentPoint + 1].position.x - spark.transform.position.x);
                 float diffY = Mathf.Abs(sparkPoints[currentPoint + 1].position.y - spark.transform.position.y);
-                //Debug.Log("DiffX: " + diffX + " DiffY: " + diffY);
                 if (diffX >= 0 && diffX < 0.05f && diffY >= 0 && diffY < 0.05f)
                 {
                     spark.transform.position = sparkPoints[currentPoint + 1].position;
@@ -82,25 +81,6 @@ public class Bomb : MonoBehaviour
                     currentPoint++;
                 }
 
-                /*if (spark.transform.position.x < sparkPoints[currentPoint + 1].position.x)
-                {
-                    spark.transform.position = new Vector3(spark.transform.position.x + moveSpeed, spark.transform.position.y, spark.transform.position.z);
-                }
-
-                else if (spark.transform.position.x > sparkPoints[currentPoint + 1].position.x)
-                {
-                    spark.transform.position = new Vector3(spark.transform.position.x - moveSpeed, spark.transform.position.y, spark.transform.position.z);
-                }
-
-                else if (spark.transform.position.y > sparkPoints[currentPoint + 1].position.y)
-                {
-                    spark.transform.position = new Vector3(spark.transform.position.x, spark.transform.position.y - moveSpeed, spark.transform.position.z);
-                }
-
-                else if (spark.transform.position.y < sparkPoints[currentPoint + 1].position.y)
-                {
-                    spark.transform.position = new Vector3(spark.transform.position.x, spark.transform.position.y + moveSpeed, spark.transform.position.z);
-                }*/
             }
         }
         else //stage completed
