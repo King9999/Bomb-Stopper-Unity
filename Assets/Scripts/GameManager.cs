@@ -124,8 +124,8 @@ public class GameManager : MonoBehaviour
         time = dictionary.wordList[(int)tm.currentDifficulty].time;
 
         //UI setup
-        ui.penaltyUI.text = "PPL: +" + penaltyPerLetter + " sec.";
-        ui.difficultyUI.text = "Difficulty: " + difficultyId;
+        ui.penaltyUI.text = "+" + penaltyPerLetter + " sec.";
+        ui.difficultyUI.text = difficultyId;
         ui.resultUI.text = "";
         //ui.scoreUI.text = "Score: " + score;
         ui.wordCountValueUI.text = currentWordCount + "/" + totalWordCount;
@@ -167,10 +167,6 @@ public class GameManager : MonoBehaviour
             medalObjects[i].medalAcquired = mm.medals[i].medalAcquired;
             medalObjects[i].medalSprite.sprite = mm.medals[i].medalSprite;
             medalObjects[i].transform.SetParent(rs.medalOrganizer); //objects must go into canvas so that it's hidden behind the screen transistion.
-
-            //SpriteRenderer sr = medalObjects[i].GetComponent<SpriteRenderer>();
-            //sr.sprite = mm.medals[i].medalSprite;
-            //sr.transform.position = new Vector3(sr.transform.position.x - 2.5f, sr.transform.position.y, sr.transform.position.z);
 
             //medal objects are hidden by default
             medalObjects[i].gameObject.SetActive(false);
@@ -227,20 +223,6 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //When I click the mouse button, random word is displayed
-        //if (Input.GetMouseButtonDown(0)) //left button pressed
-        //{
-            //int time = dictionary.wordList[0].time;
-            //Debug.Log("time is " + dictionary.wordList[0].words[0].word);
-            //int randWord = Random.Range(0, dictionary.wordList[0].words.Length);
-            //targetWordUI.text = dictionary.wordList[0].words[randWord].word;
-            /*hiScoreTable.score += 100;
-            scoreGUI.text = "Score: " + hiScoreTable.score;
-            //save the result to file
-            string scoreStr = JsonUtility.ToJson(hiScoreTable);
-            Debug.Log("New score data: " + scoreStr);
-            File.WriteAllText(filePath, scoreStr);*/
-        //}
         if (gameStarted)
         {
             if (!gameTimer.TimeUp() && !gameOver && currentWordCount < totalWordCount)
@@ -357,12 +339,6 @@ public class GameManager : MonoBehaviour
                             }
                             Debug.Log("Updated word: " + sr.originalTypedWord);
 
-                            /*string remaining = "";
-                            foreach(string l in sr.wordCopy)
-                            {
-                                remaining += l;
-                            }
-                            Debug.Log("Remaining Letters: " + remaining);*/
                         }
 
                         if (Input.GetKeyDown(KeyCode.Backspace) && sr.wordCopyIndex - 1 >= 0 && sr.wordCopy.Count > 1)  //can't delete the space
@@ -380,12 +356,6 @@ public class GameManager : MonoBehaviour
                             }
                             Debug.Log("Updated word: " + sr.originalTypedWord);
 
-                            /*string remaining = "";
-                            foreach(string l in sr.wordCopy)
-                            {
-                                remaining += l;
-                            }
-                            Debug.Log("Remaining Letters: " + remaining);*/
                         }
                     
                     }

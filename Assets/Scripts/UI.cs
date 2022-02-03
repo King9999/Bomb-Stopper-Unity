@@ -183,8 +183,7 @@ public class UI : MonoBehaviour
             
             gm.uiHandler.transform.position = originalPos;
 
-            //show stun meter if there was a correction/word is wrong
-        
+            //stun meter operation      
             stunMeterHandler.gameObject.SetActive(true);
             stunMeter.value = stunMeter.maxValue;
             currentTime = Time.time;

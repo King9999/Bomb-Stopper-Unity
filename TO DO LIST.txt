@@ -3,5 +3,5 @@ TO DO LIST
 1. When reversed rule is active, need some kind of indicator to let player know a word is reversed and must be typed with original spelling. *DONE*
 2. Need to revise the word list so that more reasonable words are used. Try to avoid obscure/outdated words.
 3. Figure out why the medals won't be displayed when they are instantiated as a child object. I need this to work so that the screen transistion hides the medal data. *DONE*
-4. Add a bomb sprite.
-5. 
+4. Add a bomb sprite. *DONE*
+5. For the combo value, find out where it's animating more than onc
