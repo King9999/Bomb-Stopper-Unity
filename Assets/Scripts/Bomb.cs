@@ -9,6 +9,9 @@ public class Bomb : MonoBehaviour
     public GameObject bombObject;
     public Image body;
     public Image redBody;               //bomb turns red when it's about to explode
+    public Image spark;
+    public Transform[] sparkPoints;
+    int currentPoint;                   //iterator for the sparkPoints array.
     Color redBodyColor;
     public Slider bombFuse;
     float initTime {get;} = 120;       //the usual game time. I use this instead of gameTimer.initTime because 
@@ -32,6 +35,10 @@ public class Bomb : MonoBehaviour
             Debug.Log("Game Manager not null");
             StartCoroutine(ReduceFuse());
         }
+
+        //spark set up
+        spark.transform.position = sparkPoints[0].position;
+        currentPoint = 0;
     }
 
     void Update()
@@ -51,6 +58,49 @@ public class Bomb : MonoBehaviour
                     flashBombCoroutineOn = true;
                     StartCoroutine(FlashBomb());
                 }
+            }
+
+            //move spark along spark points
+            
+            if(currentPoint + 1 < sparkPoints.Length)
+            {
+                float moveSpeed = 10;
+                Vector3 direction = (sparkPoints[currentPoint + 1].position - sparkPoints[currentPoint].position).normalized;
+                    spark.transform.position += direction * moveSpeed * Time.deltaTime;
+                
+                //if spark is close to the destination, want it to "snap" to the destination point so it doesn't overshoot
+                float diffX = Mathf.Abs(sparkPoints[currentPoint + 1].position.x - spark.transform.position.x);
+                float diffY = Mathf.Abs(sparkPoints[currentPoint + 1].position.y - spark.transform.position.y);
+                //Debug.Log("DiffX: " + diffX + " DiffY: " + diffY);
+                if (diffX >= 0 && diffX < 0.05f && diffY >= 0 && diffY < 0.05f)
+                {
+                    spark.transform.position = sparkPoints[currentPoint + 1].position;
+                }
+
+                if (spark.transform.position == sparkPoints[currentPoint + 1].position)
+                {
+                    currentPoint++;
+                }
+
+                /*if (spark.transform.position.x < sparkPoints[currentPoint + 1].position.x)
+                {
+                    spark.transform.position = new Vector3(spark.transform.position.x + moveSpeed, spark.transform.position.y, spark.transform.position.z);
+                }
+
+                else if (spark.transform.position.x > sparkPoints[currentPoint + 1].position.x)
+                {
+                    spark.transform.position = new Vector3(spark.transform.position.x - moveSpeed, spark.transform.position.y, spark.transform.position.z);
+                }
+
+                else if (spark.transform.position.y > sparkPoints[currentPoint + 1].position.y)
+                {
+                    spark.transform.position = new Vector3(spark.transform.position.x, spark.transform.position.y - moveSpeed, spark.transform.position.z);
+                }
+
+                else if (spark.transform.position.y < sparkPoints[currentPoint + 1].position.y)
+                {
+                    spark.transform.position = new Vector3(spark.transform.position.x, spark.transform.position.y + moveSpeed, spark.transform.position.z);
+                }*/
             }
         }
         else //stage completed
