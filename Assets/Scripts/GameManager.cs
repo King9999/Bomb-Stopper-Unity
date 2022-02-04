@@ -31,8 +31,8 @@ public class GameManager : MonoBehaviour
 
     //JSON variables
     [HideInInspector]public int totalWordCount;                 //number of words to complete to finish the level
-    string difficultyId;
-    float time;
+     [HideInInspector]public string difficultyId;
+     [HideInInspector]public float time;
 
     //variables for winning a stage
     int totalWordsAttempted;        //includes correct and incorrect words

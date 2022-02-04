@@ -14,8 +14,8 @@ public class Bomb : MonoBehaviour
     int currentPoint;                   //iterator for the sparkPoints array.
     Color redBodyColor;
     public Slider bombFuse;
-    float initTime {get;} = 120;       //the usual game time. I use this instead of gameTimer.initTime because 
-                                        //gameTimer.initTime can change.
+    float initTime;                 //used to measure the length of fuse
+    float totalDistance;            //the total distance from the first spark point to the last.
     bool pulseBombCoroutineOn;
     bool flashBombCoroutineOn;
 
@@ -30,15 +30,18 @@ public class Bomb : MonoBehaviour
         redBody.color = new Color(redBodyColor.r, redBodyColor.g, redBodyColor.b, redBodyColor.a);    //transparent by default
         gm = GameManager.instance;  //this is here to ensure the instance isn't null at runtime.
 
-        if (gm != null)
-        {
-            Debug.Log("Game Manager not null");
-            StartCoroutine(ReduceFuse());
-        }
+        initTime = gm.time;         //need this so the fuse length is constant
+        StartCoroutine(ReduceFuse());
+        
+
+       
 
         //spark set up
         spark.transform.position = sparkPoints[0].position;
         currentPoint = 0;
+
+        totalDistance = Vector3.Distance(sparkPoints[0].position, sparkPoints[sparkPoints.Length - 1].position);
+        Debug.Log("Total Distance " + totalDistance);
     }
 
     void Update()
@@ -62,9 +65,10 @@ public class Bomb : MonoBehaviour
 
             //move spark along spark points
             
-            if(currentPoint + 1 < sparkPoints.Length)
+            if(gm.gameStarted && currentPoint + 1 < sparkPoints.Length)
             {
-                float moveSpeed = 10;
+                //float moveSpeed = 1.6f;
+                float moveSpeed = (gm.gameTimer.time / initTime) * totalDistance;
                 Vector3 direction = (sparkPoints[currentPoint + 1].position - sparkPoints[currentPoint].position).normalized;
                 spark.transform.position += direction * moveSpeed * Time.deltaTime;
                 
