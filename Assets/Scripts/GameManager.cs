@@ -121,7 +121,7 @@ public class GameManager : MonoBehaviour
         //JSON data
         difficultyId = dictionary.wordList[(int)tm.currentDifficulty].difficultyId;
         totalWordCount = dictionary.wordList[(int)tm.currentDifficulty].wordCount;
-        time = dictionary.wordList[(int)tm.currentDifficulty].time;
+        time = 2 /*dictionary.wordList[(int)tm.currentDifficulty].time*/;
 
         //UI setup
         ui.penaltyUI.text = "+" + penaltyPerLetter + " sec.";
