@@ -101,7 +101,7 @@ public class SpecialRules : MonoBehaviour
             //get a random rule
             int randRule = Random.Range(1, TotalRules + 1); //ignoring the "none" rule at index 0
             specialRule = (Rule)randRule;
-            //specialRule = Rule.WordOverflow;
+            //specialRule = Rule.ReducedTime;
             ruleName.text = ruleNames[(int)specialRule - 1];    //I subtract 1 to get the correct rule in ruleNames
 
             if (specialRule == Rule.Reversed)

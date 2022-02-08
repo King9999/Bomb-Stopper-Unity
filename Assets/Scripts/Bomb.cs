@@ -36,9 +36,9 @@ public class Bomb : MonoBehaviour
 
        
 
-        //spark set up
-        spark.transform.position = sparkPoints[0].position;
-        currentPoint = 0;
+        //spark set up. Its position changes if a certain rule is enabled
+        currentPoint = gm.sr.specialRule == SpecialRules.Rule.ReducedTime ? sparkPoints.Length - 2 : 0;
+        spark.transform.position = sparkPoints[currentPoint].position;
 
         totalDistance = Vector3.Distance(sparkPoints[0].position, sparkPoints[sparkPoints.Length - 1].position);
         Debug.Log("Total Distance " + totalDistance);
