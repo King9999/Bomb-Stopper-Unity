@@ -57,6 +57,6 @@ public class TitleManager : MonoBehaviour
         SceneManager.LoadScene("Game");
     }
 
-
+    
 
 }
