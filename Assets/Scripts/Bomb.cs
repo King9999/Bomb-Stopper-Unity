@@ -65,10 +65,48 @@ public class Bomb : MonoBehaviour
 
             //move spark along spark points
             
+            /*if(gm.gameStarted && currentPoint + 1 < sparkPoints.Length)
+            {
+                float moveSpeed = 1f;
+                //float moveSpeed = (gm.gameTimer.time / initTime) * totalDistance;
+                Vector3 direction = (sparkPoints[currentPoint + 1].position - sparkPoints[currentPoint].position).normalized;
+                spark.transform.position += direction * moveSpeed * Time.deltaTime;
+                
+                //if spark is close to the destination, want it to "snap" to the destination point so it doesn't overshoot
+                float diffX = Mathf.Abs(sparkPoints[currentPoint + 1].position.x - spark.transform.position.x);
+                float diffY = Mathf.Abs(sparkPoints[currentPoint + 1].position.y - spark.transform.position.y);
+                if (diffX >= 0 && diffX < 0.05f && diffY >= 0 && diffY < 0.05f)
+                {
+                    spark.transform.position = sparkPoints[currentPoint + 1].position;
+                }
+
+                if (spark.transform.position == sparkPoints[currentPoint + 1].position)
+                {
+                    currentPoint++;
+                }
+
+            }*/
+        }
+        else //stage completed
+        {
+            StopAllCoroutines();
+            gameObject.SetActive(false);
+        }
+    }
+
+    //reduce fuse based on the timer.
+    IEnumerator ReduceFuse()
+    {
+        while(!gm.gameTimer.TimeUp())
+        {
+            bombFuse.value = gm.gameTimer.time / initTime;
+
+            //move spark along spark points
+            
             if(gm.gameStarted && currentPoint + 1 < sparkPoints.Length)
             {
-                //float moveSpeed = 1.6f;
-                float moveSpeed = (gm.gameTimer.time / initTime) * totalDistance;
+                float moveSpeed = 2f;
+                //float moveSpeed = (gm.gameTimer.time / initTime) * totalDistance;
                 Vector3 direction = (sparkPoints[currentPoint + 1].position - sparkPoints[currentPoint].position).normalized;
                 spark.transform.position += direction * moveSpeed * Time.deltaTime;
                 
@@ -86,20 +124,6 @@ public class Bomb : MonoBehaviour
                 }
 
             }
-        }
-        else //stage completed
-        {
-            StopAllCoroutines();
-            gameObject.SetActive(false);
-        }
-    }
-
-    //reduce fuse based on the timer.
-    IEnumerator ReduceFuse()
-    {
-        while(!gm.gameTimer.TimeUp())
-        {
-            bombFuse.value = gm.gameTimer.time / initTime;
             yield return null;
         }
         
