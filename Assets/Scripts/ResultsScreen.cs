@@ -77,6 +77,7 @@ public class ResultsScreen : MonoBehaviour
     public void OnShareButtonClicked()
     {
         //copy data to clipboard. This data first comes from game manager before it's copied
+        //NOTE: CANNOT COPY TEXT THROUGH WEBGL. IF THE PLAYER WANTS TO POST THEIR RESULTS THEY NEED TO USE THE PC BUILD.
         string results = "I just defused a bomb in Bomb Stopper!\n\n";
         results += tm.currentDifficulty + "\n";
         results += "Score: " + scoreUI.text + "\n";

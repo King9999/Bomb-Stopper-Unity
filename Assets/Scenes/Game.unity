@@ -1039,9 +1039,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4520576641306896623, guid: ad99b70ca53aeee43bd9943da1565ab4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7416766464139813578, guid: ad99b70ca53aeee43bd9943da1565ab4, type: 3}
       propertyPath: m_Name
       value: Game Over Screen UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 7416766464139813578, guid: ad99b70ca53aeee43bd9943da1565ab4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad99b70ca53aeee43bd9943da1565ab4, type: 3}
