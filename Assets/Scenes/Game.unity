@@ -380,11 +380,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4910882665890795454, guid: baf111c956d2b144085c61ce1738e358, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -4.24
       objectReference: {fileID: 0}
     - target: {fileID: 4910882665890795454, guid: baf111c956d2b144085c61ce1738e358, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 2.12
       objectReference: {fileID: 0}
     - target: {fileID: 4910882665890795454, guid: baf111c956d2b144085c61ce1738e358, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1049,7 +1049,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7416766464139813578, guid: ad99b70ca53aeee43bd9943da1565ab4, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad99b70ca53aeee43bd9943da1565ab4, type: 3}
@@ -1058,6 +1058,63 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3238136421518097911, guid: ad99b70ca53aeee43bd9943da1565ab4, type: 3}
   m_PrefabInstance: {fileID: 2788812354921732686}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &5461429460493613000
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5461429460793078695, guid: c739477eb37ae574a812c1644ae952e3, type: 3}
+      propertyPath: m_Name
+      value: Bomb Background Manager
+      objectReference: {fileID: 0}
+    - target: {fileID: 5461429460793078712, guid: c739477eb37ae574a812c1644ae952e3, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5461429460793078712, guid: c739477eb37ae574a812c1644ae952e3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5461429460793078712, guid: c739477eb37ae574a812c1644ae952e3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5461429460793078712, guid: c739477eb37ae574a812c1644ae952e3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5461429460793078712, guid: c739477eb37ae574a812c1644ae952e3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5461429460793078712, guid: c739477eb37ae574a812c1644ae952e3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5461429460793078712, guid: c739477eb37ae574a812c1644ae952e3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5461429460793078712, guid: c739477eb37ae574a812c1644ae952e3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5461429460793078712, guid: c739477eb37ae574a812c1644ae952e3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5461429460793078712, guid: c739477eb37ae574a812c1644ae952e3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5461429460793078712, guid: c739477eb37ae574a812c1644ae952e3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c739477eb37ae574a812c1644ae952e3, type: 3}
 --- !u!1001 &6328468647695553613
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1075,7 +1132,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6328468647815678921, guid: 0555aaa9a7cbf3346aa1c039cb59881d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.06
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6328468647815678921, guid: 0555aaa9a7cbf3346aa1c039cb59881d, type: 3}
       propertyPath: m_LocalPosition.z

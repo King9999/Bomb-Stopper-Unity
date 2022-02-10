@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviour
     public GameObject uiHandler;        //controls all UI. Mainly used to create a "shake" effect
     public GameObject resultsScreenHandler;
     string filePath;                    //contains location of high score table JSON file
+    
     //Color perfectWordColor;
     //Color wrongWordColor;
 
