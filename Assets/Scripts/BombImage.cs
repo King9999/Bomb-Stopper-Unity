@@ -57,13 +57,21 @@ public class BombImage : MonoBehaviour
             RandomizeColor();
         }
 
-        //rotate check
-        /*float chance = Random.Range(0f, 1f);
-        if (!rotateCoroutineOn && chance <= 0.3f && Time.time > currentTime + rotateCooldown)
+        //rotate check      
+        if (!rotateCoroutineOn && Time.time > currentTime + rotateCooldown)
         {
-            rotateCoroutineOn = true;
-            StartCoroutine(Rotate());
-        }*/
+            float chance = Random.Range(0f, 1f);
+            if (chance <= 0.3f)
+            {
+                rotateCoroutineOn = true;
+                StartCoroutine(Rotate());
+            }
+            else
+            {
+                currentTime = Time.time;
+            }
+
+        }
     }
 
     void RandomizeColor()
