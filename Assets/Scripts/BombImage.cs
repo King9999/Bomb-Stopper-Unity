@@ -15,6 +15,12 @@ public class BombImage : MonoBehaviour
     float screenBoundaryX;
     float screenBoundaryY;
 
+    //coroutine stuff
+    bool rotateCoroutineOn;
+    bool isRotating;
+    float rotateCooldown;       //prevents constant checking to rotate image. Time in seconds.
+    float currentTime;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +33,8 @@ public class BombImage : MonoBehaviour
 
         screenBoundaryX = (float)Screen.width / 100;       //100 = pixels per unit
         screenBoundaryY = (float)Screen.height / 100;
+
+        rotateCooldown = 3;
 
         /*redColor = Random.Range(0f, 1f);
         greenColor = Random.Range(0f, 1f);
@@ -48,6 +56,14 @@ public class BombImage : MonoBehaviour
             transform.position = new Vector3(transform.position.x * -1, transform.position.y * -1, transform.position.z);
             RandomizeColor();
         }
+
+        //rotate check
+        /*float chance = Random.Range(0f, 1f);
+        if (!rotateCoroutineOn && chance <= 0.3f && Time.time > currentTime + rotateCooldown)
+        {
+            rotateCoroutineOn = true;
+            StartCoroutine(Rotate());
+        }*/
     }
 
     void RandomizeColor()
@@ -56,5 +72,30 @@ public class BombImage : MonoBehaviour
         greenColor = Random.Range(0f, 1f);
         blueColor = Random.Range(0f, 1f);
         sr.color = new Color(redColor, greenColor, blueColor, 0.4f);   
+    }
+
+    //rotate the image's Y axis
+    IEnumerator Rotate()
+    {
+        while(transform.rotation.y < 180)
+        {
+            float yValue = 15 * Time.deltaTime;
+            transform.Rotate(0, yValue, 0);
+            //transform.rotation = new Quaternion(transform.rotation.x, transform.rotation.y + yValue, transform.rotation.z, transform.rotation.w);
+            yield return null;
+        }
+
+        //yield return new WaitForSeconds(1);
+
+       /* while(transform.rotation.y < 360)
+        {
+            float yValue = 5 * Time.deltaTime;
+            transform.rotation = new Quaternion(transform.rotation.x, transform.rotation.y + yValue, transform.rotation.z, transform.rotation.w);
+            yield return null;
+        }*/
+        //yield return null;
+        transform.rotation = new Quaternion(transform.rotation.x, 0, transform.rotation.z, transform.rotation.w);
+        rotateCoroutineOn = false;
+        currentTime = Time.time;
     }
 }

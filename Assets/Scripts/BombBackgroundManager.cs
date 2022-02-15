@@ -37,16 +37,20 @@ public class BombBackgroundManager : MonoBehaviour
             //a list of already used values.
             for (int i = 0; i < usedPosList.Count; i++)
             {
-                while (xPos >= usedPosList[i].x && xPos <= usedPosList[i].x + 3)
+                //while ((xPos >= usedPosList[i].x && xPos <= usedPosList[i].x + 7) && 
+                //(yPos >= usedPosList[i].y && yPos <= usedPosList[i].y + 7))
+                while(Vector3.Distance(new Vector3(xPos, yPos), usedPosList[i]) <= 12)
                 {
                     xPos = Random.Range(-screenPos.x * 2 * screenBoundaryX, screenPos.x * 2 * screenBoundaryX);
-                    Debug.Log("changing XPos Changed");
+                    yPos = Random.Range(-screenPos.y * 2 * screenBoundaryY, screenPos.y * 2 * screenBoundaryY);
+                    Debug.Log("Distance: " + Vector3.Distance(new Vector3(xPos, yPos), usedPosList[i]));
                 }
 
-                while (yPos >= usedPosList[i].y && yPos <= usedPosList[i].y + 3)
+                /*while (yPos >= usedPosList[i].y && yPos <= usedPosList[i].y + 5)
                 {
                     yPos = Random.Range(-screenPos.y * 2 * screenBoundaryY, screenPos.y * 2 * screenBoundaryY);
-                }
+                    Debug.Log("YPos Changed");
+                }*/
             }
             
             //once we get here, we added the new values to used list
