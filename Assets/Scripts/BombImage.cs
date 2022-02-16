@@ -61,9 +61,10 @@ public class BombImage : MonoBehaviour
         if (!rotateCoroutineOn && Time.time > currentTime + rotateCooldown)
         {
             float chance = Random.Range(0f, 1f);
-            if (chance <= 0.3f)
+            if (chance <= 0.5f)
             {
                 rotateCoroutineOn = true;
+                Debug.Log("Coroutine started");
                 StartCoroutine(Rotate());
             }
             else
@@ -85,9 +86,9 @@ public class BombImage : MonoBehaviour
     //rotate the image's Y axis
     IEnumerator Rotate()
     {
-        while(transform.rotation.y < 180)
+        while(transform.rotation.y >= 0)
         {
-            float yValue = 15 * Time.deltaTime;
+            float yValue = 90 * Time.deltaTime;
             transform.Rotate(0, yValue, 0);
             //transform.rotation = new Quaternion(transform.rotation.x, transform.rotation.y + yValue, transform.rotation.z, transform.rotation.w);
             yield return null;
@@ -102,6 +103,7 @@ public class BombImage : MonoBehaviour
             yield return null;
         }*/
         //yield return null;
+        Debug.Log("Coroutine ended");
         transform.rotation = new Quaternion(transform.rotation.x, 0, transform.rotation.z, transform.rotation.w);
         rotateCoroutineOn = false;
         currentTime = Time.time;

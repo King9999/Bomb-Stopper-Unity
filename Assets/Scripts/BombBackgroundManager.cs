@@ -39,10 +39,13 @@ public class BombBackgroundManager : MonoBehaviour
             {
                 //while ((xPos >= usedPosList[i].x && xPos <= usedPosList[i].x + 7) && 
                 //(yPos >= usedPosList[i].y && yPos <= usedPosList[i].y + 7))
-                while(Vector3.Distance(new Vector3(xPos, yPos), usedPosList[i]) <= 12)
+                while(Vector3.Distance(new Vector3(xPos, yPos), usedPosList[i]) <= 1)
                 {
-                    xPos = Random.Range(-screenPos.x * 2 * screenBoundaryX, screenPos.x * 2 * screenBoundaryX);
-                    yPos = Random.Range(-screenPos.y * 2 * screenBoundaryY, screenPos.y * 2 * screenBoundaryY);
+                
+                    //xPos = Random.Range(-screenPos.x * 2 * screenBoundaryX, screenPos.x * 2 * screenBoundaryX);
+                    //yPos = Random.Range(-screenPos.y * 2 * screenBoundaryY, screenPos.y * 2 * screenBoundaryY);
+                    xPos = Random.Range(usedPosList[i].x - 3, usedPosList[i].x + 3);
+                    yPos = Random.Range(usedPosList[i].y - 3, usedPosList[i].y + 3);
                     Debug.Log("Distance: " + Vector3.Distance(new Vector3(xPos, yPos), usedPosList[i]));
                 }
 

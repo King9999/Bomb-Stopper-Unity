@@ -41,7 +41,7 @@ public class Bomb : MonoBehaviour
         spark.transform.position = sparkPoints[currentPoint].position;
 
         totalDistance = Vector3.Distance(sparkPoints[0].position, sparkPoints[sparkPoints.Length - 1].position);
-        Debug.Log("Total Distance " + totalDistance);
+        //Debug.Log("Total Distance " + totalDistance);
     }
 
     void Update()
@@ -175,7 +175,7 @@ public class Bomb : MonoBehaviour
         while (redBodyColor.a < 1)
         {
             redBodyColor.a += changeRate * Time.deltaTime;
-            Debug.Log(redBodyColor.a + " Change Rate: " + changeRate);
+            //Debug.Log(redBodyColor.a + " Change Rate: " + changeRate);
             redBody.color = new Color(redBodyColor.a, redBodyColor.g, redBodyColor.b, redBodyColor.a);
             yield return null;
         }
