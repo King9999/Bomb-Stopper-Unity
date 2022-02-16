@@ -16,8 +16,11 @@ public class Bomb : MonoBehaviour
     public Slider bombFuse;
     float initTime;                 //used to measure the length of fuse
     float totalDistance;            //the total distance from the first spark point to the last.
+
+    //coroutine bools
     bool pulseBombCoroutineOn;
     bool flashBombCoroutineOn;
+    bool animateSparkCoroutineOn;
 
     GameManager gm;
 
@@ -32,7 +35,7 @@ public class Bomb : MonoBehaviour
 
         initTime = gm.time;         //need this so the fuse length is constant
         StartCoroutine(ReduceFuse());
-        
+        StartCoroutine(AnimateSpark());
 
        
 
@@ -125,6 +128,28 @@ public class Bomb : MonoBehaviour
 
             }
             yield return null;
+        }
+        
+    }
+
+    //spark quickly grows and reverts to normal. Tried to use particle effects but it's more trouble than it's worth.
+    IEnumerator AnimateSpark()
+    {
+        while(!gm.gameTimer.TimeUp())
+        {
+            float maxScale = spark.transform.localScale.x + 1;
+
+            while (spark.transform.localScale.x < maxScale)
+            {
+                float scaleValue = 4f * Time.deltaTime;
+                spark.transform.localScale = new Vector3(spark.transform.localScale.x + scaleValue, spark.transform.localScale.y + scaleValue, 1);
+                yield return null;
+            }
+
+            //return to normal.
+            spark.transform.localScale = new Vector3(1.5f, 1.5f, 1);
+
+            
         }
         
     }

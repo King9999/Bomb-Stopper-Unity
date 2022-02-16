@@ -304,7 +304,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.10145959, g: 0.1033889, b: 0.3773585, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -937,10 +937,6 @@ PrefabInstance:
       propertyPath: gm
       value: 
       objectReference: {fileID: 6328468647695553614}
-    - target: {fileID: 5797158483170228528, guid: ba0d297a517ed5149bbdbb0644ea601e, type: 3}
-      propertyPath: m_hasFontAssetChanged
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ba0d297a517ed5149bbdbb0644ea601e, type: 3}
 --- !u!4 &1199112424642013860 stripped
