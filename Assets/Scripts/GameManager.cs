@@ -453,7 +453,8 @@ public class GameManager : MonoBehaviour
                                     StopCoroutine(comboCountDown);
                                     ui.comboCountdownCoroutineOn = false;
                                 }
-
+                                
+                                //display combo counter
                                 if (comboCount > 1)
                                 {
                                     if (!ui.animateComboValueCoroutineOn)
@@ -489,26 +490,7 @@ public class GameManager : MonoBehaviour
                                 sr.timeAdded = true;
                             }
 
-
-                            /*if (comboCount > 1)
-                            {
-                                if (!ui.animateComboValueCoroutineOn)
-                                {
-                                    ui.animateComboValueCoroutineOn = true;
-                                    StartCoroutine(ui.AnimateComboValue());
-                                }
-                                //run coroutine. The timer duration is base combo timer + (number of letters * 0.1)
-                                if (!ui.comboCountdownCoroutineOn)
-                                {
-                                    ui.comboCountdownCoroutineOn = true;
-                                    comboTimer = baseComboTimer + (ui.inputField.text.Length * 0.1f);
-                                    comboCountDown = ui.CountdownComboTimer(comboTimer);
-                                    StartCoroutine(comboCountDown);
-                                    Debug.Log("Combo duration: " + comboTimer);
-                                }
-                            }*/
-
-
+                            //show perfect result
                             if (!ui.resultCoroutineOn)
                             {
                                 ui.resultCoroutineOn = true;
@@ -603,6 +585,7 @@ public class GameManager : MonoBehaviour
                         if (!ui.resultCoroutineOn)
                         {
                             ui.resultCoroutineOn = true;
+                            soundSource.PlayOneShot(incorrectWordSound, 0.3f);
                             StartCoroutine(ui.ShowResult("Incorrect", ui.wrongWordColor, penaltyDuration));
                             wrongWordCount++;
                         }

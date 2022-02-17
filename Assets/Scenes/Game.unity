@@ -1390,6 +1390,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: 36ee7b79d7f03374ca4f9f3440d79198, type: 3}
     - target: {fileID: 6328468647815678926, guid: 0555aaa9a7cbf3346aa1c039cb59881d, type: 3}
+      propertyPath: incorrectWordSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 94ab20dec34aef6499fde98f6656dedb, type: 3}
+    - target: {fileID: 6328468647815678926, guid: 0555aaa9a7cbf3346aa1c039cb59881d, type: 3}
       propertyPath: resultsScreenHandler
       value: 
       objectReference: {fileID: 7047143}
