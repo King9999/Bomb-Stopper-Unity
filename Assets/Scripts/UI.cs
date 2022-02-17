@@ -132,11 +132,12 @@ public class UI : MonoBehaviour
             yield return null;
         }
 
-        //start game
+        //start game & play music
         startGameHandler.SetActive(false);
         inputField.ActivateInputField();
         gm.gameTimer.StartTimer();
         gm.gameStarted = true;
+        gm.musicSource.Play();
         
     }
 

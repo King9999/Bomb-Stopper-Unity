@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 //This script's purpose is to not display the share button if the game build is WebGL.
