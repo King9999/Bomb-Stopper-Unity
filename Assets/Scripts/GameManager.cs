@@ -453,6 +453,24 @@ public class GameManager : MonoBehaviour
                                     StopCoroutine(comboCountDown);
                                     ui.comboCountdownCoroutineOn = false;
                                 }
+
+                                if (comboCount > 1)
+                                {
+                                    if (!ui.animateComboValueCoroutineOn)
+                                    {
+                                        ui.animateComboValueCoroutineOn = true;
+                                        StartCoroutine(ui.AnimateComboValue());
+                                    }
+                                    //run coroutine. The timer duration is base combo timer + (number of letters * 0.1)
+                                    if (!ui.comboCountdownCoroutineOn)
+                                    {
+                                        ui.comboCountdownCoroutineOn = true;
+                                        comboTimer = baseComboTimer + (ui.inputField.text.Length * 0.1f);
+                                        comboCountDown = ui.CountdownComboTimer(comboTimer);
+                                        StartCoroutine(comboCountDown);
+                                        Debug.Log("Combo duration: " + comboTimer);
+                                    }
+                                }
                             }
 
                             //add points
@@ -472,7 +490,7 @@ public class GameManager : MonoBehaviour
                             }
 
 
-                            if (comboCount > 1)
+                            /*if (comboCount > 1)
                             {
                                 if (!ui.animateComboValueCoroutineOn)
                                 {
@@ -488,7 +506,7 @@ public class GameManager : MonoBehaviour
                                     StartCoroutine(comboCountDown);
                                     Debug.Log("Combo duration: " + comboTimer);
                                 }
-                            }
+                            }*/
 
 
                             if (!ui.resultCoroutineOn)
