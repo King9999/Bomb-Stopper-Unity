@@ -160,7 +160,7 @@ public class UI : MonoBehaviour
 
         yield return new WaitForSeconds(duration);
         resultUI.text = "";
-        resultCoroutineOn = false;
+        //resultCoroutineOn = false;
     }
 
     public IEnumerator Stun(float stunDuration, bool stunMeterOn = true)
@@ -206,6 +206,7 @@ public class UI : MonoBehaviour
         gm.targetWordSelected = false;
         gm.correctionWasMade = false;
         stunCoroutineOn = false;
+        resultCoroutineOn = false;     //this is here to prevent the result text from pulsing again right after the new word is genrated.
         inputField.ActivateInputField();
     }
 

@@ -66,6 +66,14 @@ public class GameManager : MonoBehaviour
     float comboTimer;                   //duration before combo is broken. Length depends on the length of last word completed.
     float baseComboTimer {get;} = 2;    //time in seconds
 
+    [Header("Audio")]
+    AudioSource soundSource;
+    public AudioSource musicSource;
+    public AudioClip typeSound;
+    public AudioClip perfectWordSound;
+    public AudioClip okWordSound;
+    public AudioClip incorrectWordSound;
+
     //instances
     public UI ui = UI.instance;         //this variable must be public in order to access the instance
     TitleManager tm = TitleManager.instance;
@@ -151,6 +159,10 @@ public class GameManager : MonoBehaviour
             gameTimer.SetTimer(time);
 
         //gameTimer.StartTimer();
+
+        //sound setup
+        soundSource = GetComponent<AudioSource>();     //gets the attached audiosource component
+
 
         usedWords = new string[maxUsedWords];
 
@@ -297,6 +309,12 @@ public class GameManager : MonoBehaviour
                     {
                         sr.timeAdded = false;
                     }
+                }
+
+                //if any key is pressed, play a sound
+                if (Input.anyKeyDown)
+                {
+                    soundSource.PlayOneShot(typeSound);
                 }
 
                 //check if backspace, delete, or directional arrows are pressed. Player takes a small penalty in these cases
@@ -476,6 +494,7 @@ public class GameManager : MonoBehaviour
                             if (!ui.resultCoroutineOn)
                             {
                                 ui.resultCoroutineOn = true;
+                                soundSource.PlayOneShot(perfectWordSound, 0.4f);
                                 StartCoroutine(ui.ShowResult("Perfect!", ui.perfectWordColor));
                                 currentWordCount++;
                                 perfectWordCount++;
@@ -521,6 +540,7 @@ public class GameManager : MonoBehaviour
                             if (!ui.resultCoroutineOn)
                             {
                                 ui.resultCoroutineOn = true;
+                                soundSource.PlayOneShot(okWordSound, 0.3f);
                                 StartCoroutine(ui.ShowResult("OK", Color.white, basePenalty));
                                 currentWordCount++;
                                 okWordCount++;
