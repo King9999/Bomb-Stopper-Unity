@@ -610,6 +610,7 @@ MonoBehaviour:
   returnButton: {fileID: 1547444064878355006}
   gameOverHandler: {fileID: 7416766464139813578}
   screenTransition: {fileID: 2748961872418677927}
+  gameOverSound: {fileID: 8300000, guid: 420a13c405af92246b88b81a7e539572, type: 3}
 --- !u!1 &8517629195454167804
 GameObject:
   m_ObjectHideFlags: 0

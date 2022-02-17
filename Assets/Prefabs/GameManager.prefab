@@ -62,8 +62,9 @@ MonoBehaviour:
   musicSource: {fileID: 0}
   typeSound: {fileID: 8300000, guid: f5ba2c9a689754949b515d5f399c7c29, type: 3}
   perfectWordSound: {fileID: 8300000, guid: 5783a3f78084d7d4ab926fa53babe33a, type: 3}
-  okWordSound: {fileID: 0}
-  incorrectWordSound: {fileID: 0}
+  okWordSound: {fileID: 8300000, guid: 36ee7b79d7f03374ca4f9f3440d79198, type: 3}
+  incorrectWordSound: {fileID: 8300000, guid: 94ab20dec34aef6499fde98f6656dedb, type: 3}
+  gameOverSound: {fileID: 8300000, guid: 420a13c405af92246b88b81a7e539572, type: 3}
   ui: {fileID: 0}
   rs: {fileID: 0}
   sr: {fileID: 0}

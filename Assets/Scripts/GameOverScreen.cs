@@ -16,6 +16,8 @@ public class GameOverScreen : MonoBehaviour
     public GameObject gameOverHandler;
     public Image screenTransition;         //fades to black before returning to title screen
 
+    public AudioClip gameOverSound;
+
     bool gameOverCoroutineOn;
 
     GameManager gm;
@@ -52,6 +54,9 @@ public class GameOverScreen : MonoBehaviour
 
     IEnumerator GameOver()
     {
+        //cut music abruptly
+        gm.musicSource.Stop();
+
         //fade screen to white
         while (whiteScreen.color.a < 1)
         {
@@ -59,6 +64,9 @@ public class GameOverScreen : MonoBehaviour
             whiteScreen.color = new Color(1, 1, 1, screenAlpha);
             yield return null;
         }
+
+        //play sound
+        gm.soundSource.PlayOneShot(gameOverSound, 0.2f);
 
         //fade screen to black
         while (blackScreen.color.a < 1)

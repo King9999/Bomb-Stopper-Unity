@@ -21,7 +21,7 @@ public class UI : MonoBehaviour
     public TextMeshProUGUI scoreValueUI;
     public TextMeshProUGUI pointValueUI;    //amount of points for completed word
     public TextMeshProUGUI wordCountValueUI;
-    public Button returnButton;         //sends player back to title screen.
+    //public Button returnButton;         //sends player back to title screen.
     public TextMeshProUGUI readyText;
     public Image readyBackground;
 

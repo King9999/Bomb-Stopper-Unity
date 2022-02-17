@@ -66,13 +66,15 @@ public class GameManager : MonoBehaviour
     float comboTimer;                   //duration before combo is broken. Length depends on the length of last word completed.
     float baseComboTimer {get;} = 2;    //time in seconds
 
+
     [Header("Audio")]
-    AudioSource soundSource;
+    [HideInInspector] public AudioSource soundSource;
     public AudioSource musicSource;
     public AudioClip typeSound;
     public AudioClip perfectWordSound;
     public AudioClip okWordSound;
     public AudioClip incorrectWordSound;
+
 
     //instances
     public UI ui = UI.instance;         //this variable must be public in order to access the instance
@@ -147,7 +149,7 @@ public class GameManager : MonoBehaviour
 
         ui.stunMeterHandler.gameObject.SetActive(false);   //hidden by default
         ui.comboHandler.gameObject.SetActive(false);        //this too
-        ui.returnButton.gameObject.SetActive(false);
+        //ui.returnButton.gameObject.SetActive(false);
         resultsScreenHandler.SetActive(false);
         ui.pointValueUI.gameObject.SetActive(false);
 
@@ -623,7 +625,7 @@ public class GameManager : MonoBehaviour
                     //show animation of screen exploding
 
 
-                    ui.returnButton.gameObject.SetActive(true); //return to title
+                    //ui.returnButton.gameObject.SetActive(true); //return to title
                     ui.inputField.DeactivateInputField();
                 }
                 else

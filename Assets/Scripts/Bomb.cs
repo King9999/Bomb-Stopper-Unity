@@ -10,6 +10,7 @@ public class Bomb : MonoBehaviour
     public Image body;
     public Image redBody;               //bomb turns red when it's about to explode
     public Image spark;
+    float sparkMoveSpeed;               //varies by difficulty
     public Transform[] sparkPoints;
     int currentPoint;                   //iterator for the sparkPoints array.
     Color redBodyColor;
@@ -23,6 +24,7 @@ public class Bomb : MonoBehaviour
     bool animateSparkCoroutineOn;
 
     GameManager gm;
+    TitleManager tm;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +34,7 @@ public class Bomb : MonoBehaviour
         redBodyColor.a = 0;
         redBody.color = new Color(redBodyColor.r, redBodyColor.g, redBodyColor.b, redBodyColor.a);    //transparent by default
         gm = GameManager.instance;  //this is here to ensure the instance isn't null at runtime.
+        tm = TitleManager.instance;
 
         initTime = gm.time;         //need this so the fuse length is constant
         StartCoroutine(ReduceFuse());
@@ -42,6 +45,12 @@ public class Bomb : MonoBehaviour
         //spark set up. Its position changes if a certain rule is enabled
         currentPoint = gm.sr.specialRule == SpecialRules.Rule.ReducedTime ? sparkPoints.Length - 2 : 0;
         spark.transform.position = sparkPoints[currentPoint].position;
+        if (tm.currentDifficulty == TitleManager.Difficulty.Easy)
+            sparkMoveSpeed = 2f;
+        else if (tm.currentDifficulty == TitleManager.Difficulty.Normal)
+            sparkMoveSpeed = 2.5f;
+        else
+            sparkMoveSpeed = 1.5f;
 
         totalDistance = Vector3.Distance(sparkPoints[0].position, sparkPoints[sparkPoints.Length - 1].position);
         //Debug.Log("Total Distance " + totalDistance);
@@ -108,10 +117,10 @@ public class Bomb : MonoBehaviour
             
             if(gm.gameStarted && currentPoint + 1 < sparkPoints.Length)
             {
-                float moveSpeed = 2f;
+                //float moveSpeed = 2f;
                 //float moveSpeed = (gm.gameTimer.time / initTime) * totalDistance;
                 Vector3 direction = (sparkPoints[currentPoint + 1].position - sparkPoints[currentPoint].position).normalized;
-                spark.transform.position += direction * moveSpeed * Time.deltaTime;
+                spark.transform.position += direction * sparkMoveSpeed * Time.deltaTime;
                 
                 //if spark is close to the destination, want it to "snap" to the destination point so it doesn't overshoot
                 float diffX = Mathf.Abs(sparkPoints[currentPoint + 1].position.x - spark.transform.position.x);
@@ -137,6 +146,7 @@ public class Bomb : MonoBehaviour
     {
         while(!gm.gameTimer.TimeUp())
         {
+            float initScale = spark.transform.localScale.x;
             float maxScale = spark.transform.localScale.x + 1;
 
             while (spark.transform.localScale.x < maxScale)
@@ -147,7 +157,7 @@ public class Bomb : MonoBehaviour
             }
 
             //return to normal.
-            spark.transform.localScale = new Vector3(1.5f, 1.5f, 1);
+            spark.transform.localScale = new Vector3(initScale, initScale, 1);
 
             
         }

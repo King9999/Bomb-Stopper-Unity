@@ -667,6 +667,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 902483466}
     m_Modifications:
+    - target: {fileID: 2661697276358871223, guid: 31f82d417159e3840b2e6ac482eb5ec5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2838917791314659827, guid: 31f82d417159e3840b2e6ac482eb5ec5, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1385,14 +1389,6 @@ PrefabInstance:
       propertyPath: musicSource
       value: 
       objectReference: {fileID: 502425550}
-    - target: {fileID: 6328468647815678926, guid: 0555aaa9a7cbf3346aa1c039cb59881d, type: 3}
-      propertyPath: okWordSound
-      value: 
-      objectReference: {fileID: 8300000, guid: 36ee7b79d7f03374ca4f9f3440d79198, type: 3}
-    - target: {fileID: 6328468647815678926, guid: 0555aaa9a7cbf3346aa1c039cb59881d, type: 3}
-      propertyPath: incorrectWordSound
-      value: 
-      objectReference: {fileID: 8300000, guid: 94ab20dec34aef6499fde98f6656dedb, type: 3}
     - target: {fileID: 6328468647815678926, guid: 0555aaa9a7cbf3346aa1c039cb59881d, type: 3}
       propertyPath: resultsScreenHandler
       value: 
