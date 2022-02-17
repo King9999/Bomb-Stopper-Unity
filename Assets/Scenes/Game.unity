@@ -304,7 +304,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.10145959, g: 0.1033889, b: 0.3773585, a: 0}
+  m_BackGroundColor: {r: 0.1321645, g: 0.16583061, b: 0.509434, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -937,6 +937,78 @@ PrefabInstance:
       propertyPath: gm
       value: 
       objectReference: {fileID: 6328468647695553614}
+    - target: {fileID: 1510951401694539353, guid: ba0d297a517ed5149bbdbb0644ea601e, type: 3}
+      propertyPath: m_Color.b
+      value: 0.46619615
+      objectReference: {fileID: 0}
+    - target: {fileID: 1510951401694539353, guid: ba0d297a517ed5149bbdbb0644ea601e, type: 3}
+      propertyPath: m_Color.g
+      value: 0.47058824
+      objectReference: {fileID: 0}
+    - target: {fileID: 1510951401694539353, guid: ba0d297a517ed5149bbdbb0644ea601e, type: 3}
+      propertyPath: m_Color.r
+      value: 0.14509808
+      objectReference: {fileID: 0}
+    - target: {fileID: 1510951401694539353, guid: ba0d297a517ed5149bbdbb0644ea601e, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3138334675396851242, guid: ba0d297a517ed5149bbdbb0644ea601e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3138334675396851242, guid: ba0d297a517ed5149bbdbb0644ea601e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7240744034927562097, guid: ba0d297a517ed5149bbdbb0644ea601e, type: 3}
+      propertyPath: m_fontColorGradient.topLeft.b
+      value: 0.13333331
+      objectReference: {fileID: 0}
+    - target: {fileID: 7240744034927562097, guid: ba0d297a517ed5149bbdbb0644ea601e, type: 3}
+      propertyPath: m_fontColorGradient.topLeft.g
+      value: 0.48695254
+      objectReference: {fileID: 0}
+    - target: {fileID: 7240744034927562097, guid: ba0d297a517ed5149bbdbb0644ea601e, type: 3}
+      propertyPath: m_fontColorGradient.topLeft.r
+      value: 0.9137255
+      objectReference: {fileID: 0}
+    - target: {fileID: 7240744034927562097, guid: ba0d297a517ed5149bbdbb0644ea601e, type: 3}
+      propertyPath: m_fontColorGradient.topRight.b
+      value: 0.13333331
+      objectReference: {fileID: 0}
+    - target: {fileID: 7240744034927562097, guid: ba0d297a517ed5149bbdbb0644ea601e, type: 3}
+      propertyPath: m_fontColorGradient.topRight.g
+      value: 0.48695254
+      objectReference: {fileID: 0}
+    - target: {fileID: 7240744034927562097, guid: ba0d297a517ed5149bbdbb0644ea601e, type: 3}
+      propertyPath: m_fontColorGradient.topRight.r
+      value: 0.9137255
+      objectReference: {fileID: 0}
+    - target: {fileID: 7240744034927562097, guid: ba0d297a517ed5149bbdbb0644ea601e, type: 3}
+      propertyPath: m_fontColorGradient.bottomLeft.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7240744034927562097, guid: ba0d297a517ed5149bbdbb0644ea601e, type: 3}
+      propertyPath: m_fontColorGradient.bottomLeft.g
+      value: 0.18506935
+      objectReference: {fileID: 0}
+    - target: {fileID: 7240744034927562097, guid: ba0d297a517ed5149bbdbb0644ea601e, type: 3}
+      propertyPath: m_fontColorGradient.bottomLeft.r
+      value: 0.8117647
+      objectReference: {fileID: 0}
+    - target: {fileID: 7240744034927562097, guid: ba0d297a517ed5149bbdbb0644ea601e, type: 3}
+      propertyPath: m_fontColorGradient.bottomRight.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7240744034927562097, guid: ba0d297a517ed5149bbdbb0644ea601e, type: 3}
+      propertyPath: m_fontColorGradient.bottomRight.g
+      value: 0.18506935
+      objectReference: {fileID: 0}
+    - target: {fileID: 7240744034927562097, guid: ba0d297a517ed5149bbdbb0644ea601e, type: 3}
+      propertyPath: m_fontColorGradient.bottomRight.r
+      value: 0.8117647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ba0d297a517ed5149bbdbb0644ea601e, type: 3}
 --- !u!4 &1199112424642013860 stripped
@@ -1045,7 +1117,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7416766464139813578, guid: ad99b70ca53aeee43bd9943da1565ab4, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad99b70ca53aeee43bd9943da1565ab4, type: 3}
