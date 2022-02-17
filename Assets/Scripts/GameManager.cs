@@ -474,16 +474,33 @@ public class GameManager : MonoBehaviour
                                         Debug.Log("Combo duration: " + comboTimer);
                                     }
                                 }
+
+                                //add points
+                                if (!scoreAdded)
+                                {
+                                    pointsAdded = pointsPerLetter * ui.inputField.text.Length * (1 + comboCount * 0.25f);
+                                    score += Mathf.Round(pointsAdded * specialMod);
+                                    Debug.Log("Pts Added: " + Mathf.Round(pointsAdded * specialMod));
+                                    scoreAdded = true;
+
+                                    if(!ui.animatePointsCoroutineOn)
+                                    {
+                                        ui.animatePointsCoroutineOn = true;
+                                        StartCoroutine(ui.AnimatePoints(Mathf.Round(pointsAdded * specialMod)));
+                                    }
+                                }
+
+                        
                             }
 
                             //add points
-                            if (!scoreAdded && targetWordSelected)
+                            /*if (!scoreAdded && targetWordSelected)
                             {
                                 pointsAdded = pointsPerLetter * ui.inputField.text.Length * (1 + comboCount * 0.33f);
                                 score += Mathf.Round(pointsAdded * specialMod);
                                 Debug.Log("Pts Added: " + Mathf.Round(pointsAdded * specialMod));
                                 scoreAdded = true;
-                            }
+                            }*/
 
                             //add time if Reduced Time rule is enabled
                             if (sr.specialRule == SpecialRules.Rule.ReducedTime && !sr.timeAdded)
@@ -506,11 +523,11 @@ public class GameManager : MonoBehaviour
                                 ui.stunCoroutineOn = true;
                                 StartCoroutine(ui.Stun(0.5f, false)); //I have this here so player can confirm that they typed the correct word
                             }
-                            if(!ui.animatePointsCoroutineOn)
+                            /*if(!ui.animatePointsCoroutineOn)
                             {
                                 ui.animatePointsCoroutineOn = true;
                                 StartCoroutine(ui.AnimatePoints(Mathf.Round(pointsAdded * specialMod)));
-                            }
+                            }*/
                         }
                         else    //an OK match
                         {
@@ -520,6 +537,12 @@ public class GameManager : MonoBehaviour
                                 pointsAdded = Mathf.Round(pointsPerLetter * ui.inputField.text.Length * specialMod);
                                 score += pointsAdded;
                                 scoreAdded = true;
+
+                                if(!ui.animatePointsCoroutineOn)
+                                {
+                                    ui.animatePointsCoroutineOn = true;
+                                    StartCoroutine(ui.AnimatePoints(pointsAdded));
+                                }
                             }
 
                             //add time if Reduced Time rule is enabled
@@ -552,11 +575,11 @@ public class GameManager : MonoBehaviour
                                 ui.stunCoroutineOn = true;
                                 StartCoroutine(ui.Stun(basePenalty));
                             }
-                            if(!ui.animatePointsCoroutineOn)
+                            /*if(!ui.animatePointsCoroutineOn)
                             {
                                 ui.animatePointsCoroutineOn = true;
                                 StartCoroutine(ui.AnimatePoints(pointsAdded));
-                            }
+                            }*/
                             
                         }
 
