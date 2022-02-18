@@ -10,6 +10,11 @@ public class ShareButton : MonoBehaviour
         #if UNITY_WEBGL
             gameObject.SetActive(false);
         #endif
+
+        //if I don't have the following code, when I run the game in the editor while WebGL build is selected, the button won't appear.
+        #if UNITY_EDITOR    
+            gameObject.SetActive(true);
+        #endif
     }
 
    

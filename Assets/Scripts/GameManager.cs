@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector]public bool correctionWasMade;         //if true, player pressed delete or backspace
      [HideInInspector]public int comboCount;                 //A combo is formed when player types at least 2 words consecutively without error or correction.
     bool comboCounted;              //prevents combo counter from increasing more than once if a combo was already performed on current word.
-    float score;
+    [HideInInspector]public float score;
     float pointsPerLetter {get;} = 10;
     bool scoreAdded;                //prevents score from being added multiple times per frame.
     float specialMod;               //more points are awarded if special rules are enabled.
@@ -36,10 +36,10 @@ public class GameManager : MonoBehaviour
 
     //variables for winning a stage
     int totalWordsAttempted;        //includes correct and incorrect words
-    int highestCombo;
+    [HideInInspector]public int highestCombo;
     int perfectWordCount;
-    int okWordCount;
-    int wrongWordCount;
+    [HideInInspector] public int okWordCount;
+    [HideInInspector] public int wrongWordCount;
 
     //Medal variables
     public MedalObject[] medalObjects;  //array of earned medals
@@ -803,7 +803,7 @@ public class GameManager : MonoBehaviour
         //Ten Thosuand Club Medal
         if (score >= 10000)
         {
-            StartCoroutine(rs.DisplayMedal(medalObjects[(int)MedalManager.MedalName.FiveThousandClub], medalPos));
+            StartCoroutine(rs.DisplayMedal(medalObjects[(int)MedalManager.MedalName.TenThousandClub], medalPos));
             medalPos = new Vector3(medalPos.x, medalPos.y - yOffset, medalPos.z);
         }
 
