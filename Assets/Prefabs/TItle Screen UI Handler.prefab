@@ -435,7 +435,7 @@ MonoBehaviour:
 
     Word Length: 8-12
 
-    Time: 3 min.
+    Time: 2 min. 30 sec.
 
     Penalty
     Per Letter: +0.45 sec.'
@@ -842,7 +842,7 @@ MonoBehaviour:
 
     Word Length: 5-8
 
-    Time: 2 min.
+    Time: 1 min. 30 sec.
 
     Penalty
     Per Letter: +0.30 sec.'
