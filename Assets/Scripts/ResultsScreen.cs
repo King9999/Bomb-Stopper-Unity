@@ -98,67 +98,67 @@ public class ResultsScreen : MonoBehaviour
         //The player will always receive this medal in Normal or Hard
         if (tm.currentDifficulty == TitleManager.Difficulty.Normal)
         {
-            results += "Bronze \u2606: Bomb Defused\n";
+            results += "\u2606 Bomb Defused\n";
         }
         if (tm.currentDifficulty == TitleManager.Difficulty.Hard)
         {
-            results += "Silver \u2606: Expert Defuser\n";
+            results += "\u2606 Expert Defuser\n";
         }
 
         //Two Thousand Club medal
         if (gm.score >= 2000)
         {
-           results += "Bronze \u2606: Two Thousand Club\n";
+           results += "\u2606 Two Thousand Club\n";
         }
 
         //Ten Thosuand Club Medal
         if (gm.score >= 10000)
         {
-            results += "Gold \u2606: Ten Thousand Club\n";
+            results += "\u2606 Ten Thousand Club\n";
         }
 
         //A Special Kind of Person
         if (tm.specialToggle.isOn)
         {
-            results += "Silver \u2606: A Special Kind of Person\n";
+            results += "\u2606 A Special Kind of Person\n";
         }
 
         //Combo Rookie/Master
         if (gm.highestCombo >= 20)
         {
-            results += "Gold \u2606: Combo Master\n";
+            results += "\u2606 Combo Master\n";
         }
         else if (gm.highestCombo >= 5)
         {
-            results += "Bronze \u2606: Combo Rookie\n";
+            results += "\u2606 Combo Rookie\n";
         }
 
         //Dramatic Finish
         if (gm.gameTimer.time <= 5)
         {
-           results += "Silver \u2606: Dramatic Finish\n";
+           results += "\u2606 Dramatic Finish\n";
         }
 
         //God Defuser
         if (tm.currentDifficulty == TitleManager.Difficulty.Hard && tm.specialToggle.isOn)
         {
-            results += "Gold \u2606: God Defuser\n";
+            results += "\u2606 God Defuser\n";
         }
 
         //Perfect
         if (gm.okWordCount <= 0 && gm.wrongWordCount <= 0)
         {
-            results += "Gold \u2606: Perfect!\n";
+            results += "\u2606 Perfect!\n";
         }
 
         //Speed Demon
         float elapsedTime = (gm.sr.specialRule == SpecialRules.Rule.ReducedTime) ? gm.sr.elapsedTime : gm.gameTimer.initTime - gm.gameTimer.time;
         if (elapsedTime <= 45)
         {
-            results += "Silver \u2606: Speed Demon\n";
+            results += "\u2606 Speed Demon\n";
         }
 #endregion
-        results += "\nhttps://king9999.itch.io/bomb-stopper-unity?secret=lmNz7wEO7pvCDnVS2A6Vd05YdXM";
+        results += "\nhttps://king9999.itch.io/bomb-stopper-unity";
 
        
 
