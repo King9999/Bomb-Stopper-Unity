@@ -6,4 +6,4 @@ TO DO LIST
 4. Add a bomb sprite. *DONE*
 5. For the combo value, find out where it's animating more than once *DONE*
 6. Add 20 more words per difficulty.
-7. Add ASCII stars to represent medals and change their colours.
+7. Add ASCII stars to represent medals and change their colours. *DONE*

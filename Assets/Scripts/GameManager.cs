@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
 
     //Used Words variables
     string[] usedWords;             //holds the last words used. Any words in this list won't appear as a target word.
-    int maxUsedWords {get;} = 10;
+    int maxUsedWords {get;} = 20;
     int usedWordIndex;              //always points to last open space in the usedWords array.
 
     //JSON variables
@@ -212,26 +212,6 @@ public class GameManager : MonoBehaviour
 
         //begin countdown to start game
         StartCoroutine(ui.BeginStage());
-
-
-        //GUIUtility.systemCopyBuffer = "test";     //USE THIS TO COPY TEXT TO CLIPBOARD!
-        
-        //get hiscore table data
-        //string tableUrl = /*"http://mikemurraygames.rf.gd/hiscoretable.json"*/ "https://drive.google.com/file/d/11ERWGBUGuLbtt1WbJHM6PzBXYxJIPuNQ";
-        //StartCoroutine(GetTableData(tableUrl));
-       /* UnityWebRequest blah = UnityWebRequest.Get(tableUrl);
-
-        if (blah.error == null)
-        {
-            Debug.Log("No error");
-        }
-
-
-        hiScoreTable = JsonUtility.FromJson<HighScoreTable>(blah.downloadHandler.text);
-        Debug.Log("Score: " + hiScoreTable.score);
-        scoreUI.text = "Score: " + hiScoreTable.score;
-        filePath = Application.dataPath + "/Resources/hiscoretable.json";
-        Debug.Log(filePath);*/
 
     }
 
@@ -493,14 +473,6 @@ public class GameManager : MonoBehaviour
                         
                             }
 
-                            //add points
-                            /*if (!scoreAdded && targetWordSelected)
-                            {
-                                pointsAdded = pointsPerLetter * ui.inputField.text.Length * (1 + comboCount * 0.33f);
-                                score += Mathf.Round(pointsAdded * specialMod);
-                                Debug.Log("Pts Added: " + Mathf.Round(pointsAdded * specialMod));
-                                scoreAdded = true;
-                            }*/
 
                             //add time if Reduced Time rule is enabled
                             if (sr.specialRule == SpecialRules.Rule.ReducedTime && !sr.timeAdded)
@@ -523,11 +495,6 @@ public class GameManager : MonoBehaviour
                                 ui.stunCoroutineOn = true;
                                 StartCoroutine(ui.Stun(0.5f, false)); //I have this here so player can confirm that they typed the correct word
                             }
-                            /*if(!ui.animatePointsCoroutineOn)
-                            {
-                                ui.animatePointsCoroutineOn = true;
-                                StartCoroutine(ui.AnimatePoints(Mathf.Round(pointsAdded * specialMod)));
-                            }*/
                         }
                         else    //an OK match
                         {
@@ -575,11 +542,6 @@ public class GameManager : MonoBehaviour
                                 ui.stunCoroutineOn = true;
                                 StartCoroutine(ui.Stun(basePenalty));
                             }
-                            /*if(!ui.animatePointsCoroutineOn)
-                            {
-                                ui.animatePointsCoroutineOn = true;
-                                StartCoroutine(ui.AnimatePoints(pointsAdded));
-                            }*/
                             
                         }
 
@@ -856,149 +818,6 @@ public class GameManager : MonoBehaviour
         }
 #endregion
 
-        //provide a share button so player can copy results
-        //GUIUtility.systemCopyBuffer = "test";
-
-        //send player back to title
     }
-
-#region Coroutines
-    //I'm using this coroutine to grab the high score table from the web, but currently I'm unsuccessful in 
-    //retrieving the data.
-    /*IEnumerator GetTableData(string url)
-    {
-        UnityWebRequest request = UnityWebRequest.Get(url);
-        yield return request.SendWebRequest();
-
-        if (request.error == null)
-        {
-            //Debug.Log("No error");
-            hiScoreTable = JsonUtility.FromJson<HighScoreTable>(request.downloadHandler.text);
-            Debug.Log("Score: " + hiScoreTable.score);
-        }
-        else
-        {
-            Debug.Log(request.error);
-        }
-
-    }
-
-    //display a result. Can specify the amount of time to display message.
-    IEnumerator ShowResult(string result, Color textColor, float duration = 0.5f)
-    {
-        ui.resultUI.text = result;
-        ui.resultUI.color = textColor;
-
-        //display the result for a second. Show a pulse effect
-        ui.resultUI.transform.localScale = new Vector3(1.5f, 1.5f, 1);
-        while (ui.resultUI.transform.localScale.x > 1)
-        {
-            ui.resultUI.transform.localScale = new Vector3(ui.resultUI.transform.localScale.x - 5f * Time.deltaTime, 
-                ui.resultUI.transform.localScale.y - 5f * Time.deltaTime, 1);
-            yield return null;
-        }
-
-        //ensure scale is back to normal
-        ui.resultUI.transform.localScale = new Vector3(1, 1, 1);
-
-        yield return new WaitForSeconds(duration);
-        ui.resultUI.text = "";
-        resultCoroutineOn = false;
-    }
-
-    IEnumerator Stun(float stunDuration, bool stunMeterOn = true)
-    {
-        //shake the screen
-        //uiHandler.transform.position = new Vector3(uiHandler.transform.position.x + 100, 
-            //uiHandler.transform.position.y, uiHandler.transform.position.z);
-        
-        //show stun meter if there was a correction/word is wrong
-        if (stunMeterOn)
-        {
-            ui.stunMeterHandler.gameObject.SetActive(true);
-            ui.stunMeter.value = ui.stunMeter.maxValue;
-            float currentTime = Time.time;
-            while (Time.time < currentTime + stunDuration)
-            {
-                //update stun meter. The meter starts full, then gradually goes down.
-                ui.stunMeter.value = ui.stunMeter.maxValue - ((Time.time - currentTime) / stunDuration);
-                yield return null;
-            }
-
-            ui.stunMeterHandler.gameObject.SetActive(false);
-
-        }
-        else //got a perfect word
-            yield return new WaitForSeconds(stunDuration);
-        
-
-         //clear the field and select new word
-        ui.inputField.text = "";
-        targetWordSelected = false;
-        correctionWasMade = false;
-        stunCoroutineOn = false;
-        ui.inputField.ActivateInputField();
-    }
-
-    IEnumerator CountdownComboTimer(float duration)
-    {
-        ui.comboHandler.gameObject.SetActive(true);
-        ui.comboMeter.value = ui.comboMeter.maxValue;
-        ui.comboValueUI.text = comboCount.ToString();
-
-        float currentTime = Time.time;
-        while (Time.time < currentTime + duration)
-        {
-            //update combo meter. The meter starts full, then gradually goes down.
-            ui.comboMeter.value = ui.comboMeter.maxValue - ((Time.time - currentTime) / duration);
-            yield return null;
-        }
-
-        //if we get here, combo has ended
-        comboCount = 0;
-        ui.comboHandler.gameObject.SetActive(false);
-        comboCountdownCoroutineOn = false;
-    }
-
-    IEnumerator AnimatePoints(float pointValue)
-    {
-        Vector3 originalPos = ui.pointValueUI.transform.position;
-        float duration = 0.5f;
-        float currentTime = Time.time;
-        float distance = 20;
-        ui.pointValueUI.text = pointValue + " pts.";
-
-        //colour of text depends on whether player got a perfect word
-        if (!correctionWasMade)
-            ui.pointValueUI.color = perfectWordColor;
-        else
-            ui.pointValueUI.color = new Color(0.1f, 0.7f, 0.9f);   //light blue colour
-        ui.pointValueUI.gameObject.SetActive(true);
-
-        while(Time.time < currentTime + duration)
-        {
-            ui.pointValueUI.transform.position = new Vector3(ui.pointValueUI.transform.position.x, ui.pointValueUI.transform.position.y + distance * Time.deltaTime,
-             ui.pointValueUI.transform.position.z);
-            yield return null;
-        }
-
-        //time fades gradually after it reaches its position.
-        while(ui.pointValueUI.alpha > 0)
-        {
-            ui.pointValueUI.alpha -= 2 * Time.deltaTime;
-            yield return null;
-        }
-        
-        //reset
-        ui.pointValueUI.alpha = 1;
-        ui.pointValueUI.transform.position = originalPos;
-        ui.pointValueUI.gameObject.SetActive(false);
-        animatePointsCoroutineOn = false;
-    }*/
-
-
-#endregion
-
-
    
 }
